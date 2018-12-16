@@ -20,45 +20,84 @@
             <div class="dare">
                     <input type="search" placeholder="search user">  
                     <input type="search" placeholder="search by category"> 
-                    <div class="content">
-                        <h3>Records</h3>
-                        <h2>Red flags</h2>
-                        <h4>username</h4>
-                        <p>Bekalaze</p>
-                        <h4>Title</h4>
-                        <p>Government officials taking bribes at Mukono district headquarters.</p>
-                        <div>
-                            <h4>Geolocation</h4>
-                            <p>Lat 1.2178 Long 0.791</p>
-                        </div>
-                        <p>Status: under investigation</p>
-                        <label>
-                                select new Status:
-                        </label><br><br>
-                            <select>
-                                <option>resolved</option>
-                                <option>reject</option>
-                                <option>under investigation</option>
-                            </select><br><br>
-                        <input type="submit" value="submit">
-                        <h2>interventions</h2>
-                        <h4>username</h4>
-                        <p>Favor</p>
-                        <h4>Title</h4>
-                        <p>There isn't enough drugs at Mukono Health Centre 4</p>
-                        <h4>Geolocation</h4>
-                        <p>Lat 0.11229 Long 0.4237</p>
-                        <p>Status: resolved</p>
-                        <label>
-                                select new Status:
-                            </label><br><br>
-                                <select>
-                                    <option>resolved</option>
-                                    <option>reject</option>
-                                    <option>under investigation</option> 
-                                </select><br><br>
-                        <input type="submit" value="submit">
-                    </div>                            
+                    <h3>All iReports</h3>
+                    <table id="All_reports">
+                        <thead>
+                            <tr>
+                                <td>category</td>
+                                <td>Title</td>
+                                <td>Description</td>
+                                <td>Geolocation</td>
+                                <td>ReportedBy</td>
+                                <td>Status</td>
+                                <td>change Status</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Redflag</td>
+                                <td>corruption</td>
+                                <td>Government officials taking bribes at Mukono district headquarters</td>
+                                <td>Lat 1.2178 Long 0.791</td>
+                                <td> Bekalaze</td>
+                                <td>resolved</td>
+                                <td>
+                                    <select id="status">
+                                            <option >Resolved</option>
+                                            <option >Under investigation</option>
+                                            <option >Rejected</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>interventions</td>
+                                <td>
+                                    Embezzlement
+                                </td>
+                                <td>
+                                    There isn't enough drugs at Mukono Health Centre 4
+                                </td>
+                                <td>Lat 0.11229 Long 0.4237</td>
+                                <td>
+                                    Favor
+                                </td>
+                                <td>under investigation</td>
+                                <td>
+                                    <select id="status">
+                                            <option >Resolved</option>
+                                            <option >Under investigation</option>
+                                            <option >Rejected</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>interventions</td>
+                                <td>
+                                    Embezzlement
+                                </td>
+                                <td>
+                                    Roads along Mukono and seeta have potholes
+                                </td>
+                                <td>Lat 0.90672 Long 1.55427</td>
+                                <td>
+                                    Kalanzi
+                                </td>
+                                <td>Rejected</td>
+                                <td>
+                                    <select id="status">
+                                            <option >Resolved</option>
+                                            <option >Under investigation</option>
+                                            <option >Rejected</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                        <input type="submit" value="submit changes"><br><br>
+                        <footer>
+                            <h4>@Copyright iReporter. All Rights Reserved.</h4>
+                        </footer>       
+                </div>                        
             </div>
     </body>
 </html>    
