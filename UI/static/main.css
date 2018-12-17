@@ -1,0 +1,142 @@
+body{
+    margin: 0px;
+    background-size: cover;
+    padding-right: 0;
+}
+h1{
+    color: #d5d5d8;
+    font-size: 2em;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 5%;
+    text-shadow: 1px 2px 5px rgba(0,0,0,.5);
+
+}
+p{
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+}
+#alpha{
+    background-color: rgb(245, 188, 45);
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-bottom: 10%;
+    padding-top: 5%;
+}
+h3 {
+    text-align: center;
+    font-size: 150%;
+    color: rgb(31, 31, 243);
+    text-shadow: 1px 2px 5px rgba(173, 173, 226, 0.9);
+
+}
+
+h2 {
+    text-align: center;
+    font-size: 150%;
+    color: rgb(233, 233, 241);
+    text-shadow: 1px 2px 5px rgba(173, 173, 226, 0.9);
+
+}
+#low {
+    padding-left: 30%;
+    padding-right: 20%;
+    padding-bottom: 5%;
+    padding-top: 5%;
+}
+.top{
+    margin: 2%;
+    margin-top: 0%;
+    font-size: 1.5em;
+    float: right;
+    
+}
+.top a{
+    color: rgb(251, 255, 0);
+    text-decoration: none;
+} 
+a:hover { 
+    color: rgb(161, 27, 34);
+}
+
+.dare {
+    padding-left: 30%;
+    padding-right: 30%;
+    padding-bottom: 5%;
+    padding-top: 0%;
+}
+    input {
+        display: block;
+        width: 100%;
+        padding: 12px 20px;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        display: block;
+        margin: 20px 25px 20px 25px;
+        background-color: rgb(247, 223, 223);
+
+    }
+    button{
+        border-radius: 15px;
+        padding: 5% 5%;
+        text-align: center;
+        width: 50%;
+        font-size: 80%;
+        background-color: darkorange;
+    
+    } 
+    button:hover{
+        background-color: #1ce25b;
+    }
+    
+.omega{
+    background-color: rgb(41, 212, 41);
+}
+.flex{
+    background-color: rgb(243, 25, 243);
+    color: rgb(13, 255, 0);
+    margin-right: 0%;
+    
+}
+
+table
+{
+    border: 1px solid white;
+    border-collapse: collapse;
+    padding-bottom: 20%;
+    padding-right: 50%; 
+    padding-left: 50%;
+    padding-right: 50%;
+    overflow-x: auto;
+    width: 50%;
+    
+}
+table th{
+    border: 1px solid white;
+    text-align: center;
+    height: 50%;
+    
+}
+table td{
+    border: 1px solid white;
+    text-align: center;
+    height: 70%;
+}
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+/*tr:nth-child(even) {
+    background-color: #f2f2f2;
+}*/
+
+tr:hover 
+    background-color: #f5e72c;
+}
+th:hover {
+    background-color: #4f52ff;
+}
+label{
+    padding-left: 30%;
+}
