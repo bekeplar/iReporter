@@ -1,7 +1,7 @@
 body{
     margin: 0px;
     background-size: cover;
-    padding: 0;
+    padding-right: 0;
 }
 h1{
     color: #d5d5d8;
@@ -95,37 +95,48 @@ a:hover {
 }
 .flex{
     background-color: rgb(243, 25, 243);
-    color: rgb(13, 255, 0)
+    color: rgb(13, 255, 0);
+    margin-right: 0%;
+    
 }
 
-table{
+table
+{
     border: 1px solid white;
     border-collapse: collapse;
     padding-bottom: 20%;
     padding-right: 50%; 
+    padding-left: 50%;
+    padding-right: 50%;
+    overflow-x: auto;
+    width: 50%;
     
 }
 table th{
     border: 1px solid white;
     text-align: center;
-    height: 50px;
+    height: 50%;
     
 }
 table td{
     border: 1px solid white;
     text-align: center;
-    height: 70px;
+    height: 70%;
 }
 th {
     background-color: #4CAF50;
     color: white;
 }
-tr:nth-child(even) {
+/*tr:nth-child(even) {
     background-color: #f2f2f2;
-}
-tr:hover {
+}*/
+
+tr:hover 
     background-color: #f5e72c;
 }
 th:hover {
     background-color: #4f52ff;
+}
+label{
+    padding-left: 30%;
 }
