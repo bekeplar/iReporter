@@ -16,7 +16,7 @@ p{
     font-family: Arial, Helvetica, sans-serif;
 }
 #alpha{
-    background-color: rgb(245, 188, 45);
+    background-color: rgb(45, 95, 245);
     padding-left: 10%;
     padding-right: 10%;
     padding-bottom: 10%;
@@ -25,16 +25,16 @@ p{
 h3 {
     text-align: center;
     font-size: 150%;
-    color: rgb(31, 31, 243);
-    text-shadow: 1px 2px 5px rgba(173, 173, 226, 0.9);
+    color: whitesmoke;
+
 
 }
 
 h2 {
     text-align: center;
     font-size: 150%;
-    color: rgb(233, 233, 241);
-    text-shadow: 1px 2px 5px rgba(173, 173, 226, 0.9);
+    font-style: italic;
+    color: rgb(241, 240, 233);
 
 }
 #low {
@@ -42,49 +42,80 @@ h2 {
     padding-right: 20%;
     padding-bottom: 5%;
     padding-top: 5%;
+    
+}
+#low p{
+    color: rgb(164, 253, 30);
+    text-indent: unset;
+    font-family: Arial, Helvetica, sans-serif;
 }
 .top{
     margin: 2%;
     margin-top: 0%;
     font-size: 1.5em;
     float: right;
-    
 }
+/*#down{
+    padding-left: 50%;
+    padding-right: 50%;
+    padding-bottom: 5%;
+    padding-top: 5%;
+}
+#down a{
+    display: inline;
+    text-decoration: none;
+    color: green;
+}*/
 .top a{
     color: rgb(251, 255, 0);
     text-decoration: none;
+    background-color: green;
+    color: white;
+    padding: 5px 20px;
+    border-radius: 5px;
+    text-align: center;
 } 
+#status{
+    margin-left: 0%;   
+}
 a:hover { 
     color: rgb(161, 27, 34);
 }
 
 .dare {
-    padding-left: 30%;
-    padding-right: 30%;
+    padding-left: 20%;
+    padding-right: 25%;
     padding-bottom: 5%;
     padding-top: 0%;
+    
 }
     input {
         display: block;
-        width: 100%;
+        width: 90%;
         padding: 12px 20px;
         display: inline-block;
         border: 1px solid #ccc;
         border-radius: 4px;
-        box-sizing: border-box;
         display: block;
-        margin: 20px 25px 20px 25px;
-        background-color: rgb(247, 223, 223);
-
-    }
-    button{
-        border-radius: 15px;
-        padding: 5% 5%;
         text-align: center;
-        width: 50%;
+        margin-left: 30%;
+        padding-left: 10%;
+        margin: 10px  0px;
+        background-color: rgb(238, 239, 248);
+    }
+    input:hover{
+        background-color: rgb(149, 181, 184);
+        color: azure;
+    }
+    button {
+        border-radius: 12px;
+        padding: 3% 3%;
+        text-align: center;
+        width: 40%;
         font-size: 80%;
         background-color: darkorange;
-    
+        margin-bottom: 10%;
+        margin-left: 20%;
     } 
     button:hover{
         background-color: #1ce25b;
@@ -97,7 +128,30 @@ a:hover {
     background-color: rgb(243, 25, 243);
     color: rgb(13, 255, 0);
     margin-right: 0%;
-    
+}
+form{
+    border: 1px solid rgb(216, 200, 200);
+    border-radius: 5px;
+    padding-left: 0%;
+    padding-right: 0%;
+    width: 100%;
+    margin-left: 10% ;
+    background-color: antiquewhite;
+    margin-right: 5%;
+   
+}    
+
+select{
+    color:blue;
+    font-size: inherit;
+    margin-left: 30%;
+    font-size: 1em;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    background-color: white;
+    white-space: nowrap;
+    border: 1px solid rgb(224, 221, 221);
+    border-radius: 6px;
 }
 
 table
@@ -105,23 +159,26 @@ table
     border: 1px solid white;
     border-collapse: collapse;
     padding-bottom: 20%;
+    background-color: whitesmoke;
     padding-right: 50%; 
     padding-left: 50%;
     padding-right: 50%;
+    margin-right: 20%;
     overflow-x: auto;
     width: 50%;
-    
 }
 table th{
     border: 1px solid white;
     text-align: center;
-    height: 50%;
-    
+    height: 50%; 
 }
 table td{
     border: 1px solid white;
     text-align: center;
     height: 70%;
+}
+thead td{
+    color: blue;
 }
 th {
     background-color: #4CAF50;
@@ -130,13 +187,47 @@ th {
 /*tr:nth-child(even) {
     background-color: #f2f2f2;
 }*/
-
-tr:hover 
+tr:hover{
     background-color: #f5e72c;
 }
 th:hover {
     background-color: #4f52ff;
 }
 label{
-    padding-left: 30%;
+    padding-left: 40%;
+    font-size: 120%;
+    
+}
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    body{
+        margin: 0px;
+        background-size: cover;
+        padding-right: 0;
+    }
+    a{
+      display: block;
+    }
+    footer h3{
+        font-size: 70%;
+    }
+    h3{
+        font-size: 90%;
+        font-family: Arial, Helvetica, sans-serif;
+        font-style: italic;
+        font-weight: 200;
+    }
+  
+    .top a{
+        color: rgb(233, 233, 241);
+        background-color: #44448d;
+        border-radius: 0px;
+    }
+    a:hover { 
+        color: rgb(161, 27, 132);
+    }
+    h2{
+        font-size: 100%;
+    }
 }
