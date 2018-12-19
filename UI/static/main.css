@@ -89,6 +89,11 @@ a:hover {
     padding-top: 0%;
     
 }
+#admin {
+    flex: 30%;
+    background-color: #f1f1f1;
+    padding: 20px;	
+}
     input {
         display: block;
         width: 90%;
@@ -132,8 +137,8 @@ a:hover {
 form{
     border: 1px solid rgb(216, 200, 200);
     border-radius: 5px;
-    padding-left: 0%;
-    padding-right: 0%;
+    /* padding-left: 0%;
+    padding-right: 0%; */
     width: 100%;
     margin-left: 10% ;
     background-color: antiquewhite;
@@ -199,7 +204,7 @@ label{
     
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 500px) {
     /* For mobile phones: */
     body{
         margin: 0px;

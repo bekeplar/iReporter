@@ -5,100 +5,116 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>admin iReporter</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" media="screen" href="../static/main.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="../static/style.css" />
     </head>
     <body>
-       <div class="omega">
             <h1>iReporter</h1>
             <heder>
                 <div class="top">
                     <a href="index.html">home</a>
-                    <a href="admin.html">logout</a>
+                    <a href="signup.html">signup</a>
                 </div>    
-            </heder><br><br>
-            <h3>Building corruption free systems.</h3>
-            <div class="dare">
-                    <h2> Admin dashboard</h2>
-                    <input type="search" placeholder="search user">  
-                    <input type="search" placeholder="search by category"> 
-                    <h3>All iReports</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <td>category</td>
-                                <td>Title</td>
-                                <td>Description</td>
-                                <td>Geolocation</td>
-                                <td>ReportedBy</td>
-                                <td>Status</td>
-                                <td>change Status</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Redflag</td>
-                                <td>corruption</td>
-                                <td>Government officials taking bribes at Mukono district headquarters</td>
-                                <td>Lat 1.2178 Long 0.791</td>
-                                <td> Bekalaze</td>
-                                <td>resolved</td>
-                                <td>
-                                    <select id="status">
-                                            <option >Resolved</option>
-                                            <option >Under investigation</option>
-                                            <option >Rejected</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>interventions</td>
-                                <td>
-                                    Embezzlement
-                                </td>
-                                <td>
-                                    There isn't enough drugs at Mukono Health Centre 4
-                                </td>
-                                <td>Lat 0.11229 Long 0.4237</td>
-                                <td>
-                                    Favor
-                                </td>
+            </heder>
+            <h3>Welcome to admin dashboard!</h3>
+            <div class="admin">
+                    <div class="main-admin">
+                        <p class="header">search iReporter</p>
+                        <form>
+                            <input  type="text" name="Search" required><br><br>
+                            <button type="submit">Search</button><br><br>
+                        </form>
+                        <table>
+                              <tr>
+                                <th>Intervention</th>
+                                <th>reporter</th>
+                                <th>Status</th>
+                                <th>Change Status</th>
+                              </tr>
+                              <tr>
+                                <td></td>
+                                <td>Nanyonjo Favor</td>
+                                <td>draft</td>
+                                <td><select>
+                                        <option>resolved </option>
+                                        <option>under investigation</option>
+                                        <option>rejected</option>
+                                    </select></td>
+                              </tr>
+                              <tr>
+                                <td>Museveni stol...</td>
+                                <td>Bekalaze Joseph</td>
                                 <td>under investigation</td>
-                                <td>
-                                    <select id="status">
-                                            <option >Resolved</option>
-                                            <option >Under investigation</option>
-                                            <option >Rejected</option>
-                                    </select>
-                                </td>
+                                <td><select>
+                                        <option>resolved </option>
+                                        <option>under investigation</option>
+                                        <option>rejected</option>
+                                    </select></td>
+                              </tr>
+                              <tr>
+                                <td>Potholes along Jinja Road seeta to Mukono..</td>
+                                <td>Nanyonjo Favor</td>
+                                <td>resolved</td>
+                                <td><select>
+                                        <option>resolved </option>
+                                        <option>under investigation</option>
+                                        <option>rejected</option>
+                                    </select></td>
+                              </tr>
+                        </table>
+                        <table>
+                            <tr>
+                              <th>Red-flag</th>
+                              <th>reporter</th>
+                              <th>Status</th>
+                              <th>Edit Status</th>
                             </tr>
                             <tr>
-                                <td>interventions</td>
-                                <td>
-                                    Embezzlement
-                                </td>
-                                <td>
-                                    Roads along Mukono and seeta have potholes
-                                </td>
-                                <td>Lat 0.90672 Long 1.55427</td>
-                                <td>
-                                    Kalanzi
-                                </td>
-                                <td>Rejected</td>
-                                <td>
-                                    <select id="status">
-                                            <option >Resolved</option>
-                                            <option >Under investigation</option>
-                                            <option >Rejected</option>
-                                    </select>
-                                </td>
+                              <td>Government officials taking bribes at Mukono district headquarters</td>
+                              <td>Bekalaze Joseph</td>
+                              <td>resolved</td>
+                              <td><select>
+                                    <option>resolved </option>
+                                    <option>under investigation</option>
+                                    <option>rejected</option>
+                                </select></td>
                             </tr>
-                        </tbody>
-                    </table>
-                        <input type="submit" value="submit changes"><br><br>
-                        <footer>
-                            <h4>@Copyright iReporter. All Rights Reserved.</h4>
-                        </footer>       
-                </div>                        
-            </div>
+                            <tr>
+                              <td>Bribes by police officers.</td>
+                              <td>Bekalaze Joseph</td>
+                              <td>resolved</td>
+                              <td><select>
+                                    <option>resolved </option>
+                                    <option>under investigation</option>
+                                    <option>rejected</option>
+                                </select></td>
+                            </tr>
+                            <tr>
+                              <td>Lc 1 stamp stolen...</td>
+                              <td>Bekalaze Joseph</td>
+                              <td>draft</td>
+                              <td><select>
+                                    <option>resolved </option>
+                                    <option>under investigation</option>
+                                    <option>rejected</option>
+                                </select></td>
+                            </tr>
+                      </table>
+                    </div>
+                    <div class="right">
+                        <div class="header-small">select by status</div>
+                        <form >
+                                <select>
+                                        <option>All Incidents </option>
+                                        <option>resolved </option>
+                                        <option>under investigation</option>
+                                        <option>rejected</option>
+                                </select><br><br>
+                          <button type="submit">Search</button>
+                        </form> 
+                    </div>
+                </div>
+                <footer>
+                        <h3>Copyright iReporter. All Rights Reserved.</h3>
+                </footer>   
     </body>
 </html>    
