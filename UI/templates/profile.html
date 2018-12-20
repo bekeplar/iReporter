@@ -5,68 +5,140 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>iReporter profile</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" media="screen" href="../static/main.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="../static/style.css" />
     </head>
     <body>
-        <div class="flex">
-                <h1>iReporter</h1>
+            <h1>iReporter</h1>
+            <heder>
                 <div class="top">
-                        <a href="signin.html">signout</a>
-                        <a href="incident.html">report</a>
-                        <a href="records.html">records</a>
-                </div><br><br>
-                <h3>Building corruption free systems.</h3>
-                <div class="dare">
-                        <input type="search" placeholder="search user">
-                        <img src="">
-                        <div>
-                            <p>Name: Bekalaze</p>
-                            <p>Location: Mukono</p>
-                            <p>Email: bekeplar@gmail.com</p>
-                            <p>contact: +256772787777</p>
-                    </div>
-                    <div class="records">
-                            <h2>My iReporter Status</h2>
-                            <table>
-                                <tr>
-                                    <th>iReporter</th>
-                                    <th>Under invesigation</th>
-                                    <th>Resolved</th>
-                                    <th>Rejected</th>
-                                </tr>
-                                <tr>
-                                    <td>Red flag</td>
-                                    <td>5</td>
-                                    <td>4</td>
-                                    <td>2</td>
-                                </tr>
-                                <tr>
-                                    <td>Intervention</td>
-                                    <td>3</td>
-                                    <td>0</td>
-                                    <td>5</td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="dropdown1">
-                                <h2>Red flag</h2>
-                                <p>Government officials taking bribes at Mukono district headquarters.</p>
-                                <div>
-                                    <h4>Geolocation</h4>
-                                    <p>Lat: 1.2178</p>
+                    <a href="index.html">home</a>
+                    <a href="signin.html">signout</a>
+                </div>    
+            </heder>
+            <h3>Welcome to your profile!</h3>
+            <div class="admin">
+                    <div class="main-admin">
+                        <p class="header">search incident type</p>
+                        <form>
+                                <select>
+                                        <option>Intervention</option>
+                                        <option>Red-flag</option>
+                                </select><br><br>
+                            <button type="submit">Search</button><br><br>
+                        </form>
+                        <table>
+                              <tr>
+                                <th>Intervention</th>
+                                <th>reporter</th>
+                                <th>Geolocation</th>
+                                <th>dateCreated</th>
+                                <th>Status</th>
+                                <th>Change Status</th>
+                              </tr>
+                              <tr>
+                                <td>No medicine at Mukono health centre 4</td>
+                                <td>Bekalaze Jinja</td>
+                                <td><p>Lat: 1.2178</p>
                                     <p>Long: 0.791</p>
-                                </div>
-                                <p>Status: under investigation</p>
+                                </td>
+                                <td></td>
+                                <td>draft</td>
+                                <td><select>
+                                        <option>resolved </option>
+                                        <option>under investigation</option>
+                                        <option>rejected</option>
+                                    </select></td>
+                              </tr>
+                              <tr>
+                                <td>Dirsty...</td>
+                                <td>Bekalaze Joseph</td>
+                                <td><p>Lat: 1.2178</p>
+                                    <p>Long: 0.791</p></td>
+                                <td></td>
+                                <td>under investigation</td>
+                                <td><select>
+                                        <option>resolved </option>
+                                        <option>under investigation</option>
+                                        <option>rejected</option>
+                                    </select></td>
+                              </tr>
+                              <tr>
+                                <td>Potholes along Jinja Road seeta to Mukono..</td>
+                                <td>Bekalaze Joseph</td>
+                                <td><p>Lat: 1.2178</p>
+                                    <p>Long: 0.791</p></td>
+                                <td></td>
+                                <td>resolved</td>
+                                <td><select>
+                                        <option>resolved </option>
+                                        <option>under investigation</option>
+                                        <option>rejected</option>
+                                    </select></td>
+                              </tr>
+                        </table>
+                        <table>
+                            <tr>
+                              <th>Red-flag</th>
+                              <th>reporter</th>
+                              <th>Geolocation</th>
+                                <th>dateCreated</th>
+                              <th>Status</th>
+                              <th>Edit Status</th>
+                            </tr>
+                            <tr>
+                              <td>Government officials taking bribes at Mukono district headquarters</td>
+                              <td>Bekalaze Joseph</td>
+                              <td><p>Lat: 1.2178</p>
+                                <p>Long: 0.791</p>
+                              </td>
+                              <td></td>
+                              <td>resolved</td>
+                              <td><select>
+                                    <option>resolved </option>
+                                    <option>under investigation</option>
+                                    <option>rejected</option>
+                                </select></td>
+                            </tr>
+                            <tr>
+                              <td>Bribes by police officers.</td>
+                              <td>Bekalaze Joseph</td>
+                              <td><p>Lat: 1.2178</p>
+                                <p>Long: 0.791</p>
+                              </td>
+                              <td></td>
+                              <td>resolved</td>
+                              <td><select>
+                                    <option>resolved </option>
+                                    <option>under investigation</option>
+                                    <option>rejected</option>
+                                </select></td>
+                            </tr>
+                            <tr>
+                              <td>Lc 1 stamp stolen...</td>
+                              <td>Bekalaze Joseph</td>
+                              <td><p>Lat: 1.2178</p>
+                                <p>Long: 0.791</p>
+                              </td>
+                              <td></td>
+                              <td>draft</td>
+                              <td><select>
+                                    <option>resolved </option>
+                                    <option>under investigation</option>
+                                    <option>rejected</option>
+                                </select></td>
+                            </tr>
+                      </table>
+                    </div>
+                    <div class="right">
+                        <div 
+                        class="header-small">profile photo
+                        </div><br><br>
+                            
+                           <img src="../static/images/coruption.jpg">
                         </div>
-                        <div class="dropdown1">
-                                <h2>intervention</h2>
-                                <p>There isn't enough drugs at Mukono Health Centre 4</p>
-                                <h4>Geolocation</h4>
-                                <p>Lat: 0.11229</p> 
-                                <p>Long: 0.4237</p>
-                                <p>Status: resolved</p>
-                        </div>
-                        </div>
-        </div>
+                    </div>
+                    <footer>
+                            <h3>Copyright iReporter. All Rights Reserved.</h3>
+                    </footer>   
     </body>
 </html>

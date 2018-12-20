@@ -17,6 +17,9 @@ h3 {
 
 
 }
+th{
+    color: rgba(0, 0, 0, 0.83);
+}
 
 .top{
     margin: 2%;
@@ -67,7 +70,7 @@ a:hover {
     flex: 30%;
     background-color: #f1f1f1;
     padding: 10%;
-    margin-left: 15%;
+    margin-left: 5%;
     margin-bottom: 20%;	
     border-radius: 4px;
     height: 70%;
