@@ -1,0 +1,458 @@
+import unittest
+from api.models import User, Incident
+from api import app
+import json
+
+
+class TestUser(unittest.TestCase):
+    def setUp(self):
+        """
+        Setting up a test client
+        """
+        self.test_client = app.test_client()
+
+    def test_create_user(self):
+        """
+        Test if a user can be registered successfully.
+        """
+        user = {
+            "firstname": "bekelaze",
+            "lastname":" Joseph",
+            "othernames": "beka",
+            "email": "bekeplar@gmail.com",
+            "phoneNumber": "0789057968",
+            "username": "bekeplar",
+            "isAdmin": "False",
+            "password": "bekeplar1234"
+        }
+
+        response = self.test_client.post(
+            'api/v1/signup',
+            content_type='application/json',
+            data=json.dumps(user)
+        )
+
+        message = json.loads(response.data.decode())
+
+        self.assertEqual(message['message'], "bekeplar successfully registered.")
+
+    def test_create_user_empty_username(self):
+        """
+        Test if a user can be created with empty username.
+        """
+        user = {
+            "firstname": "bekelaze",
+            "lastname": "Joseph",
+            "othernames": "beka",
+            "email": "bekeplar@gmail.com",
+            "phoneNumber": "0789057968",
+            "username": "",
+            "isAdmin": "False",
+            "password": "bekeplar1234"
+        }
+
+        response = self.test_client.post(
+            'api/v1/signup',
+            content_type='application/json',
+            data=json.dumps(user)
+        )
+
+        message = json.loads(response.data.decode())
+
+        self.assertEqual(message['Error'], 'Please fill in username field!')
+
+    def test_create_user_empty_firstname(self):
+        """
+        Test if a user can be created with no firstname.
+        """
+        user = {
+            "firstname": "",
+            "lastname": "Joseph",
+            "othernames": "beka",
+            "email": "bekeplar@gmail.com",
+            "phoneNumber": "0789057968",
+            "username": "bekeplar",
+            "isAdmin": "False",
+            "password": "bekeplar1234"
+        }
+
+        response = self.test_client.post(
+            'api/v1/signup',
+            content_type='application/json',
+            data=json.dumps(user)
+        )
+
+        message = json.loads(response.data.decode())
+
+        self.assertEqual(message['Error'], 'Please fill in firstname field!')
+
+    def test_create_user_empty_lastname(self):
+        """
+        Test if a user can be created with no lastname.
+        """
+        user = {
+            "firstname": "Bekalaze",
+            "lastname": "",
+            "othernames": "beka",
+            "email": "bekeplar@gmail.com",
+            "phoneNumber": "0789057968",
+            "username": "bekeplar",
+            "isAdmin": "False",
+            "password": "bekeplar1234"
+        }
+
+        response = self.test_client.post(
+            'api/v1/signup',
+            content_type='application/json',
+            data=json.dumps(user)
+        )
+
+        message = json.loads(response.data.decode())
+
+        self.assertEqual(message['Error'], 'Please fill in lastname field!')
+
+    def test_create_user_empty_othernames(self):
+        """
+        Test if a user can be created with no othernames.
+        """
+        user = {
+            "firstname": "Bekalaze",
+            "lastname": "Joseph",
+            "othernames": "",
+            "email": "bekeplar@gmail.com",
+            "phoneNumber": "0789057968",
+            "username": "bekeplar",
+            "isAdmin": "False",
+            "password": "bekeplar1234"
+        }
+
+        response = self.test_client.post(
+            'api/v1/signup',
+            content_type='application/json',
+            data=json.dumps(user)
+        )
+
+        message = json.loads(response.data.decode())
+
+        self.assertEqual(message['Error'], 'Please fill in othernames field!')
+
+    def test_create_user_empty_email(self):
+        """
+        Test if a user can be created with no email.
+        """
+        user = {
+            "firstname": "Bekalaze",
+            "lastname": "Joseph",
+            "othernames": "beka",
+            "email": "",
+            "phoneNumber": "0789057968",
+            "username": "bekeplar",
+            "isAdmin": "False",
+            "password": "bekeplar1234"
+        }
+
+        response = self.test_client.post(
+            'api/v1/signup',
+            content_type='application/json',
+            data=json.dumps(user)
+        )
+
+        message = json.loads(response.data.decode())
+
+        self.assertEqual(message['Error'], 'Please fill in email field!')
+    
+    def test_create_user_wrong_email_format(self):
+        """
+        Test if a user can be created with invalid email.
+        """
+        user = {
+            "firstname": "Bekalaze",
+            "lastname": "Joseph",
+            "othernames": "beka",
+            "email": "nnnnnnnnnnn",
+            "phoneNumber": "0789057968",
+            "username": "bekeplar",
+            "isAdmin": "False",
+            "password": "bekeplar1234"
+        }
+
+        response = self.test_client.post(
+            'api/v1/signup',
+            content_type='application/json',
+            data=json.dumps(user)
+        )
+
+        message = json.loads(response.data.decode())
+
+        self.assertEqual(message['Error'], 'Please fill in right email format!.')
+
+    def test_create_user_empty_phoneNumber(self):
+        """
+        Test if a user can be created with no phone Number.
+        """
+        user = {
+            "firstname": "Bekalaze",
+            "lastname": "Joseph",
+            "othernames": "beka",
+            "email": "bekeplar@gmail.com",
+            "phoneNumber": "",
+            "username": "bekeplar",
+            "isAdmin": "False",
+            "password": "bekeplar1234"
+        }
+
+        response = self.test_client.post(
+            'api/v1/signup',
+            content_type='application/json',
+            data=json.dumps(user)
+        )
+
+        message = json.loads(response.data.decode())
+
+        self.assertEqual(message['Error'], 'Please fill in phoneNumber field!')
+
+    def test_create_user_empty_isAdmin(self):
+        """
+        Test if a user can be created with no role selected.
+        """
+        user = {
+            "firstname": "Bekalaze",
+            "lastname": "Joseph",
+            "othernames": "beka",
+            "email": "bekeplar@gmail.com",
+            "phoneNumber": "0789057968",
+            "username": "bekeplar",
+            "isAdmin": "",
+            "password": "bekeplar1234"
+        }
+
+        response = self.test_client.post(
+            'api/v1/signup',
+            content_type='application/json',
+            data=json.dumps(user)
+        )
+
+        message = json.loads(response.data.decode())
+
+        self.assertEqual(message['Error'], 'Please select user role!')
+
+    def test_create_user_empty_password(self):
+        """
+        Test if a user can be created with no password.
+        """
+        user = {
+            "firstname": "Bekalaze",
+            "lastname": "Joseph",
+            "othernames": "beka",
+            "email": "bekeplar@gmail.com",
+            "phoneNumber": "0789057968",
+            "username": "bekeplar",
+            "isAdmin": "False",
+            "password": ""
+        }
+
+        response = self.test_client.post(
+            'api/v1/signup',
+            content_type='application/json',
+            data=json.dumps(user)
+        )
+
+        message = json.loads(response.data.decode())
+
+        self.assertEqual(message['Error'], 'Plese fill in password field!')
+
+    def test_create_user_invalid_password_length(self):
+        """
+        Test if a user can be created with short password.
+        """
+        user = {
+            "firstname": "Bekalaze",
+            "lastname": "Joseph",
+            "othernames": "beka",
+            "email": "bekeplar@gmail.com",
+            "phoneNumber": "0789057968",
+            "username": "bekeplar",
+            "isAdmin": "False",
+            "password": "beka"
+        }
+
+        response = self.test_client.post(
+            'api/v1/signup',
+            content_type='application/json',
+            data=json.dumps(user)
+        )
+
+        message = json.loads(response.data.decode())
+
+        self.assertEqual(message['Error'], 'Password must be of 8 characters long!')
+
+
+class TestRedflag(unittest.TestCase):
+    def setUp(self):
+        """
+        Setting up a test client
+        """
+        self.test_client = app.test_client()
+
+    def test_create_redflag(self):
+        """
+        Test if a user can create a redflag successfully.
+        """
+        redflag = {
+            "createdBy": "Bekalaze",
+            "type": "redflag",
+            "title": "corruption",
+            "location": "mukono",
+            "comment": "corrupt traffic officers in mukono",
+            "status": "draft"
+        }
+
+        response = self.test_client.post(
+            'api/v1/redflags',
+            content_type='application/json',
+            data=json.dumps(redflag)
+        )
+
+        message = json.loads(response.data.decode())
+
+        self.assertEqual(message['message'], 'creted redflag reccord!')
+
+    def test_create_redflag_empty_createdBy(self):
+        """
+        Test if a user can create a redflag with missing createdBy.
+        """
+        redflag = {
+            "createdBy": "",
+            "type": "redflag",
+            "title": "corruption",
+            "location": "mukono",
+            "comment": "corrupt traffic officers in mukono",
+            "status": "draft"
+        }
+
+        response = self.test_client.post(
+            'api/v1/redflags',
+            content_type='application/json',
+            data=json.dumps(redflag)
+        )
+
+        message = json.loads(response.data.decode())
+
+        self.assertEqual(message['Error'], 'Please fill in reporter field!')
+
+    def test_create_redflag_empty_type(self):
+        """
+        Test if a user can be created with no type of incident.
+        """
+        redflag = {
+            "createdBy": "Bekalaze",
+            "type": "",
+            "title": "corruption",
+            "location": "mukono",
+            "comment": "corrupt traffic officers in mukono",
+            "status": "draft"
+        }
+        response = self.test_client.post(
+            'api/v1/redflags',
+            content_type='application/json',
+            data=json.dumps(redflag)
+        )
+
+        message = json.loads(response.data.decode())
+
+        self.assertEqual(message['Error'], 'Please select incident type!')
+
+    def test_create_redflag_empty_title(self):
+        """
+        check if a user can create a redflag with no title.
+        """
+        redflag = {
+            "createdBy": "Bekalaze",
+            "type": "redflag",
+            "title": "",
+            "location": "mukono",
+            "comment": "corrupt traffic officers in mukono",
+            "status": "draft"
+        }
+
+        response = self.test_client.post(
+            'api/v1/redflags',
+            content_type='application/json',
+            data=json.dumps(redflag)
+        )
+
+        message = json.loads(response.data.decode())
+
+        self.assertEqual(message['Error'], 'Please fill in title field!')
+
+    def test_create_redflag_no_location(self):
+        """
+        check if a user can create a redflag with no location.
+        """
+        redflag = {
+            "createdBy": "Bekalaze",
+            "type": "redflag",
+            "title": "corruption",
+            "location": "",
+            "comment": "corrupt traffic officers in mukono",
+            "status": "draft"
+        }
+
+        response = self.test_client.post(
+            'api/v1/redflags',
+            content_type='application/json',
+            data=json.dumps(redflag)
+        )
+
+        message = json.loads(response.data.decode())
+
+        self.assertEqual(message['Error'], 'Please fill in location field!')
+
+    def test_create_redflag_no_comment(self):
+        """
+        check if a user can create a redflag with no comment.
+        """
+        redflag = {
+            "createdBy": "Bekalaze",
+            "type": "redflag",
+            "title": "corruption",
+            "location": "mukono",
+            "comment": "",
+            "status": "draft"
+        }
+
+        response = self.test_client.post(
+            'api/v1/redflags',
+            content_type='application/json',
+            data=json.dumps(redflag)
+        )
+
+        message = json.loads(response.data.decode())
+
+        self.assertEqual(message['Error'], 'Please fill in the comments field!')
+    
+    def test_create_redflag_no_status(self):
+        """
+        check if a user can create a redflag with no location.
+        """
+        redflag = {
+            "createdBy": "Bekalaze",
+            "type": "redflag",
+            "title": "corruption",
+            "location": "mukono",
+            "comment": "corrupt traffic officers in mukono",
+            "status": ""
+        }
+
+        response = self.test_client.post(
+            'api/v1/redflags',
+            content_type='application/json',
+            data=json.dumps(redflag)
+        )
+
+        message = json.loads(response.data.decode())
+
+        self.assertEqual(message['Error'], 'Please select draft as status!')
+
+    
+
