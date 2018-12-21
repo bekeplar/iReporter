@@ -64,7 +64,7 @@ def signup():
 @blueprint.route('/redflags', methods=['POST'])
 def create_redflag():
     """
-    Function that adds a redflag incident to incidents.
+    Function that adds a redflag incident to list of redflags.
    
     """
     data = request.get_json()
@@ -96,5 +96,23 @@ def create_redflag():
             }), 201
     else:
         return jsonify({'message': exists}), 401
+
+
+@blueprint.route('/redflags', methods=['GET'])
+def get_all_redflags():
+    """
+    function to enable a user get all reported redflags
+    :returns:
+    The entire redflags reported by a user.
+    """
+    if len(redflags) == 0:
+        return jsonify({
+            'message': 'You haven/t reported any redflag!'
+        }), 400
+    return jsonify({
+        'status': 200,
+        'data': [redflag for redflag in redflags],
+        'message': 'These are your reports!'
+    }), 200
 
 
