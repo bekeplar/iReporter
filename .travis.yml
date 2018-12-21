@@ -1,18 +1,14 @@
 language: python
 
-python:
+python: 
   - "3.6"
 
-cache: pip
-install: 
+
+install:
   - pip install -r requirements.txt
 
-script: 
-  - pytest --cov
-  - coverage
-  - coverage3 report
-  - coveralls
-  
+script:
+  - python -m pytest --cov
   
 after_success:
   - coveralls
