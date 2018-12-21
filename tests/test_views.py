@@ -430,29 +430,16 @@ class TestRedflag(unittest.TestCase):
         message = json.loads(response.data.decode())
 
         self.assertEqual(message['Error'], 'Please fill in the comments field!')
-    
-    def test_create_redflag_no_status(self):
-        """
-        check if a user can create a redflag with no location.
-        """
-        redflag = {
-            "createdBy": "Bekalaze",
-            "type": "redflag",
-            "title": "corruption",
-            "location": "mukono",
-            "comment": "corrupt traffic officers in mukono",
-            "status": ""
-        }
-
-        response = self.test_client.post(
-            'api/v1/redflags',
-            content_type='application/json',
-            data=json.dumps(redflag)
+ 
+    def test_get_all_redflags(self):
+        """Test that a user can get all his created redflags"""
+        response = self.test_client.get(
+            '/api/v1/redflags'
         )
 
-        message = json.loads(response.data.decode())
+        reply = json.loads(response.data.decode())
 
-        self.assertEqual(message['Error'], 'Please select draft as status!')
+        self.assertEqual(reply['message'], 'These are your reports!')
+        self.assertEqual(response.status_code, 200)
 
     
-
