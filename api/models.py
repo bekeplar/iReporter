@@ -80,7 +80,8 @@ class Incident:
     def check_incident_exist(self, title):
         for incident in self.incidents:
             if incident.title != None:
-                return 'Incident already reported!' 
+                return 'Incident already reported!'
+
 
     def allow_delete(self, id):
         for incident in self.incidents:
