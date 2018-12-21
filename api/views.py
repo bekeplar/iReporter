@@ -64,7 +64,7 @@ def signup():
 @blueprint.route('/redflags', methods=['POST'])
 def create_redflag():
     """
-    Function that adds a redflag incident to incidents.
+    Function that adds a redflag incident to list of redflags.
    
     """
     data = request.get_json()
