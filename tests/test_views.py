@@ -340,7 +340,7 @@ class TestRedflag(unittest.TestCase):
 
         self.assertEqual(message['Error'], 'Please fill in reporter field!')
 
-    def test_create_user_empty_type(self):
+    def test_create_redflag_empty_type(self):
         """
         Test if a user can be created with no type of incident.
         """
@@ -362,7 +362,7 @@ class TestRedflag(unittest.TestCase):
 
         self.assertEqual(message['Error'], 'Please select incident type!')
 
-    def test_create_user_empty_title(self):
+    def test_create_redflag_empty_title(self):
         """
         check if a user can create a redflag with no title.
         """
@@ -385,7 +385,7 @@ class TestRedflag(unittest.TestCase):
 
         self.assertEqual(message['Error'], 'Please fill in title field!')
 
-    def test_create_user_no_location(self):
+    def test_create_redflag_no_location(self):
         """
         check if a user can create a redflag with no location.
         """
@@ -408,7 +408,7 @@ class TestRedflag(unittest.TestCase):
 
         self.assertEqual(message['Error'], 'Please fill in location field!')
 
-    def test_create_user_no_comment(self):
+    def test_create_redflag_no_comment(self):
         """
         check if a user can create a redflag with no comment.
         """
@@ -431,7 +431,7 @@ class TestRedflag(unittest.TestCase):
 
         self.assertEqual(message['Error'], 'Please fill in the comments field!')
     
-    def test_create_user_no_status(self):
+    def test_create_redflag_no_status(self):
         """
         check if a user can create a redflag with no location.
         """
@@ -455,3 +455,4 @@ class TestRedflag(unittest.TestCase):
         self.assertEqual(message['Error'], 'Please select draft as status!')
 
     
+
