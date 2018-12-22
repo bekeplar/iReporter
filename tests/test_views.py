@@ -315,7 +315,7 @@ class TestRedflag(unittest.TestCase):
 
         message = json.loads(response.data.decode())
 
-        self.assertEqual(message['message'], 'creted redflag reccord!')
+        self.assertEqual(message['message'], 'created redflag reccord!')
 
     def test_create_redflag_empty_createdBy(self):
         """

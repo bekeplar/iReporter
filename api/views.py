@@ -85,12 +85,12 @@ def create_redflag():
     exists = redflag.check_incident_exist(title)
 
     if error != None:
-        return jsonify({'Error': error}), 40
+        return jsonify({'Error': error}), 400
     if not exists:
         redflags.append(redflag.__dict__)
         return jsonify({
             'status': 201, 
-            'message': 'creted redflag reccord!',
+            'message': 'created redflag reccord!',
             'id': id,
             'data': redflag.__dict__
             }), 201
@@ -107,6 +107,7 @@ def get_all_redflags():
     """
     if len(redflags) == 0:
         return jsonify({
+            'satus': 400,
             'message': 'You haven/t reported any redflag!'
         }), 400
     return jsonify({
@@ -117,7 +118,7 @@ def get_all_redflags():
 
 
 @blueprint.route('/redflags/<int:id>', methods=['GET'])
-def get_specific_parcel(id):
+def get_specific_redflag(id):
     """
     This function enables a registered
     user fetch a specific redflag record.
