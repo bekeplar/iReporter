@@ -82,13 +82,6 @@ class Incident:
             if incident.title != None:
                 return 'Incident already reported!'
 
-
-    def allow_delete(self, id):
-        for incident in self.incidents:
-            if incident['status'] == 'draft' and incident['type'] == 'redflag':
-                self.incidents.remove(incident)
-                return incident
-
     def validate_input(self):
             if not self.title or self.title.isspace():
                 return 'Please fill in title field!'

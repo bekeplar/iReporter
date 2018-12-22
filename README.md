@@ -38,7 +38,7 @@ POST|api/vi/login|Login a user
 ## Getting started
 * Clone the project to your local machine
 ```
-git clone https://github.com/bekeplar/SendIT.git
+git clone https://github.com/bekeplar/iReporter.git
 ```
 * Change to the cloned directory
 ```
