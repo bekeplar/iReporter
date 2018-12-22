@@ -116,3 +116,35 @@ def get_all_redflags():
     }), 200
 
 
+@blueprint.route('/redflags/<int:id>', methods=['GET'])
+def get_specific_parcel(id):
+    """
+    This function enables a registered
+    user fetch a specific redflag record.
+    :params:
+    :returns:
+    For any given right id
+    """
+    try:
+        redflagId = int(id)
+    except TypeError:
+        return jsonify({
+            'status': 400,
+            'message': 'redflag id must be a number!'
+        }), 400
+    for redflag in redflags:
+        if int(redflag['id']) == redflagId:
+            return jsonify({
+                'status': 200,
+                'data': redflag,
+                'message': 'Redflag record found!'
+                }), 200
+    return jsonify({
+        'status': 200,
+        'message': 'No such redflag record found!'
+        }), 200
+
+
+
+
+
