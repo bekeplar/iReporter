@@ -2,6 +2,8 @@
 
  iReporter enables any/every citizen to bring any form of corruption to the notice of appropriate authorities and thegeneral public. Users can also report on things that needs government intervention
 
+[![Build Status](https://travis-ci.org/bekeplar/iReporter.svg?branch=develop)](https://travis-ci.org/bekeplar/iReporter)
+[![Coverage Status](https://coveralls.io/repos/github/bekeplar/iReporter/badge.svg?branch=develop)](https://coveralls.io/github/bekeplar/iReporter?branch=develop)
 ## Required features
 
 - Users can create an account and log in. 
