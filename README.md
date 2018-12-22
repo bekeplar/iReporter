@@ -45,7 +45,7 @@ git clone https://github.com/bekeplar/iReporter.git
 cd SendIT
 pip install virtualenv
 source venv/bin/activate
-git checkout ft-api
+git checkout develop
 pip install -r requirements.txt
 python run.py
 ```
