@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.org/bekeplar/iReporter.svg?branch=develop)](https://travis-ci.org/bekeplar/iReporter)
 [![Coverage Status](https://coveralls.io/repos/github/bekeplar/iReporter/badge.svg?branch=develop)](https://coveralls.io/github/bekeplar/iReporter?branch=develop)
 [![Maintainability](https://api.codeclimate.com/v1/badges/af89820c26cf454cb407/maintainability)](https://codeclimate.com/github/bekeplar/iReporter/maintainability)
-[![Maintainability](https://api.codeclimate.com/v1/badges/af89820c26cf454cb407/maintainability)](https://codeclimate.com/github/bekeplar/iReporter/maintainability)
+
 ## Required features
 
 - Users can create an account and log in. 
