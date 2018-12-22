@@ -145,6 +145,30 @@ def get_specific_parcel(id):
         }), 200
 
 
+@blueprint.route('/redflags/<int:id>', methods=['DELETE'])
+def delete_specific_redflag(id):
+    """
+    Function for deleting a specific redflag from the report.
+    """
+    try:
+        redflagId = int(id)
+    except TypeError:
+        return jsonify({
+            'status': 400,
+            'message': 'redflag id must be a number!'
+        }), 400
+    for redflag in redflags:
+        if int(redflag['id']) == redflagId:
+            redflags.remove(redflag)
+            return jsonify({'status': 200,
+            'data': redflag,
+            'status': 200,
+            'id': id,
+            'message': 'Redflag record  deleted!'
+            }), 200
+    return jsonify({'status': 200,
+                   'message': 'No such redflag record found!'
+                   }), 200
 
 
 

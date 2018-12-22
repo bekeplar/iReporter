@@ -485,8 +485,52 @@ class TestRedflag(unittest.TestCase):
             '/api/v1/redflags/2'
         )
         reply = json.loads(response.data.decode())
-        self.assertEqual(reply['message'],'No such redflag record found!')
+        self.assertEqual(reply['message'], 'No such redflag record found!')
         self.assertEqual(response.status_code, 200)
 
-    
+    def test_delete_specific_redflag(self):
+        """Test that a user can delete a specific created redflags"""
+        redflag = {
+            "createdBy": "Bekalaze",
+            "type": "redflag",
+            "title": "corruption",
+            "location": "mukono",
+            "comment": "corrupt traffic officers in mukono",
+            "status": "draft"
+        }
+
+        response = self.test_client.post(
+            'api/v1/redflags',
+            content_type='application/json',
+            data=json.dumps(redflag)
+        )
+        response = self.test_client.delete(
+            '/api/v1/redflags/1'
+        )
+        reply = json.loads(response.data.decode())
+        self.assertEqual(reply['message'], 'Redflag record  deleted!')
+        self.assertEqual(response.status_code, 200)
+
+    def test_delete_specific_redflag_not_existing(self):
+        """Test that a user cannot delete a non existing redflag record"""
+        redflag = {
+            "createdBy": "Bekalaze",
+            "type": "redflag",
+            "title": "corruption",
+            "location": "mukono",
+            "comment": "corrupt traffic officers in mukono",
+            "status": "draft"
+        }
+
+        response = self.test_client.post(
+            'api/v1/redflags',
+            content_type='application/json',
+            data=json.dumps(redflag)
+        )
+        response = self.test_client.delete(
+            '/api/v1/redflags/2'
+        )
+        reply = json.loads(response.data.decode())
+        self.assertEqual(reply['message'], 'No such redflag record found!')
+        self.assertEqual(response.status_code, 200)
     
