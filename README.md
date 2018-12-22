@@ -52,11 +52,8 @@ python run.py
 * For those on windows
 ```
 cd iReporter
-pip install virtualenv
+python -m venv venv
 venv\Scripts\activate
-git checkout ft-api
-pip install -r requirements.txt
-python run.py
 ```
 * Run tests by
 ```
