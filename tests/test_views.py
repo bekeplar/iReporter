@@ -36,6 +36,17 @@ class TestUser(unittest.TestCase):
 
         self.assertEqual(message['message'], "bekeplar successfully registered.")
 
+    def test_home(self):
+        response = self.test_client.get(
+            '/api/v1/'
+        )
+
+        reply = json.loads(response.data.decode())
+
+        self.assertEqual(reply['message'], "Welcome to bekeplar's iReporter app.")
+        self.assertEqual(response.status_code, 200)
+
+
     def test_create_user_empty_username(self):
         """
         Test if a user can be created with empty username.
