@@ -100,5 +100,6 @@ class Incident:
 
     def validate_del(self, id):
         if not id or id().isspace() or not isinstance(id, int):
-                return 'Please enter an integer!'              
+                return 'Please enter an integer!'           
 
+    
