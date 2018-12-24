@@ -11,3 +11,4 @@ omit =
     */__init__.py
     tests/*
     */models.py
+    */validator.py

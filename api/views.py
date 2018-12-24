@@ -3,6 +3,7 @@ import json
 from flask import Flask, jsonify, request
 from flask import Blueprint
 from api.models import User, Incident
+from api.validator import Validators, Validation
 from flask_jwt_extended import (create_access_token,
                                 JWTManager, jwt_required, 
                                 get_jwt_identity)
@@ -44,7 +45,7 @@ def signup():
                 email, phoneNumber, username, 
                 registered, isAdmin, password
                 )
-    error = user.validate_input(user)
+    error = Validation.validate_input(user)
     exists = user.check_user_exist(email, username)
     if error != None:
         return jsonify({'Error': error}), 400
@@ -81,7 +82,7 @@ def create_redflag():
                        title, location, comment,
                        status, createdOn
                        )
-    error = Incident.validate_input(redflag)                   
+    error = Validators.validate_inputs(redflag)                  
     exists = redflag.check_incident_exist(title)
 
     if error != None:
@@ -161,15 +162,15 @@ def delete_specific_redflag(id):
     for redflag in redflags:
         if int(redflag['id']) == redflagId:
             redflags.remove(redflag)
-            return jsonify({'status': 200,
-            'data': redflag,
-            'status': 200,
-            'id': id,
-            'message': 'Redflag record  deleted!'
+            return jsonify({
+                'data': redflag,
+                'status': 200,
+                'id': id,
+                'message': 'Redflag record  deleted!'
             }), 200
-    return jsonify({'status': 200,
+    return jsonify({'status': 404,
                    'message': 'No such redflag record found!'
-                   }), 200
+                   }), 404
 
 
 @blueprint.route('/redflags/<int:id>/location', methods=['PATCH'])
