@@ -581,4 +581,35 @@ class TestRedflag(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
 
 
+    def test_update_comment_specific_redflag(self):
+        """Test that a user can update comment of a specific created redflag"""
+        new_location = { 
+            "comment": "corruption is killing our systems"
+        }
+
+        response = self.test_client.patch(
+            'api/v1/redflags/1/comment',
+            content_type='application/json',
+            data=json.dumps(new_location)
+        )
+        reply = json.loads(response.data.decode())
+        self.assertEqual(reply['message'],'Redflag comment successfully updated!')
+        self.assertEqual(response.status_code, 200)
+
+        def test_edit_comment_non_existing(self):
+            """Test that a user cannot update comment for non existing redflag"""
+        new_location = {
+            "comment": "corruption is killing our systems"  
+        }
+
+        response = self.test_client.patch(
+            'api/v1/redflags/10000/comment',
+            content_type='application/json',
+            data=json.dumps(new_location)
+        )
+        reply = json.loads(response.data.decode())
+        self.assertEqual(reply['message'], 'No such redflag record found!')
+        self.assertEqual(response.status_code, 404)
+
+
         
