@@ -173,23 +173,46 @@ def delete_specific_redflag(id):
 
 
 @blueprint.route('/redflags/<int:id>/location', methods=['PATCH'])
-def edit_location_of_incident(id):
+def edit_location_of_redflag(id):
     data = json.loads(request.data)
     
     location = data['location']
+    redflagId = int(id)
+    for redflag in redflags:
+        if int(redflag['id']) == redflagId:
+            if redflag['status'] != 'draft':
+                return jsonify({
+                    'status': 400,
+                    'message': 'Only draft status can be updated!'}), 400
+            redflag['location'] = location
+            return jsonify({
+                'status': 200, 
+                'data': redflag,
+                'message': 'Redflag location successfully updated!'
+                            }), 200
+    return jsonify({'status': 404,
+                    'message': 'No such redflag record found!'
+                    }), 404
+
+
+@blueprint.route('/redflags/<int:id>/comment', methods=['PATCH'])
+def edit_comment_of_redflag(id):
+    data = json.loads(request.data)
+    
+    comment = data['comment']
     redflagId = int(id)
     
     for redflag in redflags:
         if int(redflag['id']) == redflagId:
             if redflag['status'] != 'draft':
-                return jsonify({'status': 400,
-                                'message': 'Only draft status can be updated!'}), 400
-            redflag['location'] = location
-            type = redflag['type']
+                return jsonify({
+                    'status': 400,
+                    'message': 'Only draft status can be updated!'}), 400
+            redflag['comment'] = comment
             return jsonify({'status': 200, 
                             'data': redflag,
-                            'message': 'Redflag location successfully updated!'
+                            'message': 'Redflag comment successfully updated!'
                             }), 200
     return jsonify({'status': 404,
-                    'message':'No such redflag record found!'
+                    'message': 'No such redflag record found!'
                     }), 404
