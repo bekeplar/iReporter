@@ -395,6 +395,7 @@ class TestRedflag(unittest.TestCase):
         message = json.loads(response.data.decode())
 
         self.assertEqual(message['Error'], 'Please fill in title field!')
+        
 
     def test_create_redflag_no_location(self):
         """
@@ -453,6 +454,7 @@ class TestRedflag(unittest.TestCase):
         self.assertEqual(reply['message'], 'These are your reports!')
         self.assertEqual(response.status_code, 200)
 
+
     def test_get_specific_redflag(self):
         """Test that a user can get a specific created redflags"""
         redflag = {
@@ -463,7 +465,6 @@ class TestRedflag(unittest.TestCase):
             "comment": "corrupt traffic officers in mukono",
             "status": "draft"
         }
-
         response = self.test_client.post(
             'api/v1/redflags',
             content_type='application/json',
