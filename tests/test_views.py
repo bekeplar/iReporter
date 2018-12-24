@@ -396,7 +396,6 @@ class TestRedflag(unittest.TestCase):
 
         self.assertEqual(message['Error'], 'Please fill in title field!')
         
-
     def test_create_redflag_no_location(self):
         """
         check if a user can create a redflag with no location.
@@ -453,7 +452,6 @@ class TestRedflag(unittest.TestCase):
 
         self.assertEqual(reply['message'], 'These are your reports!')
         self.assertEqual(response.status_code, 200)
-
 
     def test_get_specific_redflag(self):
         """Test that a user can get a specific created redflags"""
@@ -544,8 +542,7 @@ class TestRedflag(unittest.TestCase):
         )
         reply = json.loads(response.data.decode())
         self.assertEqual(reply['message'], 'No such redflag record found!')
-        self.assertEqual(response.status_code, 200)
-    
+        self.assertEqual(response.status_code, 200)  
 
     def test_update_location_specific_redflag(self):
         """Test that a user can update location of a specific created redflag"""
@@ -563,9 +560,8 @@ class TestRedflag(unittest.TestCase):
         self.assertEqual(reply['message'],'Redflag location successfully updated!')
         self.assertEqual(response.status_code, 200)
 
-
-        def test_update_location_specific_redflag_non_existing(self):
-            """Test that a user cannot update location for non existing redflag"""
+    def test_edit_location_specific_redflag_non_existing(self):
+        """Test that a user cannot update location for non existing redflag"""
         new_location = {
             
             "location": "kampala"
@@ -580,7 +576,6 @@ class TestRedflag(unittest.TestCase):
         self.assertEqual(reply['message'], 'No such redflag record found!')
         self.assertEqual(response.status_code, 404)
 
-
     def test_update_comment_specific_redflag(self):
         """Test that a user can update comment of a specific created redflag"""
         new_location = { 
@@ -593,11 +588,11 @@ class TestRedflag(unittest.TestCase):
             data=json.dumps(new_location)
         )
         reply = json.loads(response.data.decode())
-        self.assertEqual(reply['message'],'Redflag comment successfully updated!')
+        self.assertEqual(reply['message'], 'Redflag comment successfully updated!')
         self.assertEqual(response.status_code, 200)
 
-        def test_edit_comment_non_existing(self):
-            """Test that a user cannot update comment for non existing redflag"""
+    def test_edit_comment_not_in_list(self):
+        """Test that a user cannot update comment for non existing redflag"""
         new_location = {
             "comment": "corruption is killing our systems"  
         }
