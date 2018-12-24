@@ -395,6 +395,7 @@ class TestRedflag(unittest.TestCase):
         message = json.loads(response.data.decode())
 
         self.assertEqual(message['Error'], 'Please fill in title field!')
+        
 
     def test_create_redflag_no_location(self):
         """
@@ -453,6 +454,7 @@ class TestRedflag(unittest.TestCase):
         self.assertEqual(reply['message'], 'These are your reports!')
         self.assertEqual(response.status_code, 200)
 
+
     def test_get_specific_redflag(self):
         """Test that a user can get a specific created redflags"""
         redflag = {
@@ -463,7 +465,6 @@ class TestRedflag(unittest.TestCase):
             "comment": "corrupt traffic officers in mukono",
             "status": "draft"
         }
-
         response = self.test_client.post(
             'api/v1/redflags',
             content_type='application/json',
@@ -545,3 +546,39 @@ class TestRedflag(unittest.TestCase):
         self.assertEqual(reply['message'], 'No such redflag record found!')
         self.assertEqual(response.status_code, 200)
     
+
+    def test_update_location_specific_redflag(self):
+        """Test that a user can update location of a specific created redflag"""
+        new_location = {
+            
+            "location": "kampala"
+        }
+
+        response = self.test_client.patch(
+            'api/v1/redflags/1/location',
+            content_type='application/json',
+            data=json.dumps(new_location)
+        )
+        reply = json.loads(response.data.decode())
+        self.assertEqual(reply['message'],'Redflag location successfully updated!')
+        self.assertEqual(response.status_code, 200)
+
+
+        def test_update_location_specific_redflag_non_existing(self):
+            """Test that a user cannot update location for non existing redflag"""
+        new_location = {
+            
+            "location": "kampala"
+        }
+
+        response = self.test_client.patch(
+            'api/v1/redflags/10000/location',
+            content_type='application/json',
+            data=json.dumps(new_location)
+        )
+        reply = json.loads(response.data.decode())
+        self.assertEqual(reply['message'], 'No such redflag record found!')
+        self.assertEqual(response.status_code, 404)
+
+
+        
