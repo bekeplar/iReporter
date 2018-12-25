@@ -1,5 +1,6 @@
 import unittest
 from api.models import User, Incident
+from api.validator import Validators, Validation
 from api import app
 import json
 
@@ -542,7 +543,7 @@ class TestRedflag(unittest.TestCase):
         )
         reply = json.loads(response.data.decode())
         self.assertEqual(reply['message'], 'No such redflag record found!')
-        self.assertEqual(response.status_code, 200)  
+        self.assertEqual(response.status_code, 404)  
 
     def test_update_location_specific_redflag(self):
         """Test that a user can update location of a specific created redflag"""
