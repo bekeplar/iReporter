@@ -470,7 +470,7 @@ class TestRedflag(unittest.TestCase):
             data=json.dumps(redflag)
         )
         response = self.test_client.get(
-            '/api/v1/redflags/1'
+            '/api/v1/redflags/2'
         )
         reply = json.loads(response.data.decode())
         self.assertEqual(reply['message'], 'Redflag record found!')
@@ -493,7 +493,7 @@ class TestRedflag(unittest.TestCase):
             data=json.dumps(redflag)
         )
         response = self.test_client.get(
-            '/api/v1/redflags/2'
+            '/api/v1/redflags/1'
         )
         reply = json.loads(response.data.decode())
         self.assertEqual(reply['message'], 'No such redflag record found!')
@@ -539,7 +539,7 @@ class TestRedflag(unittest.TestCase):
             data=json.dumps(redflag)
         )
         response = self.test_client.delete(
-            '/api/v1/redflags/2'
+            '/api/v1/redflags/200'
         )
         reply = json.loads(response.data.decode())
         self.assertEqual(reply['message'], 'No such redflag record found!')
@@ -553,7 +553,7 @@ class TestRedflag(unittest.TestCase):
         }
 
         response = self.test_client.patch(
-            'api/v1/redflags/1/location',
+            'api/v1/redflags/2/location',
             content_type='application/json',
             data=json.dumps(new_location)
         )
@@ -584,7 +584,7 @@ class TestRedflag(unittest.TestCase):
         }
 
         response = self.test_client.patch(
-            'api/v1/redflags/1/comment',
+            'api/v1/redflags/2/comment',
             content_type='application/json',
             data=json.dumps(new_location)
         )
