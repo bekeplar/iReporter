@@ -45,9 +45,13 @@ def signup():
                 registered, isAdmin, password
                 )
     error = Validation.validate_input(user)
+    errors = Validation.validate_inputs(user)
     exists = user.check_user_exist(email, username)
     if error != None:
         return jsonify({'Error': error}), 400
+    if errors != None:
+        return jsonify({'Error': errors}), 400
+    
     if not exists:
         password_hash = generate_password_hash(password, method='sha256')
         user.create_user(username, password_hash)
@@ -74,7 +78,7 @@ def create_redflag():
     title = data.get('title')
     location = data.get('location')
     comment = data.get('comment')
-    status = data.get('status')
+    status = 'draft'
     createdOn = datetime.datetime.utcnow()
 
     redflag = Incident(id, createdBy, type,

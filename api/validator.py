@@ -14,31 +14,35 @@ class Validators(Incident):
             return'Please fill in reporter field!'
         elif not self.comment or self.comment.isspace():
             return'Please fill in the comments field!'
-        elif not self.status or self.status.isspace():
-            return 'Please select draft as status!'
         else:
             return None
  
 
 class Validation(User):
     def validate_input(self):
+        error = None
         if not self.firstname or self.firstname.isspace():
-            return 'Please fill in firstname field!'
+            error = 'Please fill in firstname field!'
         elif not self.lastname or self.lastname.isspace():
-            return'Please fill in lastname field!'
+            error = 'Please fill in lastname field!'
         elif not self.othernames or self.othernames.isspace():
-            return'Please fill in othernames field!'
+            error = 'Please fill in othernames field!'
         if not self.username or self.username.isspace():
-            return 'Please fill in username field!' 
+            error = 'Please fill in username field!' 
         if not self.isAdmin or self.isAdmin.isspace():
-            return 'Please select user role!'    
-        elif not self.email or self.email.isspace():
-            return'Please fill in email field!'
+            error = 'Please select user role!'    
+        return error
+
+    def validate_inputs(self):
+        errors = None
+        if not self.email or self.email.isspace():
+            errors = 'Please fill in email field!'
         elif not self.phoneNumber or self.phoneNumber.isspace():
-            return'Please fill in phoneNumber field!'
+            errors = 'Please fill in phoneNumber field!'
         elif not re.match(r"[^@.]+@[A-Za-z]+\.[a-z]+", self.email):
-            return 'Please fill in right email format!.'
+            errors = 'Please fill in right email format!.'
         elif not self.password or self.password.isspace():
-            return 'Plese fill in password field!'
+            errors = 'Plese fill in password field!'
         elif len(self.password) < 8:
-            return 'Password must be of 8 characters long!'
+            errors = 'Password must be of 8 characters long!'
+        return errors
