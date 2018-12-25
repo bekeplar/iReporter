@@ -13,7 +13,6 @@ app = Flask(__name__)
 
 blueprint = Blueprint('application', __name__)
 incidents = []
-redflags = []
 users = []
 
 
