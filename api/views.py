@@ -13,7 +13,6 @@ app = Flask(__name__)
 
 blueprint = Blueprint('application', __name__)
 incidents = []
-redflags = []
 users = []
 
 
@@ -88,7 +87,7 @@ def create_redflag():
     if error != None:
         return jsonify({'Error': error}), 400
     if not exists:
-        redflags.append(redflag.__dict__)
+        incidents.append(redflag.__dict__)
         return jsonify({
             'status': 201, 
             'message': 'created redflag reccord!',
@@ -106,14 +105,14 @@ def get_all_redflags():
     :returns:
     The entire redflags reported by a user.
     """
-    if len(redflags) == 0:
+    if len(incidents) == 0:
         return jsonify({
             'satus': 400,
             'message': 'You haven/t reported any redflag!'
         }), 400
     return jsonify({
         'status': 200,
-        'data': [redflag for redflag in redflags],
+        'data': [redflag for redflag in incidents],
         'message': 'These are your reports!'
     }), 200
 
@@ -134,7 +133,7 @@ def get_specific_redflag(id):
             'status': 400,
             'message': 'redflag id must be a number!'
         }), 400
-    for redflag in redflags:
+    for redflag in incidents:
         if int(redflag['id']) == redflagId:
             return jsonify({
                 'status': 200,
@@ -159,9 +158,9 @@ def delete_specific_redflag(id):
             'status': 400,
             'message': 'redflag id must be a number!'
         }), 400
-    for redflag in redflags:
+    for redflag in incidents:
         if int(redflag['id']) == redflagId:
-            redflags.remove(redflag)
+            incidents.remove(redflag)
             return jsonify({
                 'data': redflag,
                 'status': 200,
@@ -179,7 +178,7 @@ def edit_location_of_redflag(id):
     
     location = data['location']
     redflagId = int(id)
-    for redflag in redflags:
+    for redflag in incidents:
         if int(redflag['id']) == redflagId:
             if redflag['status'] != 'draft':
                 return jsonify({
@@ -203,7 +202,7 @@ def edit_comment_of_redflag(id):
     comment = data['comment']
     redflagId = int(id)
     
-    for redflag in redflags:
+    for redflag in incidents:
         if int(redflag['id']) == redflagId:
             if redflag['status'] != 'draft':
                 return jsonify({

@@ -18,13 +18,7 @@ class Validators(Incident):
             return 'Please select draft as status!'
         else:
             return None
-
-    @staticmethod
-    def validate_del(self, id):
-        if not id or not isinstance(id, int):
-            return True
-        return False
-    
+ 
 
 class Validation(User):
     def validate_input(self):
@@ -48,14 +42,3 @@ class Validation(User):
             return 'Plese fill in password field!'
         elif len(self.password) < 8:
             return 'Password must be of 8 characters long!'
-
-    @staticmethod
-    def login_validate(email, password):
-        if not email or email.isspace():
-            return 'Plese fill in email field!'
-        elif not re.match(r"[^@.]+@[A-Za-z]+\.[a-z]+", email):
-            return 'Please fill in right email format!.'   
-        elif not password or password.isspace():
-            return 'Plese fill in password field!'
-        else:
-            return None

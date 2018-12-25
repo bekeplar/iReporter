@@ -1,5 +1,4 @@
 
-
 class User:
     users = []
     """ A class stores user object details """
