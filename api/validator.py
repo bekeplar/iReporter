@@ -46,3 +46,13 @@ class Validation(User):
         elif len(self.password) < 8:
             errors = 'Password must be of 8 characters long!'
         return errors
+
+    @staticmethod
+    def login_validate(username, password):
+        if not username or username.isspace():
+            return 'Please fill in username field!'
+        elif not password or password.isspace():
+            return 'Please fill in password field!'
+        elif len(password) < 8:
+            return 'Password must be of 8 characters long!'
+        return None
