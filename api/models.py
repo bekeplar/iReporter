@@ -1,3 +1,6 @@
+import datetime
+import re
+
 
 class User:
     users = []
@@ -44,7 +47,5 @@ class Incident:
         for incident in self.incidents:
             if incident.title != None:
                 return 'Incident already reported!'
-
-               
 
     

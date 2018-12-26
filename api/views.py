@@ -65,6 +65,27 @@ def signup():
         return jsonify({'message': exists}), 401
 
 
+@blueprint.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
+    error = Validation.login_validate(email, password)
+    if error != None:
+        return jsonify({'Error': error}), 400
+
+    for login in users:
+        if login['email'] == email and \
+          check_password_hash(login['password'], password):
+            token = create_access_token(identity=login['email'])
+            return jsonify({
+                'status': 200,
+                'access_token': token,
+                'message': f'{email} successfully logged in!'
+                }), 200
+        return jsonify({'message': 'Wrong login credentials.'}), 403
+
+
 @blueprint.route('/redflags', methods=['POST'])
 def create_redflag():
     """

@@ -46,3 +46,15 @@ class Validation(User):
         elif len(self.password) < 8:
             errors = 'Password must be of 8 characters long!'
         return errors
+
+    @staticmethod
+    def login_validate(email, password):
+        if not email or email.isspace():
+            return 'Plese fill in email field!'
+        elif not re.match(r"[^@.]+@[A-Za-z]+\.[a-z]+", email):
+            return 'Please fill in right email format!.' 
+        elif not password or password.isspace():
+            return 'Plese fill in password field!'
+        elif len(password) < 8:
+            return 'Password must be of 8 characters long!'
+        return None
