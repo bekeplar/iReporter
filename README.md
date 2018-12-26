@@ -25,7 +25,9 @@ HTTP Method|Endpoint|Functionality
 POST|api/v1/redflags|Create a redflag resource
 GET|api/v1/redflags|Fetch all redflags reported
 GET|api/v1/redflags/<red-flag-id>|Fetch a specific redflag record
-DELETE|api/v1/redflags/<int:id>|Delete a soecific redflag
+DELETE|api/v1/redflags/<int:id>|Delete a specific redflag
+PATCH|api/v1/redflags/<int:id>/location|Edit location of a specific redflag
+PATCH|api/v1/redflags/<int:id>/comment|Edit a comment of a specific redflag
 POST|api/v1/users|create a new user
 POST|api/vi/login|Login a user
 
@@ -43,7 +45,7 @@ git clone https://github.com/bekeplar/iReporter.git
 ```
 * Change to the cloned directory
 ```
-cd SendIT
+cd iReporter
 pip install virtualenv
 source venv/bin/activate
 git checkout develop
