@@ -20,6 +20,12 @@ class User:
         for user in self.users:
             if user.username == None:
                 self.users.append(user)
+                
+    def login_user(self, email):
+        for user in self.users:
+            if user.email == user['email']:
+                return user['username']
+        return {"message": "user doesn't exist"}
 
     def check_user_exist(self, email, username):
         for user in self.users:

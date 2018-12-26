@@ -9,7 +9,6 @@ from flask_jwt_extended import (create_access_token,
                                 get_jwt_identity)
 from werkzeug.security import generate_password_hash, check_password_hash
 
-app = Flask(__name__)
 
 blueprint = Blueprint('application', __name__)
 incidents = []
@@ -68,23 +67,28 @@ def signup():
 @blueprint.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    email = data.get('email')
+
+    username = data.get('username')
     password = data.get('password')
-    error = Validation.login_validate(email, password)
+
+    error = Validation.login_validate(username, password)
+
     if error != None:
         return jsonify({'Error': error}), 400
 
-    for login in users:
-        if login['email'] == email and \
-          check_password_hash(login['password'], password):
-            token = create_access_token(identity=login['email'])
-            return jsonify({
-                'status': 200,
-                'access_token': token,
-                'message': f'{email} successfully logged in!'
-                }), 200
-        return jsonify({'message': 'Wrong login credentials.'}), 403
+    for user in users:
 
+        if user == None:
+            return jsonify({'message': 'Wrong login credentials!'}), 403
+        check_password_hash(user['password'], password) and user['username'] == username
+        token = create_access_token(username)
+        return jsonify({
+            'access_token': token,
+            'status': 200,
+            'message': f'{username} successfully logged in.'
+        }), 200
+    else:
+        return jsonify({'message': 'Wrong login credentials!'}), 403
 
 @blueprint.route('/redflags', methods=['POST'])
 def create_redflag():

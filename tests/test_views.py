@@ -298,6 +298,153 @@ class TestUser(unittest.TestCase):
 
         self.assertEqual(message['Error'], 'Password must be of 8 characters long!')
 
+    def test_user_login(self):
+        """
+        Test login a user successfully.
+        """
+        user1 = {
+            "firstname": "bekelaze",
+            "lastname":" Joseph",
+            "othernames": "beka",
+            "email": "bekeplar@gmail.com",
+            "phoneNumber": "0789057968",
+            "username": "bekeplar",
+            "isAdmin": "False",
+            "password": "bekeplar1234"
+        }
+
+        self.test_client.post(
+            'api/v1/signup',
+            content_type='application/json',
+            data=json.dumps(user1)
+        )
+
+        user = {
+            'username': 'bekeplar',
+            'password': 'bekeplar1234'
+        }
+
+        response = self.test_client.post(
+            'api/v1/login',
+            content_type='application/json',
+            data=json.dumps(user)
+        )
+
+        message = json.loads(response.data.decode())
+
+        self.assertEqual(message['message'], 'bekeplar successfully logged in.')    
+    
+    def test_user_login_empty_username(self):
+        """
+        Test user login with empty username
+        """
+        user1 = {
+            "firstname": "bekelaze",
+            "lastname":" Joseph",
+            "othernames": "beka",
+            "email": "bekeplar@gmail.com",
+            "phoneNumber": "0789057968",
+            "username": "bekeplar",
+            "isAdmin": "False",
+            "password": "bekeplar1234"
+        }
+
+        self.test_client.post(
+            'api/v1/signup',
+            content_type='application/json',
+            data=json.dumps(user1)
+        )
+
+        user = {
+            'username': '',
+            'password': 'bekeplar1234'
+        }
+
+        response = self.test_client.post(
+            'api/v1/login',
+            content_type='application/json',
+            data=json.dumps(user)
+        )
+
+        message = json.loads(response.data.decode())
+        self.assertEqual(message['Error'], 'Please fill in username field!')
+
+    def test_user_login_empty_password(self):
+        """
+        Test user login with empty password
+        """
+        user1 = {
+            "firstname": "bekelaze",
+            "lastname":" Joseph",
+            "othernames": "beka",
+            "email": "bekeplar@gmail.com",
+            "phoneNumber": "0789057968",
+            "username": "bekeplar",
+            "isAdmin": "False",
+            "password": "bekeplar1234"
+        }
+
+        self.test_client.post(
+            'api/v1/signup',
+            content_type='application/json',
+            data=json.dumps(user1)
+        )
+
+        user = {
+            'username': 'bekeplar',
+            'password': ''
+        }
+
+        response = self.test_client.post(
+            'api/v1/login',
+            content_type='application/json',
+            data=json.dumps(user)
+        )
+
+        message = json.loads(response.data.decode())
+        self.assertEqual(message['Error'], 'Please fill in password field!')    
+
+    def test_user_login_empty_fields(self):
+        """
+        Test user login with empty fields
+        """
+        user1 = {
+            "firstname": "bekelaze",
+            "lastname":" Joseph",
+            "othernames": "beka",
+            "email": "bekeplar@gmail.com",
+            "phoneNumber": "0789057968",
+            "username": "bekeplar",
+            "isAdmin": "False",
+            "password": "bekeplar1234"
+        }
+
+        self.test_client.post(
+            'api/v1/signup',
+            content_type='application/json',
+            data=json.dumps(user1)
+        )
+
+        user = {
+            'username': '',
+            'password': ''
+        }
+
+        response = self.test_client.post(
+            'api/v1/login',
+            content_type='application/json',
+            data=json.dumps(user)
+        )
+
+        message = json.loads(response.data.decode())
+        self.assertEqual(message['Error'], 'Please fill in username field!')
+    
+    def tearDown(self):
+        """
+        Setting up a test client
+        """
+        self.test_client = app.test_client()
+
 
 class TestRedflag(unittest.TestCase):
     def setUp(self):
