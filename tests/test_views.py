@@ -304,7 +304,7 @@ class TestUser(unittest.TestCase):
         """
         user1 = {
             "firstname": "bekelaze",
-            "lastname":" Joseph",
+            "lastname": "Joseph",
             "othernames": "beka",
             "email": "bekeplar@gmail.com",
             "phoneNumber": "0789057968",
@@ -331,7 +331,6 @@ class TestUser(unittest.TestCase):
         )
 
         message = json.loads(response.data.decode())
-
         self.assertEqual(message['message'], 'bekeplar successfully logged in.')    
     
     def test_user_login_empty_username(self):
@@ -340,7 +339,7 @@ class TestUser(unittest.TestCase):
         """
         user1 = {
             "firstname": "bekelaze",
-            "lastname":" Joseph",
+            "lastname": "Joseph",
             "othernames": "beka",
             "email": "bekeplar@gmail.com",
             "phoneNumber": "0789057968",
@@ -354,7 +353,6 @@ class TestUser(unittest.TestCase):
             content_type='application/json',
             data=json.dumps(user1)
         )
-
         user = {
             'username': '',
             'password': 'bekeplar1234'
@@ -705,7 +703,7 @@ class TestRedflag(unittest.TestCase):
             data=json.dumps(new_location)
         )
         reply = json.loads(response.data.decode())
-        self.assertEqual(reply['message'],'Redflag location successfully updated!')
+        self.assertEqual(reply['message'], 'Redflag location successfully updated!')
         self.assertEqual(response.status_code, 200)
 
     def test_edit_location_specific_redflag_non_existing(self):
@@ -754,5 +752,3 @@ class TestRedflag(unittest.TestCase):
         self.assertEqual(reply['message'], 'No such redflag record found!')
         self.assertEqual(response.status_code, 404)
 
-
-        
