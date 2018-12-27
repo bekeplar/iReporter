@@ -14,12 +14,14 @@ def check_is_admin(current_user):
 
 
 def create_user(username, password):
+    """function to create a new user. """
     for user in users:
         if user.username == None:
             users.append(user)
 
-           
+         
 def login_user(email):
+    """function that allows a known user login """
     for user in users:
         if user.email == user['email']:
             return user['username']
