@@ -459,7 +459,7 @@ class TestRedflag(unittest.TestCase):
             "createdBy": "Bekalaze",
             "type": "redflag",
             "title": "corruption",
-            "location": "mukono",
+            "location": "1.33, 2.045",
             "comment": "corrupt traffic officers in mukono",
             "status": "draft"
         }
@@ -482,7 +482,7 @@ class TestRedflag(unittest.TestCase):
             "createdBy": "",
             "type": "redflag",
             "title": "corruption",
-            "location": "mukono",
+            "location": "1.33, 2.045",
             "comment": "corrupt traffic officers in mukono",
             "status": "draft"
         }
@@ -505,7 +505,7 @@ class TestRedflag(unittest.TestCase):
             "createdBy": "Bekalaze",
             "type": "",
             "title": "corruption",
-            "location": "mukono",
+            "location": "1.33, 2.045",
             "comment": "corrupt traffic officers in mukono",
             "status": "draft"
         }
@@ -527,7 +527,7 @@ class TestRedflag(unittest.TestCase):
             "createdBy": "Bekalaze",
             "type": "redflag",
             "title": "",
-            "location": "mukono",
+            "location": "1.33, 2.045",
             "comment": "corrupt traffic officers in mukono",
             "status": "draft"
         }
@@ -573,7 +573,7 @@ class TestRedflag(unittest.TestCase):
             "createdBy": "Bekalaze",
             "type": "redflag",
             "title": "corruption",
-            "location": "mukono",
+            "location": "1.33, 2.045",
             "comment": "",
             "status": "draft"
         }
@@ -605,7 +605,7 @@ class TestRedflag(unittest.TestCase):
             "createdBy": "Bekalaze",
             "type": "redflag",
             "title": "corruption",
-            "location": "mukono",
+            "location": "1.33, 2.045",
             "comment": "corrupt traffic officers in mukono",
             "status": "draft"
         }
@@ -627,7 +627,7 @@ class TestRedflag(unittest.TestCase):
             "createdBy": "Bekalaze",
             "type": "redflag",
             "title": "corruption",
-            "location": "mukono",
+            "location": "1.33, 2.045",
             "comment": "corrupt traffic officers in mukono",
             "status": "draft"
         }
@@ -650,7 +650,7 @@ class TestRedflag(unittest.TestCase):
             "createdBy": "Bekalaze",
             "type": "redflag",
             "title": "corruption",
-            "location": "mukono",
+            "location": "1.33, 2.045",
             "comment": "corrupt traffic officers in mukono",
             "status": "draft"
         }
@@ -673,7 +673,7 @@ class TestRedflag(unittest.TestCase):
             "createdBy": "Bekalaze",
             "type": "redflag",
             "title": "corruption",
-            "location": "mukono",
+            "location": "1.33, 2.045",
             "comment": "corrupt traffic officers in mukono",
             "status": "draft"
         }
@@ -694,7 +694,7 @@ class TestRedflag(unittest.TestCase):
         """Test that a user can update location of a specific created redflag"""
         new_location = {
             
-            "location": "kampala"
+            "location": "1.784, 4.0987"
         }
 
         response = self.test_client.patch(
@@ -710,7 +710,7 @@ class TestRedflag(unittest.TestCase):
         """Test that a user cannot update location for non existing redflag"""
         new_location = {
             
-            "location": "kampala"
+            "location": "1.784, 4.0987"
         }
 
         response = self.test_client.patch(

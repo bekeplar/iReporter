@@ -74,7 +74,7 @@ redflag = [
         "createdBy":"Bekalaze",
         "type":"redflag",
         "title":"corruption",
-        "location":"mukono",
+        "location":"1.33, 2.045",
         "comment":"corrupt trffic officers in mukono",
         "status":"draft",
         "images":"nn.jpg",
