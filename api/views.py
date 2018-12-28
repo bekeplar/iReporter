@@ -2,8 +2,11 @@ import datetime
 import json
 from flask import Flask, jsonify, request
 from flask import Blueprint
+from api.validator import Validation, Validators
 from api.models import User, Incident
-from api.validator import Validators, Validation
+from api.Helpers import(check_is_admin, get_user,
+                        check_user_exist, create_user,
+                        check_incident_exist) 
 from flask_jwt_extended import (create_access_token,
                                 JWTManager, jwt_required, 
                                 get_jwt_identity)
@@ -45,7 +48,7 @@ def signup():
                 )
     error = Validation.validate_input(user)
     errors = Validation.validate_inputs(user)
-    exists = user.check_user_exist(email, username)
+    exists = check_user_exist(email, username)
     if error != None:
         return jsonify({'Error': error}), 400
     if errors != None:
@@ -53,7 +56,7 @@ def signup():
     
     if not exists:
         password_hash = generate_password_hash(password, method='sha256')
-        user.create_user(username, password_hash)
+        create_user(username, password_hash)
         users.append(user.__dict__)
         return jsonify({
             'status': 201,
@@ -79,7 +82,10 @@ def login():
     for user in users:
 
         if user == None:
-            return jsonify({'message': 'Wrong login credentials!'}), 403
+            return jsonify({
+                'message': 'Wrong login credentials!',
+                'status': 403
+                }), 403
         check_password_hash(user['password'], password) and user['username'] == username
         token = create_access_token(username)
         return jsonify({
@@ -88,7 +94,11 @@ def login():
             'message': f'{username} successfully logged in.'
         }), 200
     else:
-        return jsonify({'message': 'Wrong login credentials!'}), 403
+        return jsonify({
+            'message': 'Wrong login credentials!',
+            'status': 403
+        }), 403
+
 
 @blueprint.route('/redflags', methods=['POST'])
 def create_redflag():
@@ -96,6 +106,7 @@ def create_redflag():
     Function that adds a redflag incident to list of redflags.
    
     """
+    
     data = request.get_json()
     id = len(incidents)+1
     createdBy = data.get("createdBy")
@@ -105,26 +116,27 @@ def create_redflag():
     comment = data.get('comment')
     status = 'draft'
     createdOn = datetime.datetime.utcnow()
+    images = data.get('images')
+    videos = data.get('videos')
 
     redflag = Incident(id, createdBy, type,
                        title, location, comment,
-                       status, createdOn
+                       status, createdOn, images, videos
                        )
-    error = Validators.validate_inputs(redflag)                  
-    exists = redflag.check_incident_exist(title)
+    error = Validators.validate_inputs(redflag)               
+    exists = check_incident_exist(title)
 
     if error != None:
         return jsonify({'Error': error}), 400
-    if not exists:
-        incidents.append(redflag.__dict__)
-        return jsonify({
-            'status': 201, 
-            'message': 'created redflag reccord!',
-            'id': id,
-            'data': redflag.__dict__
-            }), 201
-    else:
+    if exists:
         return jsonify({'message': exists}), 401
+    incidents.append(redflag.__dict__)
+    return jsonify({
+        'status': 201, 
+        'message': 'created redflag reccord!',
+        'id': id,
+        'data': redflag.__dict__
+        }), 201
 
 
 @blueprint.route('/redflags', methods=['GET'])
@@ -134,6 +146,7 @@ def get_all_redflags():
     :returns:
     The entire redflags reported by a user.
     """
+    
     if len(incidents) == 0:
         return jsonify({
             'satus': 400,
@@ -155,6 +168,7 @@ def get_specific_redflag(id):
     :returns:
     For any given right id
     """
+    
     try:
         redflagId = int(id)
     except TypeError:
