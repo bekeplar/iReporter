@@ -13,3 +13,4 @@ omit =
     */models.py
     */validator.py
     */Helpers.py
+    */instance/*

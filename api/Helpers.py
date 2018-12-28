@@ -7,7 +7,7 @@ def get_user(current_user):
         if user['email'] == current_user:
             return user
 
-    
+ 
 def check_is_admin(current_user):
     """function checks if a user is an admin """
     return current_user['isAdmin']  
@@ -19,7 +19,7 @@ def create_user(username, password):
         if user.username == None:
             users.append(user)
 
-         
+
 def login_user(email):
     """function that allows a known user login """
     for user in users:
@@ -37,8 +37,8 @@ def check_user_exist(email, username):
 
 
 def check_incident_exist(title):
-    for incident in incidents:
-        if incident.title != None:
+    for redflag in incidents:
+        if redflag.title != None:
             return 'Incident already reported!'
 
 

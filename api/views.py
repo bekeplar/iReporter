@@ -116,26 +116,27 @@ def create_redflag():
     comment = data.get('comment')
     status = 'draft'
     createdOn = datetime.datetime.utcnow()
+    images = data.get('images')
+    videos = data.get('videos')
 
     redflag = Incident(id, createdBy, type,
                        title, location, comment,
-                       status, createdOn
+                       status, createdOn, images, videos
                        )
-    error = Validators.validate_inputs(redflag)                  
+    error = Validators.validate_inputs(redflag)               
     exists = check_incident_exist(title)
 
     if error != None:
         return jsonify({'Error': error}), 400
-    if not exists:
-        incidents.append(redflag.__dict__)
-        return jsonify({
-            'status': 201, 
-            'message': 'created redflag reccord!',
-            'id': id,
-            'data': redflag.__dict__
-            }), 201
-    else:
+    if exists:
         return jsonify({'message': exists}), 401
+    incidents.append(redflag.__dict__)
+    return jsonify({
+        'status': 201, 
+        'message': 'created redflag reccord!',
+        'id': id,
+        'data': redflag.__dict__
+        }), 201
 
 
 @blueprint.route('/redflags', methods=['GET'])

@@ -32,6 +32,8 @@ class Incident:
         self.location = args[4]
         self.comment = args[5]
         self.status = args[6]
-        self.createdOn = args[7]  
+        self.createdOn = args[7]
+        self.images = args[8]
+        self.videos = args[9]  
 
     

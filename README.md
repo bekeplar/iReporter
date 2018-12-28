@@ -76,7 +76,9 @@ redflag = [
         "title":"corruption",
         "location":"mukono",
         "comment":"corrupt trffic officers in mukono",
-        "status":"draft"
+        "status":"draft",
+        "images":"nn.jpg",
+        "videos":"nn.mp4"
     }
 ]
 
