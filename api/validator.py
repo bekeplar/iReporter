@@ -16,7 +16,15 @@ class Validators(Incident):
             return'Please fill in the comments field!'
         else:
             return None
- 
+
+    def validate_media(self):
+        if not self.images or self.images.isspace():
+            return 'Please add images for proof!'
+        elif not self.videos or self.videos.isspace():
+            return'Please add videos for proof!'
+        else:
+            return None
+
 
 class Validation(User):
     def validate_input(self):
