@@ -1,37 +1,42 @@
 import os
-import secrets
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
-class Config:
-    """Common configurations"""
-    CSRF_ENABLED = True
-    SECRET_KEY: secrets.token_hex(16)
-    JWT_SECRET_KEY = os.environ.get("Kimberley")
-    JWT_BLACKLIST_ENABLED = True
-    JWT_BLACKLIST_TOKEN_CHECKS = ["access"]
-
-
-class DevelopmentConfig(Config):
-    """Development configurations"""
-    DEVELOPMENT = True
-    DEBUG = True
-
-
-class TestingConfig(Config):
-    """Testing configurations"""
-    TESTING = True
-    DEBUG = True
-
-
-class ProductionConfig(Config):
-    """Production configurations"""
+class BaseConfig:
+    """Default configuration. Details from this configuration
+    class are shared across all environments  """
     DEBUG = False
+    TESTING = False
+    JWT_SECRET_KEY = 'this-is-my-secret'
 
 
-app_settings = {
-    "development": "config.config.DevelopmentConfig",
-    "testing": "config.config.TestingConfig",
-    "production": "config.config.ProductionConfig"
-}
+class DevelopmentConfig(BaseConfig):
+    """Development configuraion. Loads development configuration data
+    when the app is in the development environment"""
+    DEBUG = True
+    TESTING = False
+    ENV = "Development"
+
+
+class TestingConfig(BaseConfig):
+    """Testing configuraion. Loads Test configuration data
+    when the app is in the Test environment"""
+    DEBUG = True
+    TESTING = True
+    ENV = "Testing"
+
+
+class ProductionConfig(BaseConfig):
+    """Production configuraion. Loads Production configuration data
+    when the app is in the Production environment"""
+    DEBUG = False
+    TESTING = False
+    ENV = "Production"
+
+
+app_config = {
+            "Development": DevelopmentConfig,
+            "Testing": TestingConfig,
+            "Production": ProductionConfig
+            }
