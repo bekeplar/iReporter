@@ -123,7 +123,7 @@ def create_redflag():
                        status, createdOn, images, videos
                        )
     error = Validators.validate_inputs(redflag)
-    error1 = Validators.add_media(redflag)        
+    error1 = Validators.validate_input(redflag)        
     exists = check_incident_exist(title)
 
     if error != None:

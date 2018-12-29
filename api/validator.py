@@ -17,7 +17,7 @@ class Validators(Incident):
         else:
             return None
 
-    def add_media(self):
+    def validate_input(self):
         if not self.images or self.images.isspace():
             return 'Please add images for proof!'
         elif not self.videos or self.videos.isspace():
