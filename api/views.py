@@ -4,9 +4,8 @@ from flask import Flask, jsonify, request
 from flask import Blueprint
 from api.validator import Validation, Validators
 from api.models import User, Incident
-from api.Helpers import(check_is_admin, get_user,
-                        check_user_exist, create_user,
-                        check_incident_exist) 
+from api.Helpers import (check_is_admin, get_user, check_user_exist,
+                         create_user, check_incident_exist, add_media)
 from flask_jwt_extended import (create_access_token,
                                 JWTManager, jwt_required, 
                                 get_jwt_identity)
@@ -107,7 +106,6 @@ def create_redflag():
     Function that adds a redflag incident to list of redflags.
    
     """
-    
     data = request.get_json()
     id = len(incidents)+1
     createdBy = data.get("createdBy")
@@ -125,7 +123,7 @@ def create_redflag():
                        status, createdOn, images, videos
                        )
     error = Validators.validate_inputs(redflag)
-    error1 = Validators.validate_media(redflag)            
+    error1 = add_media(redflag)        
     exists = check_incident_exist(title)
 
     if error != None:
@@ -151,7 +149,6 @@ def get_all_redflags():
     :returns:
     The entire redflags reported by a user.
     """
-    
     if len(incidents) == 0:
         return jsonify({
             'satus': 400,
@@ -174,14 +171,7 @@ def get_specific_redflag(id):
     :returns:
     For any given right id
     """
-    
-    try:
-        redflagId = int(id)
-    except TypeError:
-        return jsonify({
-            'status': 400,
-            'message': 'redflag id must be a number!'
-        }), 400
+    redflagId = int(id)
     for redflag in incidents:
         if int(redflag['id']) == redflagId:
             return jsonify({
@@ -200,13 +190,7 @@ def delete_specific_redflag(id):
     """
     Function for deleting a specific redflag from the report.
     """
-    try:
-        redflagId = int(id)
-    except TypeError:
-        return jsonify({
-            'status': 400,
-            'message': 'redflag id must be a number!'
-        }), 400
+    redflagId = int(id)
     for redflag in incidents:
         if int(redflag['id']) == redflagId:
             incidents.remove(redflag)
@@ -218,13 +202,12 @@ def delete_specific_redflag(id):
             }), 200
     return jsonify({'status': 404,
                    'message': 'No such redflag record found!'
-                   }), 404
+          }), 404
 
 
 @blueprint.route('/redflags/<int:id>/location', methods=['PATCH'])
 def edit_location_of_redflag(id):
     data = json.loads(request.data)
-    
     location = data['location']
     redflagId = int(id)
     for redflag in incidents:
@@ -247,7 +230,6 @@ def edit_location_of_redflag(id):
 @blueprint.route('/redflags/<int:id>/comment', methods=['PATCH'])
 def edit_comment_of_redflag(id):
     data = json.loads(request.data)
-   
     comment = data['comment']
     redflagId = int(id)  
     for redflag in incidents:

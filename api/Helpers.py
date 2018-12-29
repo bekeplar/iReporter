@@ -42,3 +42,10 @@ def check_incident_exist(title):
             return 'Incident already reported!'
 
 
+def add_media(self):
+    if not self.images or self.images.isspace():
+        return 'Please add images for proof!'
+    elif not self.videos or self.videos.isspace():
+        return'Please add videos for proof!'
+    else:
+        return None
