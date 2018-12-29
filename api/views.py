@@ -5,7 +5,7 @@ from flask import Blueprint
 from api.validator import Validation, Validators
 from api.models import User, Incident
 from api.Helpers import (check_is_admin, get_user, check_user_exist,
-                         create_user, check_incident_exist, add_media)
+                         create_user, check_incident_exist)
 from flask_jwt_extended import (create_access_token,
                                 JWTManager, jwt_required, 
                                 get_jwt_identity)
@@ -123,7 +123,7 @@ def create_redflag():
                        status, createdOn, images, videos
                        )
     error = Validators.validate_inputs(redflag)
-    error1 = add_media(redflag)        
+    error1 = Validators.add_media(redflag)        
     exists = check_incident_exist(title)
 
     if error != None:
