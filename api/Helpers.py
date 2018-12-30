@@ -7,7 +7,7 @@ def get_user(current_user):
         if user['email'] == current_user:
             return user
 
- 
+
 def check_is_admin(current_user):
     """function checks if a user is an admin """
     return current_user['isAdmin']  
