@@ -1,7 +1,7 @@
 import unittest
-from api.models import User, Incident
+from api.models import User, Incident, users, incidents
 from api.validator import Validators, Validation
-from api import app
+from api import create_app
 import json
 
 
@@ -10,7 +10,8 @@ class TestUser(unittest.TestCase):
         """
         Setting up a test client
         """
-        self.test_client = app.test_client()
+        self.app = create_app('Testing')
+        self.test_client = self.app.test_client()
 
     def test_create_user(self):
         """
@@ -459,7 +460,7 @@ class TestUser(unittest.TestCase):
         """
         Setting up a test client
         """
-        self.test_client = app.test_client()
+        users.clear()
 
 
 class TestRedflag(unittest.TestCase):
@@ -467,8 +468,9 @@ class TestRedflag(unittest.TestCase):
         """
         Setting up a test client
         """
-        self.test_client = app.test_client()
-
+        self.app = create_app('Testing')
+        self.test_client = self.app.test_client()
+        
     def test_create_redflag(self):
         """
         Test if a user can create a redflag successfully.
@@ -1094,4 +1096,4 @@ class TestRedflag(unittest.TestCase):
         """
         Setting up a test client
         """
-        self.test_client = app.test_client()
+        incidents.clear()
