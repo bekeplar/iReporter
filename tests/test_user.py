@@ -18,7 +18,7 @@ class TestUser(unittest.TestCase):
         """
         user = {
             "firstname": "bekelaze",
-            "lastname":" Joseph",
+            "lastname": "Joseph",
             "othernames": "beka",
             "email": "bekeplar@gmail.com",
             "phoneNumber": "0789057968",
