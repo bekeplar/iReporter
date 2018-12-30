@@ -1,13 +1,13 @@
 import datetime
 import json
-from flask import Flask, jsonify, request
+from flask import jsonify, request
 from flask import Blueprint
 from api.validator import Validation, Validators
 from api.models import User, Incident
 from api.Helpers import (check_is_admin, get_user, check_user_exist,
                          create_user, check_incident_exist)
 from flask_jwt_extended import (create_access_token,
-                                JWTManager, jwt_required, 
+                                jwt_required,
                                 get_jwt_identity)
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -75,12 +75,12 @@ def login():
 
     error = Validation.login_validate(username, password)
 
-    if error != None:
+    if error:
         return jsonify({'Error': error}), 400
 
     for user in users:
 
-        if user == None:
+        if not user:
             return jsonify({
                 'message': 'Wrong login credentials!',
                 'status': 403
@@ -124,11 +124,10 @@ def create_redflag():
                        )
     error = Validators.validate_inputs(redflag)        
     exists = check_incident_exist(title)
-
     if error != None:
-        return jsonify({'Error': error}), 400
+        return jsonify({'Error': error, 'status': 400}), 400
     if exists:
-        return jsonify({'message': exists}), 401
+        return jsonify({'message': exists, 'status': 401}), 401
     incidents.append(redflag.__dict__)
     return jsonify({
         'status': 201, 
