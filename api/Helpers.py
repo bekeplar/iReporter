@@ -1,4 +1,5 @@
 from api.models import users, incidents
+from flask_jwt_extended import get_jwt_identity
 
 
 def get_user(current_user):
@@ -26,6 +27,12 @@ def login_user(email):
         if user.email == user['email']:
             return user['username']
     return {"message": "user doesn't exist"}
+
+
+def known_user():
+    current_user = get_jwt_identity()
+    current_user = get_user(current_user)
+    return current_user
 
 
 def check_user_exist(email, username):
