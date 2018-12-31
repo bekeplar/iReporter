@@ -3,7 +3,7 @@ import json
 from flask import jsonify, request
 from flask import Blueprint
 from api.validator import Validation, Validators
-from api.models import User, Incident
+from api.models import User, Incident, users, incidents
 from api.Helpers import (check_is_admin, get_user, check_user_exist,
                          create_user, check_incident_exist)
 from flask_jwt_extended import (create_access_token,
@@ -13,8 +13,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 
 blueprint = Blueprint('application', __name__)
-incidents = []
-users = []
 
 
 @blueprint.route('/')
@@ -242,3 +240,21 @@ def edit_comment_of_redflag(id):
     return jsonify({'status': 404,
                     'message': 'No such redflag record found!'
                     }), 404
+
+
+@blueprint.route('/redflags/<int:id>/status', methods=['PATCH'])
+def edit_status_of_redflag(id):
+    data = request.get_json()
+    status = data.get('status')
+    RedflagId = int(id)
+    if not status:
+        return jsonify({'status': 400,
+                        'error': 'status field is either empty or missing'
+                        }), 400
+    for redflag in incidents:
+        if redflag['id'] == RedflagId:
+            redflag['status'] = status
+            return jsonify({'status': 200, 'data': redflag,
+                            'message': f"{redflag['incident_type']} record's status was successfuly updated"}), 200
+    return jsonify({'status': 200,
+                   'message': 'incident record not found'}), 200

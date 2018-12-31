@@ -20,9 +20,9 @@ class TestUser(unittest.TestCase):
             "firstname": "bekelaze",
             "lastname": "Joseph",
             "othernames": "beka",
-            "email": "bekeplar@gmail.com",
+            "email": "bekeplax@gmail.com",
             "phoneNumber": "0789057968",
-            "username": "bekeplar",
+            "username": "bekepalx",
             "isAdmin": "False",
             "password": "bekeplar1234"
         }
@@ -35,7 +35,7 @@ class TestUser(unittest.TestCase):
 
         message = json.loads(response.data.decode())
 
-        self.assertEqual(message['message'], "bekeplar successfully registered.")
+        self.assertEqual(message['message'], "bekeplax successfully registered.")
 
     def test_home(self):
         response = self.test_client.get(
@@ -314,7 +314,7 @@ class TestUser(unittest.TestCase):
         )
 
         message = json.loads(response.data.decode())
-        self.assertEqual(message['message'], 'bekeplar successfully logged in.')        
+        self.assertEqual(message['message'], 'Wrong login credentials!')        
     
     def test_user_login(self):
         """

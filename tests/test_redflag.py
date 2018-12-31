@@ -519,7 +519,7 @@ class TestRedflag(unittest.TestCase):
         }
 
         response = self.test_client.patch(
-            'api/v1/redflags/2/location',
+            'api/v1/redflags/1/location',
             content_type='application/json',
             data=json.dumps(new_location)
         )
