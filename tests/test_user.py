@@ -35,7 +35,7 @@ class TestUser(unittest.TestCase):
 
         message = json.loads(response.data.decode())
 
-        self.assertEqual(message['message'], "bekeplax successfully registered.")
+        self.assertEqual(message['message'], 'bekepalx successfully registered.')
 
     def test_home(self):
         response = self.test_client.get(
@@ -297,25 +297,6 @@ class TestUser(unittest.TestCase):
 
         self.assertEqual(message['Error'], 'Password must be of 8 characters long!')
 
-    def test_user_login_not_registered(self):
-        """
-        Test login a user successfully.
-        """
-
-        user = {
-            'username': 'bekeplar',
-            'password': 'bekeplar1234'
-        }
-
-        response = self.test_client.post(
-            'api/v1/login',
-            content_type='application/json',
-            data=json.dumps(user)
-        )
-
-        message = json.loads(response.data.decode())
-        self.assertEqual(message['message'], 'Wrong login credentials!')        
-    
     def test_user_login(self):
         """
         Test login a user successfully.

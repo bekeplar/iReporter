@@ -21,12 +21,12 @@ def create_user(username, password):
             users.append(user)
 
 
-def login_user(email):
+def login_user(username):
     """function that allows a known user login """
     for user in users:
-        if user.email == user['email']:
+        if user.username == user['username']:
             return user['username']
-    return {"message": "user doesn't exist"}
+    return None
 
 
 def known_user():

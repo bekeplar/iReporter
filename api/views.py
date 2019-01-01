@@ -3,9 +3,9 @@ import json
 from flask import jsonify, request
 from flask import Blueprint
 from api.validator import Validation, Validators
-from api.models import User, Incident, users, incidents
+from api.models import User, Incident
 from api.Helpers import (check_is_admin, get_user, check_user_exist,
-                         create_user, check_incident_exist, known_user)
+                         create_user, check_incident_exist, login_user)
 from flask_jwt_extended import (create_access_token,
                                 jwt_required,
                                 get_jwt_identity)
@@ -13,6 +13,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 
 blueprint = Blueprint('application', __name__)
+incidents = []
+users = []
 
 
 @blueprint.route('/')
@@ -75,7 +77,7 @@ def login():
 
     if error:
         return jsonify({'Error': error}), 400
-
+    user = login_user(username)
     for user in users:
 
         if not user:
@@ -104,11 +106,6 @@ def create_redflag():
     Function that adds a redflag incident to list of redflags.
    
     """
-    current_user = get_jwt_identity()
-    current_user = get_user(current_user)
-    if not known_user():
-        return jsonify({'status': 401,
-                        'error': 'Please signup!'}), 401
     data = request.get_json()
     id = len(incidents)+1
     createdBy = data.get("createdBy")
@@ -148,11 +145,6 @@ def get_all_redflags():
     :returns:
     The entire redflags reported by a user.
     """
-    current_user = get_jwt_identity()
-    current_user = get_user(current_user)
-    if not known_user():
-        return jsonify({'status': 401,
-                        'error': 'Please signup!'}), 401
     if len(incidents) == 0:
         return jsonify({
             'satus': 400,
@@ -175,11 +167,6 @@ def get_specific_redflag(id):
     :returns:
     For any given right id
     """
-    current_user = get_jwt_identity()
-    current_user = get_user(current_user)
-    if not known_user():
-        return jsonify({'status': 401,
-                        'error': 'Please signup!'}), 401
     redflagId = int(id)
     for redflag in incidents:
         if int(redflag['id']) == redflagId:
@@ -195,16 +182,10 @@ def get_specific_redflag(id):
 
 
 @blueprint.route('/redflags/<int:id>', methods=['DELETE'])
-@jwt_required
 def delete_specific_redflag(id):
     """
     Function for deleting a specific redflag from the report.
     """
-    current_user = get_jwt_identity()
-    current_user = get_user(current_user)
-    if not known_user():
-        return jsonify({'status': 401,
-                        'error': 'Please signup!'}), 401
     redflagId = int(id)
     for redflag in incidents:
         if int(redflag['id']) == redflagId:
@@ -221,7 +202,6 @@ def delete_specific_redflag(id):
 
 
 @blueprint.route('/redflags/<int:id>/location', methods=['PATCH'])
-@jwt_required
 def edit_location_of_redflag(id):
     data = json.loads(request.data)
     location = data['location']
@@ -244,7 +224,6 @@ def edit_location_of_redflag(id):
 
 
 @blueprint.route('/redflags/<int:id>/comment', methods=['PATCH'])
-@jwt_required
 def edit_comment_of_redflag(id):
     data = json.loads(request.data)
     comment = data['comment']
@@ -263,30 +242,3 @@ def edit_comment_of_redflag(id):
     return jsonify({'status': 404,
                     'message': 'No such redflag record found!'
                     }), 404
-
-
-@blueprint.route('/redflags/<int:id>/status', methods=['PATCH'])
-@jwt_required
-def edit_status_of_redflag(id):
-    current_user = get_jwt_identity()
-    current_user = get_user(current_user)
-    if not known_user():
-        return jsonify({'status': 401,
-                        'error': 'Please signup!'}), 401
-    if check_is_admin(known_user()):
-        return jsonify({'status': 403,
-                    'error': 'Access denied'}), 403
-    data = request.get_json()
-    status = data.get('status')
-    RedflagId = int(id)
-    if not status:
-        return jsonify({'status': 400,
-                        'error': 'status field is either empty or missing'
-                        }), 400
-    for redflag in incidents:
-        if redflag['id'] == RedflagId:
-            redflag['status'] = status
-            return jsonify({'status': 200, 'data': redflag,
-                            'message': f"{redflag['incident_type']} record's status was successfuly updated"}), 200
-    return jsonify({'status': 200,
-                   'message': 'incident record not found'}), 200
