@@ -1,4 +1,5 @@
 from api.models import users, incidents
+from flask_jwt_extended import get_jwt_identity
 
 
 def get_user(current_user):
@@ -20,12 +21,18 @@ def create_user(username, password):
             users.append(user)
 
 
-def login_user(email):
+def login_user(username):
     """function that allows a known user login """
     for user in users:
-        if user.email == user['email']:
+        if user.username == user['username']:
             return user['username']
-    return {"message": "user doesn't exist"}
+    return None
+
+
+def known_user():
+    current_user = get_jwt_identity()
+    current_user = get_user(current_user)
+    return current_user
 
 
 def check_user_exist(email, username):
@@ -42,3 +49,10 @@ def check_incident_exist(title):
             return 'Incident already reported!'
 
 
+def verify_status(status):
+    """function that verifies a status """
+    keys = ['under investigation', 'rejected', 'resolved']
+    for key in keys:
+        if not key:
+            return "Please add either 'resolved', 'rejected' or 'under investigation as status"
+        

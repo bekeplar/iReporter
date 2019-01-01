@@ -19,9 +19,9 @@ class Validators(Incident):
         elif not self.videos or self.videos.isspace():
             return'Please add videos for proof!'
         else:
-            return None      
+            return None
+         
    
-
 class Validation(User):
     def validate_input(self):
         error = None

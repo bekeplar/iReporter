@@ -5,7 +5,8 @@ from flask import Blueprint
 from api.validator import Validation, Validators
 from api.models import User, Incident
 from api.Helpers import (check_is_admin, get_user, check_user_exist,
-                         create_user, check_incident_exist)
+                         create_user, check_incident_exist, login_user,
+                         verify_status)
 from flask_jwt_extended import (create_access_token,
                                 jwt_required,
                                 get_jwt_identity)
@@ -77,7 +78,7 @@ def login():
 
     if error:
         return jsonify({'Error': error}), 400
-
+    user = login_user(username)
     for user in users:
 
         if not user:
@@ -167,6 +168,11 @@ def get_specific_redflag(id):
     :returns:
     For any given right id
     """
+    if len(incidents) == 0:
+        return jsonify({
+            'satus': 400,
+            'message': 'You haven/t reported any redflag!'
+        }), 400
     redflagId = int(id)
     for redflag in incidents:
         if int(redflag['id']) == redflagId:
@@ -242,3 +248,27 @@ def edit_comment_of_redflag(id):
     return jsonify({'status': 404,
                     'message': 'No such redflag record found!'
                     }), 404
+
+
+@blueprint.route('/redflags/<int:id>/status', methods=['PATCH'])
+def edit_status_of_redflag(id):
+    data = request.get_json()
+    status = data.get('status')
+    RedflagId = int(id)
+    error = verify_status(status)
+
+    if error:
+        return jsonify({'status': 400,
+                        'error': 'error'
+                        }), 400
+    for redflag in incidents:
+        if redflag['id'] == RedflagId:
+            redflag['status'] = status
+            return jsonify({'status': 200, 
+                            'data': redflag,
+                            'message': 'Redflag status successfully updated!'
+                            }), 200
+    return jsonify({'status': 404,
+                    'message': 'No such redflag record found!'
+                    }), 404
+    
