@@ -49,3 +49,10 @@ def check_incident_exist(title):
             return 'Incident already reported!'
 
 
+def verify_status(status):
+    """function that verifies a status """
+    keys = ['under investigation', 'rejected', 'resolved']
+    for key in keys:
+        if not key:
+            return "Please add either 'resolved', 'rejected' or 'under investigation as status"
+        

@@ -22,7 +22,6 @@ class Validators(Incident):
             return None
          
    
-
 class Validation(User):
     def validate_input(self):
         error = None
