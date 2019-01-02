@@ -31,7 +31,7 @@ def home():
 @blueprint.route('/signup', methods=['POST'])
 def signup():
     """This function is used to create a new user."""
-    data = request.get_json()
+    data = json.loads(request.data)
     firstname = data.get('firstname')
     lastname = data.get('lastname')
     othernames = data.get('othernames')
@@ -69,7 +69,7 @@ def signup():
 
 @blueprint.route('/login', methods=['POST'])
 def login():
-    data = request.get_json()
+    data = json.loads(request.data)
 
     username = data.get('username')
     password = data.get('password')
@@ -107,7 +107,7 @@ def create_redflag():
     Function that adds a redflag incident to list of redflags.
    
     """
-    data = request.get_json()
+    data = json.loads(request.data)
     id = len(incidents)+1
     createdBy = data.get('createdBy')
     type = data.get('type')
