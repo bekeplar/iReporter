@@ -109,7 +109,7 @@ def create_redflag():
     """
     data = request.get_json()
     id = len(incidents)+1
-    createdBy = data.get("createdBy")
+    createdBy = data.get('createdBy')
     type = data.get('type')
     title = data.get('title')
     location = data.get('location')
