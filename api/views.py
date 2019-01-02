@@ -210,7 +210,7 @@ def delete_specific_redflag(id):
 @blueprint.route('/redflags/<int:id>/location', methods=['PATCH'])
 def edit_location_of_redflag(id):
     data = json.loads(request.data)
-    location = data['location']
+    location = data.get('location')
     redflagId = int(id)
     for redflag in incidents:
         if int(redflag['id']) == redflagId:
@@ -232,7 +232,7 @@ def edit_location_of_redflag(id):
 @blueprint.route('/redflags/<int:id>/comment', methods=['PATCH'])
 def edit_comment_of_redflag(id):
     data = json.loads(request.data)
-    comment = data['comment']
+    comment = data.get('comment')
     redflagId = int(id)  
     for redflag in incidents:
         if int(redflag['id']) == redflagId:
@@ -252,7 +252,7 @@ def edit_comment_of_redflag(id):
 
 @blueprint.route('/redflags/<int:id>/status', methods=['PATCH'])
 def edit_status_of_redflag(id):
-    data = request.get_json()
+    data = json.loads(request.data)
     status = data.get('status')
     RedflagId = int(id)
     error = verify_status(status)
@@ -263,8 +263,8 @@ def edit_status_of_redflag(id):
                         }), 400
     for redflag in incidents:
         if redflag['id'] == RedflagId:
-            redflag['status'] = status
-            return jsonify({'status': 200, 
+            redflag['status'] = status.lower()
+            return jsonify({'status': 200,
                             'data': redflag,
                             'message': 'Redflag status successfully updated!'
                             }), 200

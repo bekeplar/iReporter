@@ -33,4 +33,3 @@ class Incident:
         self.images = args[8]
         self.videos = args[9]  
 
-    
