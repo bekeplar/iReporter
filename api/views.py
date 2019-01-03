@@ -210,7 +210,7 @@ def delete_specific_redflag(id):
 @blueprint.route('/redflags/<int:id>/location', methods=['PATCH'])
 def edit_location_of_redflag(id):
     data = json.loads(request.data)
-    location = data['location']
+    location = data.get('location')
     redflagId = int(id)
     for redflag in incidents:
         if int(redflag['id']) == redflagId:
@@ -232,7 +232,7 @@ def edit_location_of_redflag(id):
 @blueprint.route('/redflags/<int:id>/comment', methods=['PATCH'])
 def edit_comment_of_redflag(id):
     data = json.loads(request.data)
-    comment = data['comment']
+    comment = data.get('comment')
     redflagId = int(id)  
     for redflag in incidents:
         if int(redflag['id']) == redflagId:
