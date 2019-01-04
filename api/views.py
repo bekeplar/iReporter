@@ -4,8 +4,8 @@ from flask import jsonify, request
 from flask import Blueprint
 from api.validator import Validation, Validators
 from api.models import User, Incident
-from api.Helpers import (check_is_admin, get_user, check_user_exist,
-                         create_user, check_incident_exist, login_user,
+from api.Helpers import (check_is_admin, get_user, 
+                         create_user, login_user,
                          verify_status)
 from flask_jwt_extended import (create_access_token,
                                 jwt_required,
@@ -48,23 +48,26 @@ def signup():
                 )
     error = Validation.validate_input(user)
     errors = Validation.validate_inputs(user)
-    exists = check_user_exist(email, username)
+    exists = [user for user in users]
     if error != None:
         return jsonify({'Error': error}), 400
     if errors != None:
         return jsonify({'Error': errors}), 400
     
-    if not exists:
-        password_hash = generate_password_hash(password, method='sha256')
-        create_user(username, password_hash)
-        users.append(user.__dict__)
+    if exists:
         return jsonify({
-            'status': 201,
-            'message': f'{username} successfully registered.',
-            'data': user.__dict__
-            }), 201
-    else:
-        return jsonify({'message': exists}), 401
+            'message':  f'{username} already registered.',
+            'status': 401
+            }), 401
+    password_hash = generate_password_hash(password, method='sha256')
+    create_user(username, password_hash)
+    users.append(user.__dict__)
+    return jsonify({
+        'status': 201,
+        'message': f'{username} successfully registered.',
+        'data': user.__dict__
+        }), 201
+       
 
 
 @blueprint.route('/login', methods=['POST'])
@@ -124,11 +127,13 @@ def create_redflag():
                        status, createdOn, images, videos
                        )
     error = Validators.validate_inputs(redflag)        
-    exists = check_incident_exist(title)
+    exists = [redflag for redflag in incidents]
     if error != None:
         return jsonify({'Error': error, 'status': 400}), 400
     if exists:
-        return jsonify({'message': exists, 'status': 401}), 401
+        return jsonify({
+            'Error': 'Redflag record already reported!',
+            'status': 401}), 401
     incidents.append(redflag.__dict__)
     return jsonify({
         'status': 201, 
@@ -149,7 +154,8 @@ def get_all_redflags():
     if len(incidents) == 0:
         return jsonify({
             'satus': 400,
-            'message': 'You haven/t reported any redflag!'
+            'message': 'You haven/t reported any redflag!',
+            'data': [redflag for redflag in incidents]
         }), 400
     return jsonify({
         'status': 200,
@@ -202,9 +208,10 @@ def delete_specific_redflag(id):
                 'id': id,
                 'message': 'Redflag record  deleted!'
             }), 200
-    return jsonify({'status': 404,
-                   'message': 'No such redflag record found!'
-          }), 404
+    return jsonify({
+        'status': 404,
+        'message': 'No such redflag record found!'
+            }), 404
 
 
 @blueprint.route('/redflags/<int:id>/location', methods=['PATCH'])

@@ -1,5 +1,5 @@
 from flask import Flask
-import  datetime
+import datetime
 from instance.config import app_config
 from api.views import blueprint
 from flask_jwt_extended import JWTManager
