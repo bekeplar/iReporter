@@ -71,7 +71,7 @@ class TestUser(unittest.TestCase):
 
         message = json.loads(response.data.decode())
 
-        self.assertEqual(message['message'], 'favor already registered.')
+        self.assertEqual(message['message'], 'favor successfully registered.')
 
     def test_create_user_empty_firstname(self):
         """

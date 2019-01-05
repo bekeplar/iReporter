@@ -48,7 +48,7 @@ def signup():
                 )
     error = Validation.validate_input(user)
     errors = Validation.validate_inputs(user)
-    exists = [user for user in users]
+    exists = [user for user in users if user['username'] == username or user['email'] == email]
     if error != None:
         return jsonify({'Error': error}), 400
     if errors != None:
@@ -127,7 +127,7 @@ def create_redflag():
                        status, createdOn, images, videos
                        )
     error = Validators.validate_inputs(redflag)        
-    exists = [redflag for redflag in incidents]
+    exists = [redflag for redflag in incidents if redflag['title'] == title]
     if error != None:
         return jsonify({'Error': error, 'status': 400}), 400
     if exists:
