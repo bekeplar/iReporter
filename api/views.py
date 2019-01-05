@@ -56,7 +56,7 @@ def signup():
     
     if exists:
         return jsonify({
-            'message':  f'{username} already registered.',
+            'message':  'user already registered.',
             'status': 401
             }), 401
     password_hash = generate_password_hash(password, method='sha256')
