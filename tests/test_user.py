@@ -12,31 +12,7 @@ class TestUser(unittest.TestCase):
         self.app = create_app('Testing')
         self.test_client = self.app.test_client()
 
-    def test_create_user(self):
-        """
-        Test if a user can be registered successfully.
-        """
-        user = {
-            "firstname": "bekelaze",
-            "lastname": "Joseph",
-            "othernames": "beka",
-            "email": "bekeplax@gmail.com",
-            "phoneNumber": "0789057968",
-            "username": "bekepalx",
-            "isAdmin": "False",
-            "password": "bekeplar1234"
-        }
-
-        response = self.test_client.post(
-            'api/v1/signup',
-            content_type='application/json',
-            data=json.dumps(user)
-        )
-
-        message = json.loads(response.data.decode())
-
-        self.assertEqual(message['message'], 'bekepalx successfully registered.')
-
+   
     def test_home(self):
         response = self.test_client.get(
             '/api/v1/'
@@ -71,6 +47,31 @@ class TestUser(unittest.TestCase):
         message = json.loads(response.data.decode())
 
         self.assertEqual(message['Error'], 'Please fill in username field!')
+
+    def test_create_user(self):
+        """
+        Test if a user can be registered successfully.
+        """
+        user = {
+            "firstname": "Nanyonjo",
+            "lastname": "Favour",
+            "othernames": "sylvia",
+            "email": "nanyofav@gmail.com",
+            "phoneNumber": "0789057968",
+            "username": "favor",
+            "isAdmin": "False",
+            "password": "favor123"
+        }
+
+        response = self.test_client.post(
+            'api/v1/signup',
+            content_type='application/json',
+            data=json.dumps(user)
+        )
+
+        message = json.loads(response.data.decode())
+
+        self.assertEqual(message['message'], 'favor already registered.')
 
     def test_create_user_empty_firstname(self):
         """

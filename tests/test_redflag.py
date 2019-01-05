@@ -62,6 +62,41 @@ class TestRedflag(unittest.TestCase):
         )
         self.assertEqual(response.status_code, 201)
 
+    def test_create_redflag_twice(self):
+        """
+        Test if a user can create a redflag successfully.
+        """
+        user = {
+            'username': 'bekeplar',
+            'password': 'bekeplar1234'
+        }
+        response = self.test_client.post(
+            'api/v1/login',
+            content_type='application/json',
+            data=json.dumps(user)
+        )
+        access_token = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 200)
+        redflag = {
+            "createdBy": "Bekalaze",
+            "type": "redflag",
+            "title": "corruption",
+            "location": "1.33, 2.045",
+            "comment": "corrupt traffic officers in mukono",
+            "status": "draft",
+            "images": "nn.jpg",
+            "videos": "nn.mp4"
+        }
+        response = self.test_client.post(
+            'api/v1/redflags',
+            headers={'Authorization': 'Bearer ' + access_token['token']},
+            content_type='application/json',
+            data=json.dumps(redflag)
+        )
+        message = json.loads(response.data.decode())
+        self.assertEqual(message['Error'], 'Redflag record already reported!')
+        self.assertEqual(response.status_code, 401)
+
     def test_create_redflag_unauthorised_user(self):
         """
         Test if a non user can create a redflag successfully.
@@ -488,7 +523,7 @@ class TestRedflag(unittest.TestCase):
             data=json.dumps(redflag)
         )
         response = self.test_client.delete(
-            '/api/v1/redflags/2'
+            '/api/v1/redflags/1'
         )
         self.assertEqual(response.status_code, 200)
 
