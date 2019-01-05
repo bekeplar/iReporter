@@ -1,6 +1,6 @@
 from api import create_app
 
-app = create_app("Development")
+app = create_app("Production")
 
 """Api entry point for my application"""
 

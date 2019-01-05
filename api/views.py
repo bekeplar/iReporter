@@ -259,7 +259,7 @@ def edit_comment_of_redflag(id):
 
 @blueprint.route('/redflags/<int:id>/status', methods=['PATCH'])
 def edit_status_of_redflag(id):
-    data = request.get_json()
+    data = json.loads(request.data)
     status = data.get('status')
     RedflagId = int(id)
     error = verify_status(status)
