@@ -4,8 +4,8 @@ from flask import jsonify, request
 from flask import Blueprint
 from api.validator import Validation, Validators
 from api.models import User, Incident
-from api.Helpers import (check_is_admin, get_user, check_user_exist,
-                         create_user, check_incident_exist, login_user,
+from api.Helpers import (check_is_admin, get_user, 
+                         create_user, login_user,
                          verify_status)
 from flask_jwt_extended import (create_access_token,
                                 jwt_required,
