@@ -38,16 +38,6 @@ def create_app(config_name):
 
     @app.errorhandler(405)
     def method_not_allowed(e):
-        valid_urls = [
-            "POST/signup",
-            "POST/login",
-            "GET /redflags",
-            "GET /redflags/<int:id>",
-            "PATCH /redflags/<int:id>/location",
-            "PATCH /redflags/<int:id>/",
-            "PATCH /redflags/<int:id>/comment",
-            "DELETE /redflags/<int:id>Delete a redflag"
-        ]
         return jsonify({
             'Issue': 'Method Not Allowed.',
             'Supported Methods': valid_urls,
