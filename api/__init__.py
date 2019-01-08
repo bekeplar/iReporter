@@ -17,9 +17,7 @@ def create_app(config_name):
     #  Register blueprints
     app.register_blueprint(blueprint, url_prefix='/api/v1')
 
-    @app.errorhandler(404)
-    def page_not_found(e):
-        valid_urls = [
+    valid_urls = [
             "POST/signup",
             "POST/login",
             "GET /redflags",
@@ -29,6 +27,9 @@ def create_app(config_name):
             "PATCH /redflags/<int:id>/comment",
             "DELETE /redflags/<int:id>Delete a redflag"
         ]
+
+    @app.errorhandler(404)
+    def page_not_found(e):
         return jsonify({
             'Issue': 'You have entered an unknown URL.',
             'Valid URLs': valid_urls,
