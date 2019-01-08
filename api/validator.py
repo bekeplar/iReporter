@@ -4,15 +4,20 @@ import re
 
 class Validators(Incident):
     def validate_inputs(self):
-        if not self.title or self.title.isspace():
+        if not self.title or not isinstance(
+           self.title, str) or self.title.isspace():
             return 'Please fill in title field!'
-        elif not self.location or self.location.isspace():
+        elif not self.location or not isinstance(
+           self.location, str) or self.location.isspace():
             return'Please fill in location field!'
-        elif not self.type or self.type.isspace():
+        elif not self.type or not isinstance(
+           self.type, str) or self.type.isspace():
             return'Please select incident type!'
-        elif not self.createdBy or self.createdBy.isspace():
+        elif not self.createdBy or not isinstance(
+           self.createdBy, str) or self.createdBy.isspace():
             return'Please fill in reporter field!'
-        elif not self.comment or self.comment.isspace():
+        elif not self.comment or not isinstance(
+           self.comment, str) or self.comment.isspace():
             return'Please fill in the comments field!'
         if not self.images or self.images.isspace():
             return 'Please add images for proof!'
@@ -25,13 +30,17 @@ class Validators(Incident):
 class Validation(User):
     def validate_input(self):
         error = None
-        if not self.firstname or self.firstname.isspace():
+        if not self.firstname or not isinstance(
+           self.firstname, str) or self.firstname.isspace():
             error = 'Please fill in firstname field!'
-        elif not self.lastname or self.lastname.isspace():
+        elif not self.lastname or not isinstance(
+           self.lastname, str)  or self.lastname.isspace():
             error = 'Please fill in lastname field!'
-        elif not self.othernames or self.othernames.isspace():
+        elif not self.othernames or not isinstance(
+           self.othernames, str)  or self.othernames.isspace():
             error = 'Please fill in othernames field!'
-        if not self.username or self.username.isspace():
+        if not self.username or not isinstance(
+           self.username, str) or self.username.isspace():
             error = 'Please fill in username field!' 
         if not self.isAdmin or self.isAdmin.isspace():
             error = 'Please select user role!'    
@@ -53,7 +62,8 @@ class Validation(User):
 
     @staticmethod
     def login_validate(username, password):
-        if not username or username.isspace():
+        if not username or not isinstance(
+          username, str) or username.isspace():
             return 'Please fill in username field!'
         elif not password or password.isspace():
             return 'Please fill in password field!'
