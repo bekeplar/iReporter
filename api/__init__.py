@@ -32,7 +32,8 @@ def create_app(config_name):
         return jsonify({
             'Issue': 'You have entered an unknown URL.',
             'Valid URLs': valid_urls,
+            'status': 404,
             'message': 'Please contact the Admin for more details on this API.'
-            })
+            }), 404
     return app
 
