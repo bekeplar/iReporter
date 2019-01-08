@@ -25,18 +25,14 @@ def create_app(config_name):
             "GET /redflags",
             "GET /redflags/<id>",
             "PATCH /redflags/<id>/location",
-            "PATCH /redflags/<id>/status",
+            "PATCH /redflags/<id>/",
             "PATCH /redflags/<id>/comment",
             "DELETE /redflags/<id>Delete a redflag"
         ]
-        return (
-            jsonify({
-                'Issue': 'You have entered an unknown URL.',
-                'Valid URLs': valid_urls,
-                'status': 404,
-                'message': 'Please contact the Admin for more details on this API.'
-            }), 404
-            )
-         
+        return jsonify({
+            'Issue': 'You have entered an unknown URL.',
+            'Valid URLs': valid_urls,
+            'message': 'Please contact the Admin for more details on this API.'
+            })
     return app
 
