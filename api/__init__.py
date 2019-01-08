@@ -23,11 +23,11 @@ def create_app(config_name):
             "POST/signup",
             "POST/login",
             "GET /redflags",
-            "GET /redflags/<id>",
-            "PATCH /redflags/<id>/location",
-            "PATCH /redflags/<id>/",
-            "PATCH /redflags/<id>/comment",
-            "DELETE /redflags/<id>Delete a redflag"
+            "GET /redflags/<int:id>",
+            "PATCH /redflags/<int:id>/location",
+            "PATCH /redflags/<int:id>/",
+            "PATCH /redflags/<int:id>/comment",
+            "DELETE /redflags/<int:id>Delete a redflag"
         ]
         return jsonify({
             'Issue': 'You have entered an unknown URL.',
