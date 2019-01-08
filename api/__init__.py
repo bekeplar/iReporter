@@ -19,10 +19,16 @@ def create_app(config_name):
 
     @app.errorhandler(404)
     def page_not_found(e):
-        valid_urls = {
-            'Signup': {'url': '/api/v1/signup', 'method(s)': 'POST', 'body': {'username': 'String', 'email': 'example@email.com', 'password': 'At least 8 characters.', 'firstname': 'string', 'lastname': 'string', 'othernames': 'string', 'isAdmin': 'boolean', 'phoneNumber': 'float'}},
-            'Login': {'url': '/api/v1/login', 'method(s)': 'POST', 'body': {'username': 'String', 'password': 'Enter user password.'}},
-            'home': {'url': '/api/v1/', 'method(s)': 'GET'}}
+        valid_urls = [
+            "POST /auth/signup",
+            "POST /auth/login",
+            "GET /redflags",
+            "GET /redflags/<id>",
+            "PATCH /redflags/<id>/location",
+            "PATCH /redflags/<id>/status",
+            "PATCH /redflags/<id>/comment",
+            "DELETE /redflags/<id> - Delete a redflag"
+        ]
         return jsonify({
             'Issue': 'You have entered an unknown URL.',
             'Valid URLs': valid_urls,
