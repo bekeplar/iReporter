@@ -20,8 +20,8 @@ def create_app(config_name):
     @app.errorhandler(404)
     def page_not_found(e):
         valid_urls = [
-            "POST /auth/signup",
-            "POST /auth/login",
+            "POST/signup",
+            "POST/login",
             "GET /redflags",
             "GET /redflags/<id>",
             "PATCH /redflags/<id>/location",
