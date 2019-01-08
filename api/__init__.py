@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 import datetime
 from instance.config import app_config
 from api.views import blueprint
@@ -16,5 +16,17 @@ def create_app(config_name):
 
     #  Register blueprints
     app.register_blueprint(blueprint, url_prefix='/api/v1')
+
+    @app.errorhandler(404)
+    def page_not_found(e):
+        valid_urls = {
+            'Signup': {'url': '/api/v1/signup', 'method(s)': 'POST', 'body': {'username': 'String', 'email': 'example@email.com', 'password': 'At least 8 characters.', 'firstname': 'string', 'lastname': 'string', 'othernames': 'string', 'isAdmin': 'boolean', 'phoneNumber': 'float'}},
+            'Login': {'url': '/api/v1/login', 'method(s)': 'POST', 'body': {'username': 'String', 'password': 'Enter user password.'}},
+            'home': {'url': '/api/v1/', 'method(s)': 'GET'}}
+        return jsonify({
+            'Issue': 'You have entered an unknown URL.',
+            'Valid URLs': valid_urls,
+            'message': 'Please contact the Admin for more details on this API.'
+            })
     return app
 

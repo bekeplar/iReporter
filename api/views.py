@@ -1,17 +1,13 @@
 import datetime
 import json
-from flask import jsonify, request
-from flask import Blueprint
+from flask import jsonify, request, Blueprint
 from api.validator import Validation, Validators
 from api.models import User, Incident
-from api.Helpers import (check_is_admin, get_user, 
-                         create_user, login_user,
-                         verify_status)
+from api.Helpers import (create_user,
+                         login_user, verify_status)
 from flask_jwt_extended import (create_access_token,
-                                jwt_required,
-                                get_jwt_identity)
+                                jwt_required)
 from werkzeug.security import generate_password_hash, check_password_hash
-
 
 blueprint = Blueprint('application', __name__)
 incidents = []
@@ -53,7 +49,6 @@ def signup():
         return jsonify({'Error': error}), 400
     if errors != None:
         return jsonify({'Error': errors}), 400
-    
     if exists:
         return jsonify({
             'message':  'user already registered.',
