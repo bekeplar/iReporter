@@ -23,7 +23,7 @@ def create_app(config_name):
             "GET /redflags",
             "GET /redflags/<int:id>",
             "PATCH /redflags/<int:id>/location",
-            "PATCH /redflags/<int:id>/",
+            "PATCH /redflags/<int:id>/status",
             "PATCH /redflags/<int:id>/comment",
             "DELETE /redflags/<int:id>Delete a redflag"
         ]

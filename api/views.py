@@ -13,11 +13,9 @@ blueprint = Blueprint('application', __name__)
 incidents = []
 users = []
 
-
 @blueprint.route('/')
 def home():
     """A welcoming route to my api"""
-
     return jsonify({
         'message': 'Welcome to bekeplar\'s iReporter app.',
         'status': '200'
@@ -45,6 +43,7 @@ def signup():
     error = Validation.validate_input(user)
     errors = Validation.validate_inputs(user)
     exists = [user for user in users if user['username'] == username or user['email'] == email]
+
     if error != None:
         return jsonify({'Error': error}), 400
     if errors != None:
@@ -52,8 +51,8 @@ def signup():
     if exists:
         return jsonify({
             'message':  'user already registered.',
-            'status': 401
-            }), 401
+            'status': 406
+            }), 406
     password_hash = generate_password_hash(password, method='sha256')
     create_user(username, password_hash)
     users.append(user.__dict__)
@@ -62,11 +61,11 @@ def signup():
         'message': f'{username} successfully registered.',
         'data': user.__dict__
         }), 201
-       
 
 
 @blueprint.route('/login', methods=['POST'])
 def login():
+    """This function allows a registered user to login"""
     data = json.loads(request.data)
 
     username = data.get('username')
@@ -76,14 +75,14 @@ def login():
 
     if error:
         return jsonify({'Error': error}), 400
-    user = login_user(username)
+    user = login_user(username, password)
     for user in users:
 
         if not user:
             return jsonify({
                 'message': 'Wrong login credentials!',
-                'status': 403
-                }), 403
+                'status': 401
+                }), 401
         check_password_hash(user['password'], password) and user['username'] == username
         access_token = create_access_token(username)
         return jsonify({
@@ -93,10 +92,9 @@ def login():
         }), 200
     else:
         return jsonify({
-            'message': 'Wrong login credentials!',
-            'status': 403
-        }), 403
-
+                'message': 'Wrong login credentials!',
+                'status': 401
+                }), 401
 
 @blueprint.route('/redflags', methods=['POST'])
 @jwt_required
@@ -128,7 +126,7 @@ def create_redflag():
     if exists:
         return jsonify({
             'Error': 'Redflag record already reported!',
-            'status': 401}), 401
+            'status': 406}), 406
     incidents.append(redflag.__dict__)
     return jsonify({
         'status': 201, 
@@ -172,6 +170,7 @@ def get_specific_redflag(id):
     if len(incidents) == 0:
         return jsonify({
             'satus': 400,
+            'data': [redflag for redflag in incidents],
             'message': 'You haven/t reported any redflag!'
         }), 400
     redflagId = int(id)
@@ -189,6 +188,7 @@ def get_specific_redflag(id):
 
 
 @blueprint.route('/redflags/<int:id>', methods=['DELETE'])
+@jwt_required
 def delete_specific_redflag(id):
     """
     Function for deleting a specific redflag from the report.
@@ -210,6 +210,7 @@ def delete_specific_redflag(id):
 
 
 @blueprint.route('/redflags/<int:id>/location', methods=['PATCH'])
+@jwt_required
 def edit_location_of_redflag(id):
     data = json.loads(request.data)
     location = data.get('location')
@@ -232,6 +233,7 @@ def edit_location_of_redflag(id):
 
 
 @blueprint.route('/redflags/<int:id>/comment', methods=['PATCH'])
+@jwt_required
 def edit_comment_of_redflag(id):
     data = json.loads(request.data)
     comment = data.get('comment')
@@ -253,6 +255,7 @@ def edit_comment_of_redflag(id):
 
 
 @blueprint.route('/redflags/<int:id>/status', methods=['PATCH'])
+@jwt_required
 def edit_status_of_redflag(id):
     data = json.loads(request.data)
     status = data.get('status')

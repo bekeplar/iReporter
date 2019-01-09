@@ -20,8 +20,8 @@ class Validators(Incident):
             return'Please add videos for proof!'
         else:
             return None
-         
-   
+
+
 class Validation(User):
     def validate_input(self):
         error = None

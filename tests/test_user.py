@@ -11,7 +11,6 @@ class TestUser(unittest.TestCase):
         """
         self.app = create_app('Testing')
         self.test_client = self.app.test_client()
-
    
     def test_home(self):
         response = self.test_client.get(
@@ -19,7 +18,6 @@ class TestUser(unittest.TestCase):
         )
 
         reply = json.loads(response.data.decode())
-
         self.assertEqual(reply['message'], "Welcome to bekeplar's iReporter app.")
         self.assertEqual(response.status_code, 200)
 
@@ -43,9 +41,7 @@ class TestUser(unittest.TestCase):
             content_type='application/json',
             data=json.dumps(user)
         )
-
         message = json.loads(response.data.decode())
-
         self.assertEqual(message['Error'], 'Please fill in username field!')
 
     def test_create_user(self):
@@ -62,15 +58,12 @@ class TestUser(unittest.TestCase):
             "isAdmin": "False",
             "password": "favor123"
         }
-
         response = self.test_client.post(
             'api/v1/signup',
             content_type='application/json',
             data=json.dumps(user)
         )
-
         message = json.loads(response.data.decode())
-
         self.assertEqual(message['message'], 'favor successfully registered.')
 
     def test_create_user_empty_firstname(self):
@@ -93,9 +86,7 @@ class TestUser(unittest.TestCase):
             content_type='application/json',
             data=json.dumps(user)
         )
-
         message = json.loads(response.data.decode())
-
         self.assertEqual(message['Error'], 'Please fill in firstname field!')
 
     def test_create_user_empty_lastname(self):
@@ -118,9 +109,7 @@ class TestUser(unittest.TestCase):
             content_type='application/json',
             data=json.dumps(user)
         )
-
         message = json.loads(response.data.decode())
-
         self.assertEqual(message['Error'], 'Please fill in lastname field!')
 
     def test_create_user_empty_othernames(self):
@@ -137,15 +126,12 @@ class TestUser(unittest.TestCase):
             "isAdmin": "False",
             "password": "bekeplar1234"
         }
-
         response = self.test_client.post(
             'api/v1/signup',
             content_type='application/json',
             data=json.dumps(user)
         )
-
         message = json.loads(response.data.decode())
-
         self.assertEqual(message['Error'], 'Please fill in othernames field!')
 
     def test_create_user_empty_email(self):
@@ -168,9 +154,7 @@ class TestUser(unittest.TestCase):
             content_type='application/json',
             data=json.dumps(user)
         )
-
         message = json.loads(response.data.decode())
-
         self.assertEqual(message['Error'], 'Please fill in email field!')
     
     def test_create_user_wrong_email_format(self):
@@ -193,9 +177,7 @@ class TestUser(unittest.TestCase):
             content_type='application/json',
             data=json.dumps(user)
         )
-
         message = json.loads(response.data.decode())
-
         self.assertEqual(message['Error'], 'Please fill in right email format!.')
 
     def test_create_user_empty_phoneNumber(self):
@@ -218,9 +200,7 @@ class TestUser(unittest.TestCase):
             content_type='application/json',
             data=json.dumps(user)
         )
-
         message = json.loads(response.data.decode())
-
         self.assertEqual(message['Error'], 'Please fill in phoneNumber field!')
 
     def test_create_user_empty_isAdmin(self):
@@ -243,9 +223,7 @@ class TestUser(unittest.TestCase):
             content_type='application/json',
             data=json.dumps(user)
         )
-
         message = json.loads(response.data.decode())
-
         self.assertEqual(message['Error'], 'Please select user role!')
 
     def test_create_user_empty_password(self):
@@ -268,9 +246,7 @@ class TestUser(unittest.TestCase):
             content_type='application/json',
             data=json.dumps(user)
         )
-
         message = json.loads(response.data.decode())
-
         self.assertEqual(message['Error'], 'Plese fill in password field!')
 
     def test_create_user_invalid_password_length(self):
@@ -293,9 +269,7 @@ class TestUser(unittest.TestCase):
             content_type='application/json',
             data=json.dumps(user)
         )
-
         message = json.loads(response.data.decode())
-
         self.assertEqual(message['Error'], 'Password must be of 8 characters long!')
 
     def test_user_login(self):
@@ -329,7 +303,6 @@ class TestUser(unittest.TestCase):
             content_type='application/json',
             data=json.dumps(user)
         )
-
         message = json.loads(response.data.decode())
         self.assertEqual(message['message'], 'bekeplar successfully logged in.')   
 
@@ -373,7 +346,7 @@ class TestUser(unittest.TestCase):
         """
         user1 = {
             "firstname": "bekelaze",
-            "lastname":" Joseph",
+            "lastname": "Joseph",
             "othernames": "beka",
             "email": "bekeplar@gmail.com",
             "phoneNumber": "0789057968",
