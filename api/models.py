@@ -31,6 +31,5 @@ class Incident:
         self.status = args[6]
         self.createdOn = args[7]
         self.images = args[8]
-        self.videos = args[9]  
-
+        self.videos = args[9]
     

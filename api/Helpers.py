@@ -1,4 +1,4 @@
-from api.models import users, incidents
+from api.models import users
 
 
 def check_is_admin(current_user):
@@ -13,10 +13,10 @@ def create_user(username, password):
             users.append(user)
 
 
-def login_user(username):
+def login_user(username, password):
     """function that allows a known user login """
     for user in users:
-        if user.username == user['username']:
+        if user.username == user['username'] and user.password == user['password']:
             return user['username']
     return None
 
@@ -27,3 +27,5 @@ def verify_status(status):
     for key in keys:
         if not key:
             return "Please add either 'resolved', 'rejected' or 'under investigation as status"
+
+
