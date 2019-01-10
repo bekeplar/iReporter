@@ -4,24 +4,24 @@ import re
 
 class Validators(Incident):
     def validate_inputs(self):
-        error = None
         if not self.title or self.title.isspace():
-            error = 'Please fill in title field!'
+            return 'Please fill in title field!'
         elif not self.location or self.location.isspace():
-            error = 'Please fill in location field!'
+            return'Please fill in location field!'
         elif not self.type or self.type.isspace():
-            error = 'Please select incident type!'
+            return'Please select incident type!'
         elif not self.createdBy or self.createdBy.isspace():
-            error = 'Please fill in reporter field!'
+            return'Please fill in reporter field!'
         elif not self.comment or self.comment.isspace():
-            error = 'Please fill in the comments field!'
+            return'Please fill in the comments field!'
         if not self.images or self.images.isspace():
-            error = 'Please add images for proof!'
+            return 'Please add images for proof!'
         elif not self.videos or self.videos.isspace():
-            error = 'Please add videos for proof!'
-        return error
-
-
+            return'Please add videos for proof!'
+        else:
+            return None
+         
+   
 class Validation(User):
     def validate_input(self):
         error = None
