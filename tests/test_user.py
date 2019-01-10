@@ -42,6 +42,7 @@ class TestUser(unittest.TestCase):
             data=json.dumps(user)
         )
         message = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 400)
         self.assertEqual(message['Error'], 'Please fill in username field!')
 
     def test_create_user(self):
@@ -64,6 +65,7 @@ class TestUser(unittest.TestCase):
             data=json.dumps(user)
         )
         message = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 201)
         self.assertEqual(message['message'], 'favor successfully registered.')
 
     def test_create_user_empty_firstname(self):
@@ -87,6 +89,7 @@ class TestUser(unittest.TestCase):
             data=json.dumps(user)
         )
         message = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 400)
         self.assertEqual(message['Error'], 'Please fill in firstname field!')
 
     def test_create_user_empty_lastname(self):
@@ -110,6 +113,7 @@ class TestUser(unittest.TestCase):
             data=json.dumps(user)
         )
         message = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 400)
         self.assertEqual(message['Error'], 'Please fill in lastname field!')
 
     def test_create_user_empty_othernames(self):
@@ -132,6 +136,7 @@ class TestUser(unittest.TestCase):
             data=json.dumps(user)
         )
         message = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 400)
         self.assertEqual(message['Error'], 'Please fill in othernames field!')
 
     def test_create_user_empty_email(self):
@@ -155,6 +160,7 @@ class TestUser(unittest.TestCase):
             data=json.dumps(user)
         )
         message = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 400)
         self.assertEqual(message['Error'], 'Please fill in email field!')
     
     def test_create_user_wrong_email_format(self):
@@ -178,6 +184,7 @@ class TestUser(unittest.TestCase):
             data=json.dumps(user)
         )
         message = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 400)
         self.assertEqual(message['Error'], 'Please fill in right email format!.')
 
     def test_create_user_empty_phoneNumber(self):
@@ -201,6 +208,7 @@ class TestUser(unittest.TestCase):
             data=json.dumps(user)
         )
         message = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 400)
         self.assertEqual(message['Error'], 'Please fill in phoneNumber field!')
 
     def test_create_user_empty_isAdmin(self):
@@ -224,6 +232,7 @@ class TestUser(unittest.TestCase):
             data=json.dumps(user)
         )
         message = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 400)
         self.assertEqual(message['Error'], 'Please select user role!')
 
     def test_create_user_empty_password(self):
@@ -247,6 +256,7 @@ class TestUser(unittest.TestCase):
             data=json.dumps(user)
         )
         message = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 400)
         self.assertEqual(message['Error'], 'Plese fill in password field!')
 
     def test_create_user_invalid_password_length(self):
@@ -270,6 +280,7 @@ class TestUser(unittest.TestCase):
             data=json.dumps(user)
         )
         message = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 400)
         self.assertEqual(message['Error'], 'Password must be of 8 characters long!')
 
     def test_user_login(self):
@@ -304,6 +315,7 @@ class TestUser(unittest.TestCase):
             data=json.dumps(user)
         )
         message = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 200)
         self.assertEqual(message['message'], 'bekeplar successfully logged in.')   
 
     def test_user_login_empty_username(self):
@@ -338,6 +350,7 @@ class TestUser(unittest.TestCase):
         )
 
         message = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 400)
         self.assertEqual(message['Error'], 'Please fill in username field!')
 
     def test_user_login_empty_password(self):
@@ -373,6 +386,7 @@ class TestUser(unittest.TestCase):
         )
 
         message = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 400)
         self.assertEqual(message['Error'], 'Please fill in password field!')    
 
     def test_user_login_empty_fields(self):
@@ -408,6 +422,7 @@ class TestUser(unittest.TestCase):
         )
 
         message = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 400)
         self.assertEqual(message['Error'], 'Please fill in username field!')
 
     def tearDown(self):

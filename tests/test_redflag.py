@@ -160,7 +160,9 @@ class TestRedflag(unittest.TestCase):
             "title": "corruption",
             "location": "1.33, 2.045",
             "comment": "corrupt traffic officers in mukono",
-            "status": "draft"
+            "status": "draft",
+            "images": "nn.jpg",
+            "videos": "nn.mp4"
         }
 
         response = self.test_client.post(
@@ -193,7 +195,9 @@ class TestRedflag(unittest.TestCase):
             "title": "corruption",
             "location": "1.33, 2.045",
             "comment": "corrupt traffic officers in mukono",
-            "status": "draft"
+            "status": "draft",
+            "images": "nn.jpg",
+            "videos": "nn.mp4"
         }
         response = self.test_client.post(
             'api/v1/redflags',
@@ -227,7 +231,9 @@ class TestRedflag(unittest.TestCase):
             "title": "",
             "location": "1.33, 2.045",
             "comment": "corrupt traffic officers in mukono",
-            "status": "draft"
+            "status": "draft",
+            "images": "nn.jpg",
+            "videos": "nn.mp4"
         }
         response = self.test_client.post(
             'api/v1/redflags',
@@ -328,7 +334,9 @@ class TestRedflag(unittest.TestCase):
             "title": "corruption",
             "location": "",
             "comment": "corrupt traffic officers in mukono",
-            "status": "draft"
+            "status": "draft",
+            "images": "nn.jpg",
+            "videos": "nn.mp4"
         }
         response = self.test_client.post(
             'api/v1/redflags',
@@ -361,7 +369,9 @@ class TestRedflag(unittest.TestCase):
             "title": "corruption",
             "location": "1.33, 2.045",
             "comment": "",
-            "status": "draft"
+            "status": "draft",
+            "images": "nn.jpg",
+            "videos": "nn.mp4"
         }
 
         response = self.test_client.post(

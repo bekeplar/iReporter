@@ -1,4 +1,5 @@
 from api.models import users
+from werkzeug.security import check_password_hash
 
 
 def check_is_admin(current_user):
@@ -16,9 +17,9 @@ def create_user(username, password):
 def login_user(username, password):
     """function that allows a known user login """
     for user in users:
-        if user.username == user['username'] and user.password == user['password']:
-            return user['username']
-    return None
+        if user.username == user['username'] and check_password_hash(user["password"], password):
+            return True
+    return False
 
 
 def verify_status(status):
