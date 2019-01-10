@@ -29,7 +29,7 @@ def create_app(config_name):
         ]
 
     @app.errorhandler(404)
-    def page_not_found(e):
+    def _page_not_found(e):
         return jsonify({
             'Issue': 'You have entered an unknown URL.',
             'Valid URLs': valid_urls,
