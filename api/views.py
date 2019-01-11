@@ -220,7 +220,7 @@ def edit_location_of_redflag(id):
             if redflag['status'] != 'draft':
                 return jsonify({
                     'status': 400,
-                    'message': 'Only draft status can be updated!'}), 400
+                    'message': 'Only draft status can be updated!'}), 400        
             redflag['location'] = location
             return jsonify({
                 'status': 200, 
