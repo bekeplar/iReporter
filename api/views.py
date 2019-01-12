@@ -1,17 +1,17 @@
 import datetime
 import json
+from database.db import DatabaseConnection
 from flask import jsonify, request, Blueprint
 from api.validator import Validation, Validators
-from api.models import User, Incident
-from api.Helpers import (create_user,
-                         login_user, verify_status)
+from api.models import User, Incident, incidents
+from api.Helpers import verify_status
 from flask_jwt_extended import (create_access_token,
-                                jwt_required)
+                                jwt_required, get_jwt_identity)
 from werkzeug.security import generate_password_hash, check_password_hash
 
 blueprint = Blueprint('application', __name__)
-incidents = []
-users = []
+db = DatabaseConnection()
+
 
 @blueprint.route('/')
 def home():
@@ -42,7 +42,7 @@ def signup():
                 )
     error = Validation.validate_input(user)
     errors = Validation.validate_inputs(user)
-    exists = [user for user in users if user['username'] == username or user['email'] == email]
+    exists = user.check_user_exist()
 
     if error != None:
         return jsonify({'Error': error}), 400
@@ -54,8 +54,9 @@ def signup():
             'status': 406
             }), 406
     password_hash = generate_password_hash(password, method='sha256')
-    create_user(username, password_hash)
-    users.append(user.__dict__)
+    db.insert_user(id, firstname, lastname,
+                   othernames, email, password_hash,
+                   username, registered, isAdmin)
     return jsonify({
         'status': 201,
         'message': f'{username} successfully registered.',
@@ -73,28 +74,23 @@ def login():
 
     error = Validation.login_validate(username, password)
 
-    if error:
+    if error != None:
         return jsonify({'Error': error}), 400
-    user = login_user(username, password)
-    for user in users:
 
-        if not user:
-            return jsonify({
-                'message': 'Wrong login credentials!',
-                'status': 401
-                }), 401
-        check_password_hash(user['password'], password) and user['username'] == username
-        access_token = create_access_token(username)
+    db = DatabaseConnection()
+    user = db.login(username)
+    if user == None:
+        return jsonify({'message': 'Wrong login credentials.'}), 400
+
+    if check_password_hash(user['password'], password) and user['username'] == username:
+        token = create_access_token(username)
         return jsonify({
-            'token': access_token,
-            'status': 200,
+            'access_token': token,
             'message': f'{username} successfully logged in.'
         }), 200
     else:
-        return jsonify({
-                'message': 'Wrong login credentials!',
-                'status': 401
-                }), 401
+        return jsonify({'message': 'Wrong login credentials.'}), 400
+     
 
 @blueprint.route('/redflags', methods=['POST'])
 @jwt_required
@@ -119,15 +115,17 @@ def create_redflag():
                        title, location, comment,
                        status, createdOn, images, videos
                        )
-    error = Validators.validate_inputs(redflag)        
-    exists = [redflag for redflag in incidents if redflag['title'] == title]
+    error = Validators.validate_inputs(redflag)      
+    exists = redflag.check_incident_exist()
     if error != None:
         return jsonify({'Error': error, 'status': 400}), 400
     if exists:
         return jsonify({
             'Error': 'Redflag record already reported!',
             'status': 406}), 406
-    incidents.append(redflag.__dict__)
+    db.insert_redflag(id, createdBy, type,
+                      title, location, comment,
+                      status, createdOn, images, videos)
     return jsonify({
         'status': 201, 
         'message': 'created redflag reccord!',
@@ -144,15 +142,16 @@ def get_all_redflags():
     :returns:
     The entire redflags reported by a user.
     """
-    if len(incidents) == 0:
+    all_redflags = db.fetch_all_redflags()
+    if not all_redflags:
         return jsonify({
             'satus': 400,
             'message': 'You haven/t reported any redflag!',
-            'data': [redflag for redflag in incidents]
+            'data': all_redflags
         }), 400
     return jsonify({
         'status': 200,
-        'data': [redflag for redflag in incidents],
+        'data': all_redflags,
         'message': 'These are your reports!'
     }), 200
 
@@ -167,24 +166,17 @@ def get_specific_redflag(id):
     :returns:
     For any given right id
     """
-    if len(incidents) == 0:
+    try:
+        get_one = db.fetch_redflag(id)
+        if not get_one:
+            return jsonify({'message': 'No such redflag record found!'}), 404
         return jsonify({
-            'satus': 400,
-            'data': [redflag for redflag in incidents],
-            'message': 'You haven/t reported any redflag!'
-        }), 400
-    redflagId = int(id)
-    for redflag in incidents:
-        if int(redflag['id']) == redflagId:
-            return jsonify({
-                'status': 200,
-                'data': redflag,
-                'message': 'Redflag record found!'
-                }), 200
-    return jsonify({
-        'status': 404,
-        'message': 'No such redflag record found!'
-        }), 404
+            'status': 404,
+            'data': get_one,
+            'message': 'Redflag record found succesfully.',
+        }), 200
+    except TypeError:
+        return jsonify({'message': 'Redflag Id must be a number.'}), 400
 
 
 @blueprint.route('/redflags/<int:id>', methods=['DELETE'])
@@ -193,20 +185,18 @@ def delete_specific_redflag(id):
     """
     Function for deleting a specific redflag from the report.
     """
-    redflagId = int(id)
-    for redflag in incidents:
-        if int(redflag['id']) == redflagId:
-            incidents.remove(redflag)
-            return jsonify({
-                'data': redflag,
-                'status': 200,
-                'id': id,
-                'message': 'Redflag record  deleted!'
-            }), 200
-    return jsonify({
-        'status': 404,
-        'message': 'No such redflag record found!'
-            }), 404
+    try:
+        username = get_jwt_identity()
+
+        get_one = db.fetch_redflag(id)
+
+        if get_one[2] == username:
+            db.delete_redflag(id)
+            return jsonify({'message': 'Redflag record deleted succesfully.'}), 200
+        else:
+            return jsonify({'message': 'Only the reporter can delete this.'}), 400
+    except TypeError:
+        return jsonify({'message': 'No such redflag record found!'}), 400
 
 
 @blueprint.route('/redflags/<int:id>/location', methods=['PATCH'])

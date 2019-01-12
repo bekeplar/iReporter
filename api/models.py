@@ -1,3 +1,6 @@
+from database.db import DatabaseConnection
+
+db = DatabaseConnection()
 users = []
 
 
@@ -13,6 +16,14 @@ class User:
         self.registered = args[6]
         self.isAdmin = args[7]
         self.password = args[8]
+
+    def check_user_exist(self):
+        username = db.check_username(self.username)
+        email = db.check_email(self.email)
+        if username != None:
+            return 'Username is taken.'
+        if email != None:
+            return 'Email already has an account.'
 
 
 incidents = []
@@ -33,3 +44,10 @@ class Incident:
         self.images = args[8]
         self.videos = args[9]
     
+    def check_incident_exist(self):
+        title = db.check_title(self.title)
+        comment = db.check_comment(self.comment)
+        if title != None:
+            return 'Title already reported.'
+        if comment != None:
+            return 'comment already reported.'

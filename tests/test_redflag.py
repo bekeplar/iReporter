@@ -1,5 +1,5 @@
 import unittest
-from api.models import incidents
+from database.db import DatabaseConnection
 from api import create_app
 import json
 
@@ -9,6 +9,7 @@ class TestRedflag(unittest.TestCase):
         """
         Setting up a test client
         """
+        self.db = DatabaseConnection()
         self.app = create_app('Testing')
         self.test_client = self.app.test_client()
  
@@ -153,7 +154,6 @@ class TestRedflag(unittest.TestCase):
             data=json.dumps(user)
         )
         access_token = json.loads(response.data.decode())
-        self.assertEqual(response.status_code, 200)
         redflag = {
             "createdBy": "",
             "type": "redflag",
@@ -829,6 +829,6 @@ class TestRedflag(unittest.TestCase):
 
     def tearDown(self):
         """
-        Setting up a test client
+        Drop the user table very after a single test has run
         """
-        incidents.clear()
+        self.db.drop_tables()

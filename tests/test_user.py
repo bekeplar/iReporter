@@ -1,5 +1,5 @@
 import unittest
-from api.models import users
+from database.db import DatabaseConnection
 from api import create_app
 import json
 
@@ -9,6 +9,7 @@ class TestUser(unittest.TestCase):
         """
         Setting up a test client
         """
+        self.db = DatabaseConnection()
         self.app = create_app('Testing')
         self.test_client = self.app.test_client()
    
@@ -328,7 +329,7 @@ class TestUser(unittest.TestCase):
             "othernames": "beka",
             "email": "bekeplar@gmail.com",
             "phoneNumber": "0789057968",
-            "username": "bekeplar",
+            "username": "",
             "isAdmin": "False",
             "password": "bekeplar1234"
         }
@@ -365,7 +366,7 @@ class TestUser(unittest.TestCase):
             "phoneNumber": "0789057968",
             "username": "bekeplar",
             "isAdmin": "False",
-            "password": "bekeplar1234"
+            "password": ""
         }
 
         self.test_client.post(
@@ -427,8 +428,8 @@ class TestUser(unittest.TestCase):
 
     def tearDown(self):
         """
-        Setting up a test client
+        Drop the user table very after a single test has run
         """
-        users.clear()
+        self.db.drop_tables()
 
 
