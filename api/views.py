@@ -83,9 +83,10 @@ def login():
         return jsonify({'message': 'Wrong login credentials.'}), 400
 
     if check_password_hash(user['password'], password) and user['username'] == username:
-        token = create_access_token(username)
+        access_token = create_access_token(username)
         return jsonify({
-            'access_token': token,
+            'status': 200,
+            'token': access_token,
             'message': f'{username} successfully logged in.'
         }), 200
     else:
@@ -187,16 +188,15 @@ def delete_specific_redflag(id):
     """
     try:
         username = get_jwt_identity()
-
         get_one = db.fetch_redflag(id)
 
-        if get_one[2] == username:
+        if username and get_one:
             db.delete_redflag(id)
             return jsonify({'message': 'Redflag record deleted succesfully.'}), 200
         else:
             return jsonify({'message': 'Only the reporter can delete this.'}), 400
     except TypeError:
-        return jsonify({'message': 'No such redflag record found!'}), 400
+        return jsonify({'message': 'No such redflag record found!'}), 404
 
 
 @blueprint.route('/redflags/<int:id>/location', methods=['PATCH'])

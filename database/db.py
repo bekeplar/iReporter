@@ -19,18 +19,6 @@ class DatabaseConnection:
             self.dict_cursor = self.connection.cursor(
                                             cursor_factory=RealDictCursor)
 
-            create_Incidents_table = """CREATE TABLE IF NOT EXISTS incidents(
-            id SERIAL NOT NULL PRIMARY KEY,
-            createdBy TEXT NOT NULL,
-            type FLOAT NOT NULL,
-            title TEXT NOT NULL, 
-            location TEXT NOT NULL, 
-            comment TEXT NOT NULL,
-            status TEXT NOT NULL,
-            createdOn TEXT NOT NULL,
-            images TEXT NOT NULL,
-            videos TEXT NOT NULL
-                );"""
             create_user_table = """CREATE TABLE IF NOT EXISTS users(
             id SERIAL PRIMARY KEY,
             firstname VARCHAR(50) NOT NULL,
@@ -43,32 +31,48 @@ class DatabaseConnection:
             registered TEXT NOT NULL,
             isAdmin BOOL NOT NULL
                 );"""
+            
+            create_Incidents_table = """CREATE TABLE IF NOT EXISTS incidents(
+            id SERIAL NOT NULL PRIMARY KEY,
+            createdBy VARCHAR(50) NOT NULL,
+            type VARCHAR(50) NOT NULL,
+            title VARCHAR(50) NOT NULL,
+            location VARCHAR(50) NOT NULL,
+            comment VARCHAR(50) NOT NULL,
+            status VARCHAR(50) NOT NULL,
+            createdOn TEXT NOT NULL,
+            images TEXT NOT NULL,
+            videos TEXT NOT NULL
+                );"""
             self.cursor.execute(create_Incidents_table)
             self.cursor.execute(create_user_table)
         except (Exception, psycopg2.DatabaseError) as error:
             pprint(error)
 
-    def insert_redflag(self, id, createdBy, type,
-                       title, location, comment,
-                       status, createdOn, images, videos
-                       ):
-
-        """Method for adding a new redflag to incidents"""
+    def insert_redflag(self, id, createdBy,
+                    type, title, location, 
+                    comment, status, createdOn,
+                    images, videos
+                    ):
+        """Method for adding a new user to users"""
         insert_redflag = """INSERT INTO incidents(
-            createdBy,
-            type,
-            title,
-            location,
-            comment,
-            status,
-            createdOn,
-            images,
-            videos
-            ) VALUES('{}','{}','{}','{}','{}','{}','{}','{}','{}')""".format(createdBy, type, title,                                                                                  location, comment, status,
-                                                                                  createdOn, images, videos)
+           createdBy,
+           type,
+           title,
+           location,
+           comment,
+           status,
+           createdOn,
+           images,
+           videos
+            ) VALUES('{}', '{}','{}', '{}', '{}', '{}','{}', '{}', '{}')""".format(
+                createdBy, type,
+                title, location, comment,
+                status, createdOn,
+                images, videos)
         pprint(insert_redflag)
         self.dict_cursor.execute(insert_redflag)
-
+    
     def insert_user(self, id, firstname, lastname,
                     othernames, email, password,
                     username, registered, isAdmin
@@ -83,9 +87,10 @@ class DatabaseConnection:
            username,
            registered,
            isAdmin
-            ) VALUES('{}', '{}','{}', '{}', '{}', '{}','{}', '{}')""".format(firstname, lastname,
-                                                                             othernames, email, password,
-                                                                             username, registered, isAdmin)
+            ) VALUES('{}', '{}','{}', '{}', '{}', '{}','{}', '{}')""".format(
+                firstname, lastname,
+                othernames, email, password,
+                username, registered, isAdmin)
         pprint(insert_user)
         self.dict_cursor.execute(insert_user)
 
@@ -162,7 +167,7 @@ class DatabaseConnection:
         return redflag
 
     def delete_redflag(self, id):
-        query = "DELETE* FROM incidents  WHERE id='{}'".format(id)
+        query = "DELETE FROM incidents  WHERE id='{}'".format(id)
         pprint(query)
         self.cursor.execute(query)
 
