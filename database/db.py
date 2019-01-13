@@ -10,9 +10,15 @@ class DatabaseConnection:
 
     def __init__(self):
 
+        if os.getenv('DB_NAME') == 'test_db':
+            self.db_name = 'test_db'
+        else:
+            self.db_name = 'postgres'
+
         try:
             self.connection = psycopg2.connect(
-                dbname='postgres',host='localhost',  port=5433,password='bekeplar', user='postgres'
+                dbname='postgres',host='localhost',
+                port=5433, password='bekeplar', user='postgres'
                  )
             self.connection.autocommit = True
             self.cursor = self.connection.cursor()
@@ -104,6 +110,16 @@ class DatabaseConnection:
         user = self.cursor.fetchone()
         return user
    
+    def check_status(self, status):
+        """
+        Check if a redflag status is  editable.
+        """
+        query = f"SELECT * FROM incidents WHERE status='{status}';"
+        pprint(query)
+        self.cursor.execute(query)
+        redflag = self.cursor.fetchone()
+        return redflag
+
     def check_title(self, title):
         """
         Check if a redflag title already exists.

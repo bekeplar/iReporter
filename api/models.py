@@ -51,3 +51,5 @@ class Incident:
             return 'Title already reported.'
         if comment != None:
             return 'comment already reported.'
+
+    
