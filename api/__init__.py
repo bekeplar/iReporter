@@ -28,23 +28,27 @@ def create_app(config_name):
             "DELETE /api/v1/redflags/<int:id>Delete a redflag"
         ]
 
-    @app.errorhandler(404)
-    def _page_not_found(e):
-        return jsonify({
-            'Issue': 'You have entered an unknown URL.',
-            'Valid URLs': valid_urls,
-            'status': 404,
-            'message': 'Please contact the Admin for more details on this API.'
+    @app.errorhandler(Exception)
+    def errors(e):
+        """
+        This funcion handles the 404 and 405 HTTP STATUS CODES.
+        """
+        response = None
+        if e.code == 404:
+            response = jsonify({
+                'Issue': 'You have entered an unknown URL.',
+                'Valid URLs': valid_urls,
+                'status': 404,
+                'message': 'Please contact the Admin for more details on this API.'
             }), 404
-
-    @app.errorhandler(405)
-    def method_not_allowed(e):
-        return jsonify({
-            'Issue': 'Method Not Allowed.',
-            'Supported Methods': valid_urls,
-            'status': 405,
-            'message': 'Please follow this guide for details on this API.'
+        else:
+            response = jsonify({
+                'status': 405,
+                'error': 'Method Not Allowed.',
+                'Supported Methods': valid_urls,
+                'message': 'Please follow this guide for details on this API.'          
             }), 405
+        return response
 
     return app
 
