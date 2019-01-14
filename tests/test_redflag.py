@@ -423,6 +423,47 @@ class TestRedflag(unittest.TestCase):
         reply = json.loads(response.data.decode())
         self.assertEqual(reply['message'], 'These are your reports!')
         self.assertEqual(response.status_code, 200)
+    
+    def test_get_all_redflags(self):
+        """Test that a user can get all his created redflags"""
+        user = {
+            'username': 'bekeplar',
+            'password': 'bekeplar1234'
+        }
+
+        response = self.test_client.post(
+            'api/v1/login',
+            content_type='application/json',
+            data=json.dumps(user)
+        )
+        access_token = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 200)
+        redflag = {
+            "createdBy": "Bekalaze",
+            "type": "redflag",
+            "title": "corruption",
+            "location": "1.33, 2.045",
+            "comment": "corrupt traffic officers in mukono",
+            "status": "draft",
+            "images": "nn.jpg",
+            "videos": "nn.mp4"
+        }
+        response = self.test_client.post(
+            'api/v1/redflags',
+            headers={'Authorization': 'Bearer ' + access_token['token']},
+            content_type='application/json',
+            data=json.dumps(redflag)
+        )
+        response = self.test_client.get(
+            '/api/v1/redflags',
+            headers={'Authorization': 'Bearer ' + access_token['token']},
+            content_type='application/json'
+
+        )
+        reply = json.loads(response.data.decode())
+        self.assertEqual(reply['message'], 'These are your reports!')
+        self.assertEqual(response.status_code, 200)
+
 
     def test_get_all_redflags_non_user(self):
         """Test that a non-user cannot get created redflags"""
