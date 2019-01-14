@@ -17,13 +17,16 @@ class DatabaseConnection:
 
         try:
             self.connection = psycopg2.connect(
-                dbname='postgres',host='localhost',
+                dbname='postgres', host='localhost',
                 port=5433, password='bekeplar', user='postgres'
                  )
             self.connection.autocommit = True
             self.cursor = self.connection.cursor()
             self.dict_cursor = self.connection.cursor(
                                             cursor_factory=RealDictCursor)
+            pprint('Connected to the database')
+            pprint('Database Name:')
+            pprint(self.db_name)
 
             create_user_table = """CREATE TABLE IF NOT EXISTS users(
             id SERIAL PRIMARY KEY,
@@ -52,11 +55,13 @@ class DatabaseConnection:
                 );"""
             self.cursor.execute(create_Incidents_table)
             self.cursor.execute(create_user_table)
+
         except (Exception, psycopg2.DatabaseError) as error:
             pprint(error)
 
-    def insert_redflag(self, id, createdBy,
-                    type, title, location, 
+    def insert_redflag(
+                    self, id, createdBy,
+                    type, title, location,
                     comment, status, createdOn,
                     images, videos
                     ):
