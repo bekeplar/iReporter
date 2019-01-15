@@ -40,12 +40,14 @@ POST|api/vi/login|Login a user
 - Postman
 
 ## Getting started
+
 * Clone the project to your local machine
 ```
 git clone https://github.com/bekeplar/iReporter.git
 ```
 * Change to the cloned directory
 ```
+
 cd iReporter
 pip install virtualenv
 source venv/bin/activate
@@ -65,7 +67,9 @@ pip install pytest
 pytest
 
 ```
+
 * Testing Endpoints
+
 ```
 copy the url in the terminal
 paste it in postman
@@ -97,8 +101,11 @@ user = [
 ]
     
 ```
+
 ## Authors:
+
 Bekalaze Joseph
 
 ### Courtesy of :
+
 Andela Uganda

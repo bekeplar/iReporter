@@ -77,7 +77,6 @@ def login():
         return jsonify({'Error': error}), 400
     user = login_user(username, password)
     for user in users:
-
         if not user:
             return jsonify({
                 'message': 'Wrong login credentials!',
