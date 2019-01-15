@@ -869,6 +869,6 @@ class TestRedflag(unittest.TestCase):
 
     def tearDown(self):
         """
-        Setting up a test client
+        Destroying a test client
         """
         incidents.clear()

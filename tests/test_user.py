@@ -427,7 +427,7 @@ class TestUser(unittest.TestCase):
 
     def tearDown(self):
         """
-        Setting up a test client
+        Destroying a test client
         """
         users.clear()
 
