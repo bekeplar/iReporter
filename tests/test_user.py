@@ -11,7 +11,38 @@ class TestUser(unittest.TestCase):
         """
         self.app = create_app('Testing')
         self.test_client = self.app.test_client()
-   
+        self.user = {
+            "firstname": "bekelaze",
+            "lastname":" Joseph",
+            "othernames": "beka",
+            "email": "bekeplar@gmail.com",
+            "phoneNumber": "0789057968",
+            "username": "bekeplar",
+            "isAdmin": "False",
+            "password": "bekeplar1234"
+        }
+
+        self.user1 = {
+            "firstname": "Nanyonjo",
+            "lastname": "sylvia",
+            "othernames": "favorite",
+            "email": "beke@gmail.com",
+            "phoneNumber": "0789057968",
+            "username": "favor",
+            "isAdmin": "False",
+            "password": "nanyonjo1234"
+        }
+
+        self.login_user = {
+            'username': 'bekeplar',
+            'password': 'bekeplar1234'
+        }
+
+        self.invalid_user_login = {
+            'username': '',
+            'password': ''
+        }
+
     def test_home(self):
         response = self.test_client.get(
             '/api/v1/'
@@ -49,20 +80,10 @@ class TestUser(unittest.TestCase):
         """
         Test if a user can be registered successfully.
         """
-        user = {
-            "firstname": "Nanyonjo",
-            "lastname": "Favour",
-            "othernames": "sylvia",
-            "email": "nanyofav@gmail.com",
-            "phoneNumber": "0789057968",
-            "username": "favor",
-            "isAdmin": "False",
-            "password": "favor123"
-        }
         response = self.test_client.post(
             'api/v1/signup',
             content_type='application/json',
-            data=json.dumps(user)
+            data=json.dumps(self.user1)
         )
         message = json.loads(response.data.decode())
         self.assertEqual(201, response.status_code)
@@ -287,32 +308,17 @@ class TestUser(unittest.TestCase):
         """
         Test login a user successfully.
         """
-        user1 = {
-            "firstname": "bekelaze",
-            "lastname": "Joseph",
-            "othernames": "beka",
-            "email": "bekeplar@gmail.com",
-            "phoneNumber": "0789057968",
-            "username": "bekeplar",
-            "isAdmin": "False",
-            "password": "bekeplar1234"
-        }
 
         self.test_client.post(
             'api/v1/signup',
             content_type='application/json',
-            data=json.dumps(user1)
+            data=json.dumps(self.user)
         )
-
-        user = {
-            'username': 'bekeplar',
-            'password': 'bekeplar1234'
-        }
 
         response = self.test_client.post(
             'api/v1/login',
             content_type='application/json',
-            data=json.dumps(user)
+            data=json.dumps(self.login_user)
         )
         message = json.loads(response.data.decode())
         self.assertEqual(200, response.status_code)
@@ -322,21 +328,11 @@ class TestUser(unittest.TestCase):
         """
         Test user login with empty username
         """
-        user1 = {
-            "firstname": "bekelaze",
-            "lastname": "Joseph",
-            "othernames": "beka",
-            "email": "bekeplar@gmail.com",
-            "phoneNumber": "0789057968",
-            "username": "bekeplar",
-            "isAdmin": "False",
-            "password": "bekeplar1234"
-        }
 
         self.test_client.post(
             'api/v1/signup',
             content_type='application/json',
-            data=json.dumps(user1)
+            data=json.dumps(self.user)
         )
         user = {
             'username': '',
@@ -357,21 +353,10 @@ class TestUser(unittest.TestCase):
         """
         Test user login with empty password
         """
-        user1 = {
-            "firstname": "bekelaze",
-            "lastname": "Joseph",
-            "othernames": "beka",
-            "email": "bekeplar@gmail.com",
-            "phoneNumber": "0789057968",
-            "username": "bekeplar",
-            "isAdmin": "False",
-            "password": "bekeplar1234"
-        }
-
         self.test_client.post(
             'api/v1/signup',
             content_type='application/json',
-            data=json.dumps(user1)
+            data=json.dumps(self.user)
         )
 
         user = {
@@ -393,32 +378,17 @@ class TestUser(unittest.TestCase):
         """
         Test user login with empty fields
         """
-        user1 = {
-            "firstname": "bekelaze",
-            "lastname":" Joseph",
-            "othernames": "beka",
-            "email": "bekeplar@gmail.com",
-            "phoneNumber": "0789057968",
-            "username": "bekeplar",
-            "isAdmin": "False",
-            "password": "bekeplar1234"
-        }
 
         self.test_client.post(
             'api/v1/signup',
             content_type='application/json',
-            data=json.dumps(user1)
+            data=json.dumps(self.user)
         )
-
-        user = {
-            'username': '',
-            'password': ''
-        }
 
         response = self.test_client.post(
             'api/v1/login',
             content_type='application/json',
-            data=json.dumps(user)
+            data=json.dumps(self.invalid_user_login)
         )
 
         message = json.loads(response.data.decode())
