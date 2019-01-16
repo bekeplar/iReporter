@@ -326,7 +326,7 @@ class TestUser(unittest.TestCase):
 
     def test_user_login_empty_username(self):
         """
-        Test user login with empty username
+        Test user login with empty username.
         """
 
         self.test_client.post(
