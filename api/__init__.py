@@ -18,6 +18,7 @@ def create_app(config_name):
     app.register_blueprint(blueprint, url_prefix='/api/v1')
 
     valid_urls = [
+            "GET /api/v1/",
             "POST /api/v1/signup",
             "POST /api/v1/login",
             "GET /api/v1/redflags",
