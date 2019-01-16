@@ -282,7 +282,7 @@ class TestUser(unittest.TestCase):
 
     def test_create_user_invalid_password_length(self):
         """
-        Test if a user can be created with short password.
+        Test if a user can be created with short password
         """
         user = {
             "firstname": "Bekalaze",
