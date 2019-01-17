@@ -181,7 +181,7 @@ def edit_status_of_redflag(id):
 
 @blueprint.route('/redflags/<int:id>/comment', methods=['PATCH'])
 @jwt_required
-def edit_comment_of_redflag(id):
+def change_comment_of_redflag(id):
     data = json.loads(request.data)
     comment = data.get('comment')
     redflagId = int(id)  
