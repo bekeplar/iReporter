@@ -1,17 +1,13 @@
 import datetime
 import json
 from flask import jsonify, request, Blueprint
-from api.validator import Validation, Validators
-from api.models import User, Incident
-from api.Helpers import (create_user,
-                         login_user, verify_status)
-from flask_jwt_extended import (create_access_token,
-                                jwt_required)
-from werkzeug.security import generate_password_hash, check_password_hash
-
-blueprint = Blueprint('application', __name__)
+from api.validators.incident import Validators
+from api.models.incident import Incident
+from api.Helpers import verify_status, check_status
+from flask_jwt_extended import jwt_required
 incidents = []
-users = []
+blueprint = Blueprint('application', __name__)
+
 
 @blueprint.route('/')
 def home():
@@ -20,80 +16,6 @@ def home():
         'message': 'Welcome to bekeplar\'s iReporter app.',
         'status': '200'
     }), 200
-
-
-@blueprint.route('/signup', methods=['POST'])
-def signup():
-    """This function is used to create a new user."""
-    data = json.loads(request.data)
-    firstname = data.get('firstname')
-    lastname = data.get('lastname')
-    othernames = data.get('othernames')
-    email = data.get('email')
-    phoneNumber = data.get('phoneNumber')
-    username = data.get('username')
-    registered = datetime.datetime.utcnow()
-    isAdmin = data.get('isAdmin')
-    password = data.get('password')
-
-    user = User(firstname, lastname, othernames,
-                email, phoneNumber, username, 
-                registered, isAdmin, password
-                )
-    error = Validation.validate_input(user)
-    errors = Validation.validate_inputs(user)
-    exists = [user for user in users if user['username'] == username or user['email'] == email]
-
-    if error != None:
-        return jsonify({'Error': error}), 400
-    if errors != None:
-        return jsonify({'Error': errors}), 400
-    if exists:
-        return jsonify({
-            'message':  'user already registered.',
-            'status': 406
-            }), 406
-    password_hash = generate_password_hash(password, method='sha256')
-    create_user(username, password_hash)
-    users.append(user.__dict__)
-    return jsonify({
-        'status': 201,
-        'message': f'{username} successfully registered.',
-        'data': user.__dict__
-        }), 201
-
-
-@blueprint.route('/login', methods=['POST'])
-def login():
-    """This function allows a registered user to login"""
-    data = json.loads(request.data)
-
-    username = data.get('username')
-    password = data.get('password')
-
-    error = Validation.login_validate(username, password)
-
-    if error:
-        return jsonify({'Error': error}), 400
-    user = login_user(username, password)
-    for user in users:
-        if not user:
-            return jsonify({
-                'message': 'Wrong login credentials!',
-                'status': 401
-                }), 401
-        check_password_hash(user['password'], password) and user['username'] == username
-        access_token = create_access_token(username)
-        return jsonify({
-            'token': access_token,
-            'status': 200,
-            'message': f'{username} successfully logged in.'
-        }), 200
-    else:
-        return jsonify({
-                'message': 'Wrong login credentials!',
-                'status': 401
-                }), 401
 
 @blueprint.route('/redflags', methods=['POST'])
 @jwt_required
@@ -118,9 +40,12 @@ def create_redflag():
                        title, location, comment,
                        status, createdOn, images, videos
                        )
-    error = Validators.validate_inputs(redflag)        
+    error = Validators.validate_inputs(redflag)
+    error1 = Validators.validate_media(redflag)     
     exists = [redflag for redflag in incidents if redflag['title'] == title]
     if error != None:
+        return jsonify({'Error': error, 'status': 400}), 400
+    if error1 != None:
         return jsonify({'Error': error, 'status': 400}), 400
     if exists:
         return jsonify({
@@ -230,29 +155,6 @@ def edit_location_of_redflag(id):
                     'message': 'No such redflag record found!'
                     }), 404
 
-
-@blueprint.route('/redflags/<int:id>/comment', methods=['PATCH'])
-@jwt_required
-def edit_comment_of_redflag(id):
-    data = json.loads(request.data)
-    comment = data.get('comment')
-    redflagId = int(id)  
-    for redflag in incidents:
-        if int(redflag['id']) == redflagId:
-            if redflag['status'] != 'draft':
-                return jsonify({
-                    'status': 400,
-                    'message': 'Only draft status can be updated!'}), 400
-            redflag['comment'] = comment
-            return jsonify({'status': 200, 
-                            'data': redflag,
-                            'message': 'Redflag comment successfully updated!'
-                            }), 200
-    return jsonify({'status': 404,
-                    'message': 'No such redflag record found!'
-                    }), 404
-
-
 @blueprint.route('/redflags/<int:id>/status', methods=['PATCH'])
 @jwt_required
 def edit_status_of_redflag(id):
@@ -275,4 +177,25 @@ def edit_status_of_redflag(id):
     return jsonify({'status': 404,
                     'message': 'No such redflag record found!'
                     }), 404
-    
+
+@blueprint.route('/redflags/<int:id>/comment', methods=['PATCH'])
+@jwt_required
+def change_comment_of_redflag(id):
+    data = json.loads(request.data)
+    comment = data.get('comment')
+    error = check_status()
+    if error:
+        return jsonify({
+            'status': 400,
+            'message': 'Only draft status can be updated!'}), 400
+    RedflagId = int(id)
+    for redflag in incidents:
+        if redflag['id'] == RedflagId:
+            redflag['comment'] = comment
+            return jsonify({'status': 200, 
+                            'data': redflag,
+                            'message': 'Redflag comment successfully updated!'
+                            }), 200
+    return jsonify({'status': 404,
+                    'message': 'No such redflag record found!'
+                    }), 404

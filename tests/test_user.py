@@ -1,5 +1,5 @@
 import unittest
-from api.models import users
+from api.models.user import users
 from api import create_app
 import json
 

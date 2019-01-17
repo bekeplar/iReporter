@@ -1,4 +1,5 @@
-from api.models import users
+from api.models.user import users
+from api.models.incident import incidents
 from werkzeug.security import check_password_hash
 
 
@@ -28,5 +29,15 @@ def verify_status(status):
     for key in keys:
         if not key:
             return "Please add either 'resolved', 'rejected' or 'under investigation as status"
+
+
+def check_status():
+    """function that checks the current status """
+    redflagId = id
+    for redflag in incidents:
+        if int(redflag['id']) == redflagId:
+            if redflag['status'] != 'draft':
+                return True
+        return False
 
 

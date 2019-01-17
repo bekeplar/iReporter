@@ -10,7 +10,7 @@ omit =
     db.py
     */__init__.py
     tests/*
-    */models.py
-    */validator.py
+    */models*
+    */validators*
     */Helpers.py
     */instance/*
