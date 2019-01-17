@@ -182,9 +182,9 @@ def edit_status_of_redflag(id):
 @blueprint.route('/redflags/<int:id>/comment', methods=['PATCH'])
 @jwt_required
 def change_comment_of_redflag(id):
+    redflagId = int(id) 
     data = json.loads(request.data)
-    comment = data.get('comment')
-    redflagId = int(id)  
+    comment = data.get('comment') 
     for redflag in incidents:
         if int(redflag['id']) == redflagId:
             if redflag['status'] != 'draft':
