@@ -3,7 +3,7 @@ import json
 from flask import jsonify, request, Blueprint
 from api.validator import Validators
 from api.models.incident import Incident
-from api.Helpers import verify_status
+from api.Helpers import verify_status, check_status
 from flask_jwt_extended import jwt_required
 
 incidents = []
@@ -182,15 +182,16 @@ def edit_status_of_redflag(id):
 @blueprint.route('/redflags/<int:id>/comment', methods=['PATCH'])
 @jwt_required
 def change_comment_of_redflag(id):
-    redflagId = int(id) 
     data = json.loads(request.data)
-    comment = data.get('comment') 
+    comment = data.get('comment')
+    error = check_status()
+    if error:
+        return jsonify({
+            'status': 400,
+            'message': 'Only draft status can be updated!'}), 400
+    RedflagId = int(id)
     for redflag in incidents:
-        if int(redflag['id']) == redflagId:
-            if redflag['status'] != 'draft':
-                return jsonify({
-                    'status': 400,
-                    'message': 'Only draft status can be updated!'}), 400
+        if redflag['id'] == RedflagId:
             redflag['comment'] = comment
             return jsonify({'status': 200, 
                             'data': redflag,
