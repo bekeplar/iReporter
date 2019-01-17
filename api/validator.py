@@ -15,6 +15,8 @@ class Validators(Incident):
             return'Please fill in reporter field!'
         elif not self.comment or self.comment.isspace():
             return'Please fill in the comments field!'
+
+    def validate_media(self):
         if not self.images or self.images.isspace():
             return 'Please add images for proof!'
         elif not self.videos or self.videos.isspace():

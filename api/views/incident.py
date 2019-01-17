@@ -41,9 +41,12 @@ def create_redflag():
                        title, location, comment,
                        status, createdOn, images, videos
                        )
-    error = Validators.validate_inputs(redflag)        
+    error = Validators.validate_inputs(redflag)
+    error1 = Validators.validate_media(redflag)       
     exists = [redflag for redflag in incidents if redflag['title'] == title]
     if error != None:
+        return jsonify({'Error': error, 'status': 400}), 400
+    if error1 != None:
         return jsonify({'Error': error, 'status': 400}), 400
     if exists:
         return jsonify({
