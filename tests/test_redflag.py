@@ -1,5 +1,5 @@
 import unittest
-from api.models import incidents
+from api.models.incident import incidents
 from api import create_app
 import json
 

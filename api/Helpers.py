@@ -1,4 +1,4 @@
-from api.models import users
+from api.models.user import users
 from werkzeug.security import check_password_hash
 
 

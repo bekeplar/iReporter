@@ -1,4 +1,5 @@
-from api.models import Incident, User
+from api.models.incident import Incident
+from api.models.user import User
 import re
 
 
