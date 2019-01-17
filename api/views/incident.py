@@ -156,29 +156,6 @@ def edit_location_of_redflag(id):
                     'message': 'No such redflag record found!'
                     }), 404
 
-
-@blueprint.route('/redflags/<int:id>/comment', methods=['PATCH'])
-@jwt_required
-def edit_comment_of_redflag(id):
-    data = json.loads(request.data)
-    comment = data.get('comment')
-    redflagId = int(id)  
-    for redflag in incidents:
-        if int(redflag['id']) == redflagId:
-            if redflag['status'] != 'draft':
-                return jsonify({
-                    'status': 400,
-                    'message': 'Only draft status can be updated!'}), 400
-            redflag['comment'] = comment
-            return jsonify({'status': 200, 
-                            'data': redflag,
-                            'message': 'Redflag comment successfully updated!'
-                            }), 200
-    return jsonify({'status': 404,
-                    'message': 'No such redflag record found!'
-                    }), 404
-
-
 @blueprint.route('/redflags/<int:id>/status', methods=['PATCH'])
 @jwt_required
 def edit_status_of_redflag(id):
@@ -201,4 +178,24 @@ def edit_status_of_redflag(id):
     return jsonify({'status': 404,
                     'message': 'No such redflag record found!'
                     }), 404
-    
+
+@blueprint.route('/redflags/<int:id>/comment', methods=['PATCH'])
+@jwt_required
+def edit_comment_of_redflag(id):
+    data = json.loads(request.data)
+    comment = data.get('comment')
+    redflagId = int(id)  
+    for redflag in incidents:
+        if int(redflag['id']) == redflagId:
+            if redflag['status'] != 'draft':
+                return jsonify({
+                    'status': 400,
+                    'message': 'Only draft status can be updated!'}), 400
+            redflag['comment'] = comment
+            return jsonify({'status': 200, 
+                            'data': redflag,
+                            'message': 'Redflag comment successfully updated!'
+                            }), 200
+    return jsonify({'status': 404,
+                    'message': 'No such redflag record found!'
+                    }), 404
