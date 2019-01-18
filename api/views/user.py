@@ -1,13 +1,13 @@
 import datetime
 import json
 from flask import jsonify, request, Blueprint
-from api.validator import Validation
+from api.validators.user import Validation
 from api.models.user import User
 from api.Helpers import create_user, login_user
 from flask_jwt_extended import create_access_token
 from werkzeug.security import generate_password_hash, check_password_hash
 
-users = []
+users = list()
 user_blueprint = Blueprint('user blueprint', __name__)
 
 

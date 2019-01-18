@@ -86,8 +86,8 @@ class TestRedflag(unittest.TestCase):
             content_type='application/json',
             data=json.dumps(self.redflag)
         )
-        message = json.loads(response.data.decode())
-        self.assertEqual(message['Error'], 'Redflag record already reported!')
+        reply = json.loads(response.data.decode())
+        self.assertEqual(reply['Error'], 'Redflag record already reported!')
         self.assertEqual(406, response.status_code)
 
     def test_create_redflag_unauthorised_user(self):
@@ -356,7 +356,7 @@ class TestRedflag(unittest.TestCase):
         reply = json.loads(response.data.decode())
         self.assertEqual(reply['message'], 'These are your reports!')
         self.assertEqual(200, response.status_code)
-    
+
     def test_get_all_redflags(self):
         """Test that a user can get all his created redflags"""
 

@@ -1,11 +1,10 @@
 import datetime
 import json
 from flask import jsonify, request, Blueprint
-from api.validator import Validators
+from api.validators.incident import Validators
 from api.models.incident import Incident
 from api.Helpers import verify_status, check_status
 from flask_jwt_extended import jwt_required
-
 incidents = []
 blueprint = Blueprint('application', __name__)
 

@@ -11,6 +11,6 @@ omit =
     */__init__.py
     tests/*
     */models*
-    */validator.py
+    */validators*
     */Helpers.py
     */instance/*
