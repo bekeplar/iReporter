@@ -31,7 +31,8 @@ def signup():
                 )
     error = Validation.validate_input(user)
     errors = Validation.validate_inputs(user)
-    exists = [user for user in users if user['username'] == username or user['email'] == email]
+    exists = [user for user in users if user['username'] == username or
+              user['email'] == email]
 
     if error != None:
         return jsonify({'Error': error}), 400

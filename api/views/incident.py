@@ -17,6 +17,7 @@ def home():
         'status': '200'
     }), 200
 
+
 @blueprint.route('/redflags', methods=['POST'])
 @jwt_required
 def create_redflag():
@@ -25,9 +26,9 @@ def create_redflag():
    
     """
     data = json.loads(request.data)
-    id = len(incidents)+1
+    _id = len(incidents)+1
     createdBy = data.get('createdBy')
-    type = data.get('type')
+    _type = data.get('type')
     title = data.get('title')
     location = data.get('location')
     comment = data.get('comment')
@@ -36,7 +37,7 @@ def create_redflag():
     images = data.get('images')
     videos = data.get('videos')
 
-    redflag = Incident(id, createdBy, type,
+    redflag = Incident(_id, createdBy, _type,
                        title, location, comment,
                        status, createdOn, images, videos
                        )
@@ -55,7 +56,7 @@ def create_redflag():
     return jsonify({
         'status': 201, 
         'message': 'created redflag reccord!',
-        'id': id,
+        'id': _id,
         'data': redflag.__dict__
         }), 201
 
@@ -81,9 +82,9 @@ def get_all_redflags():
     }), 200
 
 
-@blueprint.route('/redflags/<int:id>', methods=['GET'])
+@blueprint.route('/redflags/<int:redflag_id>', methods=['GET'])
 @jwt_required
-def get_specific_redflag(id):
+def get_specific_redflag(redflag_id):
     """
     This function enables a registered
     user fetch a specific redflag record.
@@ -97,9 +98,9 @@ def get_specific_redflag(id):
             'data': [redflag for redflag in incidents],
             'message': 'You haven/t reported any redflag!'
         }), 400
-    redflagId = int(id)
+    redflagId = int(redflag_id)
     for redflag in incidents:
-        if int(redflag['id']) == redflagId:
+        if int(redflag['_id']) == redflagId:
             return jsonify({
                 'status': 200,
                 'data': redflag,
@@ -111,20 +112,20 @@ def get_specific_redflag(id):
         }), 404
 
 
-@blueprint.route('/redflags/<int:id>', methods=['DELETE'])
+@blueprint.route('/redflags/<int:redflag_id>', methods=['DELETE'])
 @jwt_required
-def delete_specific_redflag(id):
+def delete_specific_redflag(redflag_id):
     """
     Function for deleting a specific redflag from the report.
     """
-    redflagId = int(id)
+    redflagId = int(redflag_id)
     for redflag in incidents:
-        if int(redflag['id']) == redflagId:
+        if int(redflag['_id']) == redflagId:
             incidents.remove(redflag)
             return jsonify({
                 'data': redflag,
                 'status': 200,
-                'id': id,
+                'id': redflag_id,
                 'message': 'Redflag record  deleted!'
             }), 200
     return jsonify({
@@ -133,21 +134,21 @@ def delete_specific_redflag(id):
             }), 404
 
 
-@blueprint.route('/redflags/<int:id>/location', methods=['PATCH'])
+@blueprint.route('/redflags/<int:redflag_id>/location', methods=['PATCH'])
 @jwt_required
-def edit_location_of_redflag(id):
+def edit_location_of_redflag(redflag_id):
     data = json.loads(request.data)
     location = data.get('location')
-    redflagId = int(id)
+    redflagId = int(redflag_id)
     for redflag in incidents:
-        if int(redflag['id']) == redflagId:
+        if int(redflag['_id']) == redflagId:
             if redflag['status'] != 'draft':
                 return jsonify({
                     'status': 400,
                     'message': 'Only draft status can be updated!'}), 400
             redflag['location'] = location
             return jsonify({
-                'status': 200, 
+                'status': 200,
                 'data': redflag,
                 'message': 'Redflag location successfully updated!'
                             }), 200
@@ -155,12 +156,13 @@ def edit_location_of_redflag(id):
                     'message': 'No such redflag record found!'
                     }), 404
 
-@blueprint.route('/redflags/<int:id>/status', methods=['PATCH'])
+
+@blueprint.route('/redflags/<int:redflag_id>/status', methods=['PATCH'])
 @jwt_required
-def edit_status_of_redflag(id):
+def edit_status_of_redflag(redflag_id):
     data = json.loads(request.data)
     status = data.get('status')
-    RedflagId = int(id)
+    RedflagId = int(redflag_id)
     error = verify_status(status)
 
     if error:
@@ -168,7 +170,7 @@ def edit_status_of_redflag(id):
                         'error': 'error'
                         }), 400
     for redflag in incidents:
-        if redflag['id'] == RedflagId:
+        if redflag['_id'] == RedflagId:
             redflag['status'] = status
             return jsonify({'status': 200, 
                             'data': redflag,
@@ -178,9 +180,10 @@ def edit_status_of_redflag(id):
                     'message': 'No such redflag record found!'
                     }), 404
 
-@blueprint.route('/redflags/<int:id>/comment', methods=['PATCH'])
+
+@blueprint.route('/redflags/<int:redflag_id>/comment', methods=['PATCH'])
 @jwt_required
-def change_comment_of_redflag(id):
+def change_comment_of_redflag(redflag_id):
     data = json.loads(request.data)
     comment = data.get('comment')
     error = check_status()
@@ -188,9 +191,9 @@ def change_comment_of_redflag(id):
         return jsonify({
             'status': 400,
             'message': 'Only draft status can be updated!'}), 400
-    RedflagId = int(id)
+    RedflagId = int(redflag_id)
     for redflag in incidents:
-        if redflag['id'] == RedflagId:
+        if redflag['_id'] == RedflagId:
             redflag['comment'] = comment
             return jsonify({'status': 200, 
                             'data': redflag,

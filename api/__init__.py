@@ -42,16 +42,15 @@ def create_app(config_name):
                 'Issue': 'You have entered an unknown URL.',
                 'Valid URLs': valid_urls,
                 'status': 404,
-                'message': 'Please contact the Admin for more details on this API.'
+                'message': 'Please contact Admin for more details on this API.'
             }), 404
         else:
             response = jsonify({
                 'status': 405,
                 'error': 'Method Not Allowed.',
                 'Supported Methods': valid_urls,
-                'message': 'Please follow this guide for details on this API.'          
+                'message': 'Please follow this guide for details on this API.'
             }), 405
         return response
 
     return app
-
