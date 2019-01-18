@@ -1,5 +1,4 @@
 from api.models.incident import Incident
-import re
 
 
 class Validators(Incident):
@@ -22,5 +21,3 @@ class Validators(Incident):
             return'Please add videos for proof!'
         else:
             return None
-         
-   

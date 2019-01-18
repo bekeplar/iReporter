@@ -26,7 +26,7 @@ def signup():
     password = data.get('password')
 
     user = User(firstname, lastname, othernames,
-                email, phoneNumber, username, 
+                email, phoneNumber, username,
                 registered, isAdmin, password
                 )
     error = Validation.validate_input(user)
@@ -71,7 +71,7 @@ def login():
                 'message': 'Wrong login credentials!',
                 'status': 401
                 }), 401
-        check_password_hash(user['password'], password) and user['username'] == username
+        check_password_hash(user['password'], password) and user['username'] == username,
         access_token = create_access_token(username)
         return jsonify({
             'token': access_token,

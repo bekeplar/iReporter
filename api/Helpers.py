@@ -1,5 +1,4 @@
 from api.models.user import users
-from flask import jsonify
 from api.models.incident import incidents
 from werkzeug.security import check_password_hash
 
