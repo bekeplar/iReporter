@@ -1,6 +1,6 @@
 .pytest_cache
 .vscode
-env
+.env
 venv
 # Byte-compiled / optimized / DLL files
 .pyc

@@ -10,22 +10,17 @@ class DatabaseConnection:
 
     def __init__(self):
 
-        if os.getenv('DB_NAME') == 'test_db':
-            self.db_name = 'test_db'
-        else:
-            self.db_name = 'postgres'
-
+        self.db_name = os.getenv('DB_NAME') 
         try:
             self.connection = psycopg2.connect(
-                dbname='postgres', host='localhost',
-                port=5433, password='bekeplar', user='postgres'
+                dbname=os.getenv('DB_NAME'), host=os.getenv('HOST_NAME'),
+                port=os.getenv('PORT_NAME'), password=os.getenv('PASSWORD'), user=os.getenv('USER_NAME')
                  )
             self.connection.autocommit = True
             self.cursor = self.connection.cursor()
             self.dict_cursor = self.connection.cursor(
                                             cursor_factory=RealDictCursor)
             pprint('Connected to the database')
-            pprint('Database Name:')
             pprint(self.db_name)
 
             create_user_table = """CREATE TABLE IF NOT EXISTS users(
