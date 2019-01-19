@@ -14,7 +14,8 @@ class DatabaseConnection:
         try:
             self.connection = psycopg2.connect(
                 dbname=os.getenv('DB_NAME'), host=os.getenv('HOST_NAME'),
-                port=os.getenv('PORT_NAME'), password=os.getenv('PASSWORD'), user=os.getenv('USER_NAME')
+                password='bekeplar', port=os.getenv('PORT_NAME'),
+                user=os.getenv('USER_NAME')
                  )
             self.connection.autocommit = True
             self.cursor = self.connection.cursor()
