@@ -1,7 +1,7 @@
 from flask import Flask, jsonify
 import datetime
 from instance.config import app_config
-from api.views.incident import blueprint
+from api.views.redflag import blueprint
 from api.views.user import user_blueprint
 from flask_jwt_extended import JWTManager
 

@@ -14,7 +14,7 @@ class DatabaseConnection:
         try:
             self.connection = psycopg2.connect(
                 dbname=os.getenv('DB_NAME'), host=os.getenv('HOST_NAME'),
-                password=('USER_PASSWORD'), port=os.getenv('PORT_NAME'),
+                password='bekeplar', port=os.getenv('PORT_NAME'),
                 user=os.getenv('USER_NAME')
                  )
             self.connection.autocommit = True
@@ -218,4 +218,4 @@ class DatabaseConnection:
 
 if __name__ == '__main__':
     database_connection = DatabaseConnection()
-# dbname = os.environ["DATABASE_URL"]
+# dbname = os.environ["DATABASE_URL"]           

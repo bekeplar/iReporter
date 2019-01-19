@@ -7,7 +7,7 @@ class Validators(Incident):
             return 'Please fill in title field!'
         elif not self.location or self.location.isspace():
             return'Please fill in location field!'
-        elif not self._type or self._type.isspace():
+        elif not self.type or self.type.isspace():
             return'Please select incident type!'
         elif not self.createdBy or self.createdBy.isspace():
             return'Please fill in reporter field!'

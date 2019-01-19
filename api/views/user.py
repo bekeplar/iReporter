@@ -1,14 +1,14 @@
 import datetime
 import json
+from database.db import DatabaseConnection
 from flask import jsonify, request, Blueprint
 from api.validators.user import Validation
 from api.models.user import User
-from api.Helpers import create_user, login_user
 from flask_jwt_extended import create_access_token
 from werkzeug.security import generate_password_hash, check_password_hash
 
-users = list()
 user_blueprint = Blueprint('user blueprint', __name__)
+db = DatabaseConnection()
 
 
 @user_blueprint.route('/signup', methods=['POST'])
@@ -26,13 +26,12 @@ def signup():
     password = data.get('password')
 
     user = User(firstname, lastname, othernames,
-                email, phoneNumber, username,
+                email, phoneNumber, username, 
                 registered, isAdmin, password
                 )
     error = Validation.validate_input(user)
     errors = Validation.validate_inputs(user)
-    exists = [user for user in users if user['username'] == username or
-              user['email'] == email]
+    exists = user.check_user_exist()
 
     if error != None:
         return jsonify({'Error': error}), 400
@@ -44,8 +43,9 @@ def signup():
             'status': 406
             }), 406
     password_hash = generate_password_hash(password, method='sha256')
-    create_user(username, password_hash)
-    users.append(user.__dict__)
+    db.insert_user(id, firstname, lastname,
+                   othernames, email, password_hash,
+                   username, registered, isAdmin)
     return jsonify({
         'status': 201,
         'message': f'{username} successfully registered.',
@@ -63,24 +63,21 @@ def login():
 
     error = Validation.login_validate(username, password)
 
-    if error:
+    if error != None:
         return jsonify({'Error': error}), 400
-    user = login_user(username, password)
-    for user in users:
-        if not user:
-            return jsonify({
-                'message': 'Wrong login credentials!',
-                'status': 401
-                }), 401
-        check_password_hash(user['password'], password) and user['username'] == username,
+
+    db = DatabaseConnection()
+    user = db.login(username)
+    if user == None:
+        return jsonify({'message': 'Wrong login credentials.'}), 400
+
+    if check_password_hash(user['password'], password) and user['username'] == username:
         access_token = create_access_token(username)
         return jsonify({
-            'token': access_token,
             'status': 200,
+            'token': access_token,
             'message': f'{username} successfully logged in.'
         }), 200
     else:
-        return jsonify({
-                'message': 'Wrong login credentials!',
-                'status': 401
-                }), 401
+        return jsonify({'message': 'Wrong login credentials.'}), 400
+     

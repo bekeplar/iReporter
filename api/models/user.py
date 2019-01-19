@@ -1,3 +1,6 @@
+from database.db import DatabaseConnection
+
+db = DatabaseConnection()
 users = []
 
 
@@ -13,3 +16,11 @@ class User:
         self.registered = args[6]
         self.isAdmin = args[7]
         self.password = args[8]
+
+    def check_user_exist(self):
+        username = db.check_username(self.username)
+        email = db.check_email(self.email)
+        if username != None:
+            return 'Username is taken.'
+        if email != None:
+            return 'Email already has an account.'
