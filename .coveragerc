@@ -12,5 +12,6 @@ omit =
     tests/*
     */models*
     */validators*
+    */database/*
     */Helpers.py
     */instance/*
