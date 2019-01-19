@@ -43,9 +43,9 @@ def signup():
             'status': 406
             }), 406
     password_hash = generate_password_hash(password, method='sha256')
-    db.insert_user(id, firstname, lastname,
-                   othernames, email, password_hash,
-                   username, registered, isAdmin)
+    db.add_user(id, firstname, lastname,
+                othernames, email, password_hash,
+                username, registered, isAdmin)
     return jsonify({
         'status': 201,
         'message': f'{username} successfully registered.',

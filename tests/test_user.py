@@ -12,6 +12,32 @@ class TestUser(unittest.TestCase):
         self.db = DatabaseConnection()
         self.app = create_app('Testing')
         self.test_client = self.app.test_client()
+        self.user1 = {
+            "firstname": "bekelaze",
+            "lastname": "Joseph",
+            "othernames": "beka",
+            "email": "bekeplar@gmail.com",
+            "phoneNumber": "0789057968",
+            "username": "bekeplar",
+            "isAdmin": "False",
+            "password": "bekeplar1234"
+        }
+
+        self.user2 = {
+            "firstname": "Nanyonjo",
+            "lastname": "Favour",
+            "othernames": "sylvia",
+            "email": "nanyofav@gmail.com",
+            "phoneNumber": "0789057968",
+            "username": "favor",
+            "isAdmin": "False",
+            "password": "favor123"
+        }
+
+        self.user = {
+            'username': 'bekeplar',
+            'password': 'bekeplar1234'
+        }
    
     def test_home(self):
         response = self.test_client.get(
@@ -50,16 +76,6 @@ class TestUser(unittest.TestCase):
         """
         Test if a user can be registered successfully.
         """
-        user = {
-            "firstname": "Nanyonjo",
-            "lastname": "Favour",
-            "othernames": "sylvia",
-            "email": "nanyofav@gmail.com",
-            "phoneNumber": "0789057968",
-            "username": "favor",
-            "isAdmin": "False",
-            "password": "favor123"
-        }
         response = self.test_client.post(
             'api/v1/signup',
             content_type='application/json',
@@ -288,32 +304,17 @@ class TestUser(unittest.TestCase):
         """
         Test login a user successfully.
         """
-        user1 = {
-            "firstname": "bekelaze",
-            "lastname": "Joseph",
-            "othernames": "beka",
-            "email": "bekeplar@gmail.com",
-            "phoneNumber": "0789057968",
-            "username": "bekeplar",
-            "isAdmin": "False",
-            "password": "bekeplar1234"
-        }
 
         self.test_client.post(
             'api/v1/signup',
             content_type='application/json',
-            data=json.dumps(user1)
+            data=json.dumps(self.user1)
         )
-
-        user = {
-            'username': 'bekeplar',
-            'password': 'bekeplar1234'
-        }
 
         response = self.test_client.post(
             'api/v1/login',
             content_type='application/json',
-            data=json.dumps(user)
+            data=json.dumps(self.user)
         )
         message = json.loads(response.data.decode())
         self.assertEqual(response.status_code, 200)

@@ -14,7 +14,7 @@ class DatabaseConnection:
         try:
             self.connection = psycopg2.connect(
                 dbname=os.getenv('DB_NAME'), host=os.getenv('HOST_NAME'),
-                password='bekeplar', port=os.getenv('PORT_NAME'),
+                password=('DB_PASSWORD'), port=os.getenv('PORT_NAME'),
                 user=os.getenv('USER_NAME')
                  )
             self.connection.autocommit = True
@@ -80,9 +80,9 @@ class DatabaseConnection:
         pprint(insert_redflag)
         self.dict_cursor.execute(insert_redflag)
     
-    def insert_user(self, id, firstname, lastname,
-                    othernames, email, password,
-                    username, registered, isAdmin
+    def add_user(self, id, firstname, lastname,
+                 othernames, email, password,
+                 username, registered, isAdmin
                     ):
         """Method for adding a new user to users"""
         insert_user = """INSERT INTO users(
