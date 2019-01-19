@@ -39,5 +39,3 @@ def check_status():
             if redflag['status'] != 'draft':
                 return True
         return False
-
-
