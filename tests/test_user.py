@@ -431,5 +431,3 @@ class TestUser(unittest.TestCase):
         Drop the user table very after a single test has run
         """
         self.db.drop_tables()
-
-

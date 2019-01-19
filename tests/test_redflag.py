@@ -807,4 +807,3 @@ class TestRedflag(unittest.TestCase):
             data=json.dumps(new_location)
         )
         self.assertEqual(response.status_code, 404)
-    
