@@ -262,7 +262,7 @@ class TestRedflag(unittest.TestCase):
             headers={'Authorization': 'Bearer ' + access_token['token']},
             data=json.dumps(redflag)
         )
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 406)
 
     def test_create_redflag_empty_images(self):
         """
@@ -296,7 +296,7 @@ class TestRedflag(unittest.TestCase):
             headers={'Authorization': 'Bearer ' + access_token['token']},
             data=json.dumps(redflag)
         )
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 406)
 
     def test_create_redflag_no_location(self):
         """
