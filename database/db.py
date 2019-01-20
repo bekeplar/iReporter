@@ -10,11 +10,12 @@ class DatabaseConnection:
 
     def __init__(self):
 
-        self.db_name = os.getenv('DB_NAME') 
+        self.db_name = os.getenv('DB_NAME')
+
         try:
             self.connection = psycopg2.connect(
                 dbname=os.getenv('DB_NAME'), host=os.getenv('HOST_NAME'),
-                password=('DB_PASSWORD'), port=os.getenv('PORT_NAME'),
+                password=os.getenv('USER_PASSWORD'), port=os.getenv('PORT_NAME'),
                 user=os.getenv('USER_NAME')
                  )
             self.connection.autocommit = True
@@ -35,8 +36,8 @@ class DatabaseConnection:
             password TEXT NOT NULL,
             registered TEXT NOT NULL,
             isAdmin BOOL NOT NULL
-                );"""
-            
+                );""" 
+  
             create_Incidents_table = """CREATE TABLE IF NOT EXISTS incidents(
             id SERIAL NOT NULL PRIMARY KEY,
             createdBy VARCHAR(50) NOT NULL,

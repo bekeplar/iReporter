@@ -79,7 +79,7 @@ class TestUser(unittest.TestCase):
         response = self.test_client.post(
             'api/v1/signup',
             content_type='application/json',
-            data=json.dumps(user)
+            data=json.dumps(self.user2)
         )
         message = json.loads(response.data.decode())
         self.assertEqual(response.status_code, 201)

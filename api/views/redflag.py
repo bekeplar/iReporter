@@ -95,7 +95,9 @@ def get_specific_redflag(id):
     try:
         get_one = db.fetch_redflag(id)
         if not get_one:
-            return jsonify({'message': 'No such redflag record found!'}), 404
+            return jsonify({
+                'status': 404,
+                'message': 'No such redflag record found!'}), 404
         return jsonify({
             'status': 404,
             'data': get_one,
@@ -152,6 +154,7 @@ def edit_status_of_redflag(id):
                             }), 404
     except ValueError:
         return jsonify({
+            'status': 400,
             'message': 'Please provide right inputs'
         }), 400
 
@@ -204,6 +207,7 @@ def edit_comment_of_redflag(id):
                             }), 404
     except ValueError:
         return jsonify({
+            'status': 400,
             'message': 'Please provide right inputs'
         }), 400
 
