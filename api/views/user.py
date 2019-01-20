@@ -11,7 +11,7 @@ user_blueprint = Blueprint('user blueprint', __name__)
 db = DatabaseConnection()
 
 
-@user_blueprint.route('/signup', methods=['POST'])
+@user_blueprint.route('/auth/signup', methods=['POST'])
 def signup():
     """This function is used to create a new user."""
     data = json.loads(request.data)
@@ -46,14 +46,16 @@ def signup():
     db.add_user(id, firstname, lastname,
                 othernames, email, password_hash,
                 username, registered, isAdmin)
+    access_token = create_access_token(username)
     return jsonify({
         'status': 201,
+        'token': access_token,
         'message': f'{username} successfully registered.',
-        'data': user.__dict__
+        'user': user.__dict__
         }), 201
 
 
-@user_blueprint.route('/login', methods=['POST'])
+@user_blueprint.route('/auth/login', methods=['POST'])
 def login():
     """This function allows a registered user to login"""
     data = json.loads(request.data)

@@ -1,13 +1,14 @@
 import datetime
 import json
+import uuid
 from database.db import DatabaseConnection
 from flask import jsonify, request, Blueprint
 from api.validators.incident import Validators
-from api.models.incident import Incident, incidents
+from api.models.incident import Incident
 from flask_jwt_extended import jwt_required, get_jwt_identity
 db = DatabaseConnection()
 blueprint = Blueprint('application', __name__)
-
+# userId = uuid.uuid4()
 
 @blueprint.route('/')
 def home():
@@ -26,7 +27,7 @@ def create_redflag():
    
     """
     data = json.loads(request.data)
-    id = len(incidents)+1
+    id = uuid.uuid4()
     createdBy = data.get('createdBy')
     type = data.get('type')
     title = data.get('title')

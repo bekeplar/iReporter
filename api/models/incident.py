@@ -2,8 +2,6 @@ from database.db import DatabaseConnection
 
 db = DatabaseConnection()
 
-incidents = []
-
 
 class Incident:
     """This class contains all incident objects"""

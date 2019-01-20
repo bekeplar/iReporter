@@ -21,8 +21,8 @@ def create_app(config_name):
 
     valid_urls = [
             "GET /api/v1/",
-            "POST /api/v1/signup",
-            "POST /api/v1/login",
+            "POST /api/v1/auth/signup",
+            "POST /api/v1/auth/login",
             "GET /api/v1/redflags",
             "GET /api/v1 /redflags/<int:id>",
             "PATCH /api/v1/redflags/<int:id>/location",

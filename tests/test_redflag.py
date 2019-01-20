@@ -44,7 +44,7 @@ class TestRedflag(unittest.TestCase):
         Test if a user can create a redflag successfully.
         """
         response = self.test_client.post(
-            'api/v1/signup',
+            'api/v1/auth/signup',
             content_type='application/json',
             data=json.dumps(self.user)
         )
@@ -52,7 +52,7 @@ class TestRedflag(unittest.TestCase):
         self.assertEqual(message['message'], "bekeplar successfully registered.")
        
         response = self.test_client.post(
-            'api/v1/login',
+            'api/v1/auth/login',
             content_type='application/json',
             data=json.dumps(self.login_user)
         )
@@ -107,7 +107,7 @@ class TestRedflag(unittest.TestCase):
         Test if a user can create a redflag with missing createdBy.
         """
         response = self.test_client.post(
-            'api/v1/login',
+            'api/v1/auth/login',
             content_type='application/json',
             data=json.dumps(self.login_user)
         )
@@ -137,7 +137,7 @@ class TestRedflag(unittest.TestCase):
         Test if a user can be created with no type of incident.
         """
         response = self.test_client.post(
-            'api/v1/login',
+            'api/v1/auth/login',
             content_type='application/json',
             data=json.dumps(self.login_user)
         )
@@ -169,7 +169,7 @@ class TestRedflag(unittest.TestCase):
         """
 
         response = self.test_client.post(
-            'api/v1/login',
+            'api/v1/auth/login',
             content_type='application/json',
             data=json.dumps(self.login_user)
         )
@@ -199,7 +199,7 @@ class TestRedflag(unittest.TestCase):
         check if a user can create a redflag with no video.
         """
         response = self.test_client.post(
-            'api/v1/login',
+            'api/v1/auth/login',
             content_type='application/json',
             data=json.dumps(self.login_user)
         )
@@ -230,7 +230,7 @@ class TestRedflag(unittest.TestCase):
         """
         
         response = self.test_client.post(
-            'api/v1/login',
+            'api/v1/auth/login',
             content_type='application/json',
             data=json.dumps(self.login_user)
         )
@@ -261,7 +261,7 @@ class TestRedflag(unittest.TestCase):
         """
 
         response = self.test_client.post(
-            'api/v1/login',
+            'api/v1/auth/login',
             content_type='application/json',
             data=json.dumps(self.login_user)
         )
@@ -292,7 +292,7 @@ class TestRedflag(unittest.TestCase):
         """
 
         response = self.test_client.post(
-            'api/v1/login',
+            'api/v1/auth/login',
             content_type='application/json',
             data=json.dumps(self.login_user)
         )
@@ -323,7 +323,7 @@ class TestRedflag(unittest.TestCase):
         """Test that a user can get all his created redflags"""
         
         response = self.test_client.post(
-            'api/v1/login',
+            'api/v1/auth/login',
             content_type='application/json',
             data=json.dumps(self.login_user)
         )
@@ -364,7 +364,7 @@ class TestRedflag(unittest.TestCase):
         """Test that a user cannot get a non existing redflag record"""
         
         response = self.test_client.post(
-            'api/v1/login',
+            'api/v1/auth/login',
             content_type='application/json',
             data=json.dumps(self.login_user)
         )
@@ -386,7 +386,7 @@ class TestRedflag(unittest.TestCase):
         """Test that a user cannot get a redflag from empty list"""
         
         response = self.test_client.post(
-            'api/v1/login',
+            'api/v1/auth/login',
             content_type='application/json',
             data=json.dumps(self.login_user)
         )
@@ -403,7 +403,7 @@ class TestRedflag(unittest.TestCase):
         """Test that a user can delete a specific created redflags"""
 
         response = self.test_client.post(
-            'api/v1/login',
+            'api/v1/auth/login',
             content_type='application/json',
             data=json.dumps(self.login_user)
         )
@@ -426,7 +426,7 @@ class TestRedflag(unittest.TestCase):
         """Test that a user cannot delete non existing"""
 
         response = self.test_client.post(
-            'api/v1/login',
+            'api/v1/auth/login',
             content_type='application/json',
             data=json.dumps(self.login_user)
         )
@@ -462,7 +462,7 @@ class TestRedflag(unittest.TestCase):
         """Test that a user can update comment of a specific created redflag"""
        
         response = self.test_client.post(
-            'api/v1/login',
+            'api/v1/auth/login',
             content_type='application/json',
             data=json.dumps(self.login_user)
         )
@@ -493,7 +493,7 @@ class TestRedflag(unittest.TestCase):
         """Test that a user cannot update comment for non existing redflag"""
        
         response = self.test_client.post(
-            'api/v1/login',
+            'api/v1/auth/login',
             content_type='application/json',
             data=json.dumps(self.login_user)
         )
@@ -515,7 +515,7 @@ class TestRedflag(unittest.TestCase):
         """Test that a user cannot update status for non existing redflag"""
 
         response = self.test_client.post(
-            'api/v1/login',
+            'api/v1/auth/login',
             content_type='application/json',
             data=json.dumps(self.login_user)
         )
@@ -537,7 +537,7 @@ class TestRedflag(unittest.TestCase):
         """Test that a user can update comment of a specific created redflag"""
        
         response = self.test_client.post(
-            'api/v1/login',
+            'api/v1/auth/login',
             content_type='application/json',
             data=json.dumps(self.login_user)
         )
@@ -566,7 +566,7 @@ class TestRedflag(unittest.TestCase):
         """Test that a user can update location of a specific created redflag"""
         
         response = self.test_client.post(
-            'api/v1/login',
+            'api/v1/auth/login',
             content_type='application/json',
             data=json.dumps(self.login_user)
         )
@@ -596,7 +596,7 @@ class TestRedflag(unittest.TestCase):
         """Test that a user cannot update non existing created redflag"""
 
         response = self.test_client.post(
-            'api/v1/login',
+            'api/v1/auth/login',
             content_type='application/json',
             data=json.dumps(self.login_user)
         )

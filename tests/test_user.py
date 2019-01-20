@@ -64,7 +64,7 @@ class TestUser(unittest.TestCase):
         }
 
         response = self.test_client.post(
-            'api/v1/signup',
+            'api/v1/auth/signup',
             content_type='application/json',
             data=json.dumps(user)
         )
@@ -77,7 +77,7 @@ class TestUser(unittest.TestCase):
         Test if a user can be registered successfully.
         """
         response = self.test_client.post(
-            'api/v1/signup',
+            'api/v1/auth/signup',
             content_type='application/json',
             data=json.dumps(self.user2)
         )
@@ -101,7 +101,7 @@ class TestUser(unittest.TestCase):
         }
 
         response = self.test_client.post(
-            'api/v1/signup',
+            'api/v1/auth/signup',
             content_type='application/json',
             data=json.dumps(user)
         )
@@ -125,7 +125,7 @@ class TestUser(unittest.TestCase):
         }
 
         response = self.test_client.post(
-            'api/v1/signup',
+            'api/v1/auth/signup',
             content_type='application/json',
             data=json.dumps(user)
         )
@@ -336,7 +336,7 @@ class TestUser(unittest.TestCase):
         }
 
         self.test_client.post(
-            'api/v1/signup',
+            'api/v1/auth/signup',
             content_type='application/json',
             data=json.dumps(user1)
         )
@@ -346,7 +346,7 @@ class TestUser(unittest.TestCase):
         }
 
         response = self.test_client.post(
-            'api/v1/login',
+            'api/v1/auth/login',
             content_type='application/json',
             data=json.dumps(user)
         )
@@ -371,7 +371,7 @@ class TestUser(unittest.TestCase):
         }
 
         self.test_client.post(
-            'api/v1/signup',
+            'api/v1/auth/signup',
             content_type='application/json',
             data=json.dumps(user1)
         )
@@ -382,7 +382,7 @@ class TestUser(unittest.TestCase):
         }
 
         response = self.test_client.post(
-            'api/v1/login',
+            'api/v1/auth/login',
             content_type='application/json',
             data=json.dumps(user)
         )
@@ -397,7 +397,7 @@ class TestUser(unittest.TestCase):
         """
         user1 = {
             "firstname": "bekelaze",
-            "lastname":" Joseph",
+            "lastname": "Joseph",
             "othernames": "beka",
             "email": "bekeplar@gmail.com",
             "phoneNumber": "0789057968",
@@ -407,7 +407,7 @@ class TestUser(unittest.TestCase):
         }
 
         self.test_client.post(
-            'api/v1/signup',
+            'api/v1/auth/signup',
             content_type='application/json',
             data=json.dumps(user1)
         )
@@ -418,7 +418,7 @@ class TestUser(unittest.TestCase):
         }
 
         response = self.test_client.post(
-            'api/v1/login',
+            'api/v1/auth/login',
             content_type='application/json',
             data=json.dumps(user)
         )

@@ -1,7 +1,6 @@
 from database.db import DatabaseConnection
 
 db = DatabaseConnection()
-users = []
 
 
 class User:
