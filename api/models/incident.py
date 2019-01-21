@@ -7,7 +7,7 @@ class Incident:
     """This class contains all incident objects"""
 
     def __init__(self, *args):
-        self.id = args[0]
+        self.incident_id = args[0]
         self.createdBy = args[1]
         self.type = args[2]
         self.title = args[3]

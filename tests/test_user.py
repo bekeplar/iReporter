@@ -148,7 +148,7 @@ class TestUser(unittest.TestCase):
             "password": "bekeplar1234"
         }
         response = self.test_client.post(
-            'api/v1/signup',
+            'api/v1/auth/signup',
             content_type='application/json',
             data=json.dumps(user)
         )
@@ -172,7 +172,7 @@ class TestUser(unittest.TestCase):
         }
 
         response = self.test_client.post(
-            'api/v1/signup',
+            'api/v1/auth/signup',
             content_type='application/json',
             data=json.dumps(user)
         )
@@ -196,7 +196,7 @@ class TestUser(unittest.TestCase):
         }
 
         response = self.test_client.post(
-            'api/v1/signup',
+            'api/v1/auth/signup',
             content_type='application/json',
             data=json.dumps(user)
         )
@@ -220,7 +220,7 @@ class TestUser(unittest.TestCase):
         }
 
         response = self.test_client.post(
-            'api/v1/signup',
+            'api/v1/auth/signup',
             content_type='application/json',
             data=json.dumps(user)
         )
@@ -244,7 +244,7 @@ class TestUser(unittest.TestCase):
         }
 
         response = self.test_client.post(
-            'api/v1/signup',
+            'api/v1/auth/signup',
             content_type='application/json',
             data=json.dumps(user)
         )
@@ -268,7 +268,7 @@ class TestUser(unittest.TestCase):
         }
 
         response = self.test_client.post(
-            'api/v1/signup',
+            'api/v1/auth/signup',
             content_type='application/json',
             data=json.dumps(user)
         )
@@ -292,7 +292,7 @@ class TestUser(unittest.TestCase):
         }
 
         response = self.test_client.post(
-            'api/v1/signup',
+            'api/v1/auth/signup',
             content_type='application/json',
             data=json.dumps(user)
         )
@@ -306,13 +306,13 @@ class TestUser(unittest.TestCase):
         """
 
         self.test_client.post(
-            'api/v1/signup',
+            'api/v1/auth/signup',
             content_type='application/json',
             data=json.dumps(self.user1)
         )
 
         response = self.test_client.post(
-            'api/v1/login',
+            'api/v1/auth/login',
             content_type='application/json',
             data=json.dumps(self.user)
         )

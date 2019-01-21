@@ -17,7 +17,7 @@ class RedflagController:
         """
         Method for creating a new redflag.
         """
-        id = uuid.uuid4()
+        incident_id = uuid.uuid4()
         createdBy = data.get('createdBy')
         type = data.get('type')
         title = data.get('title')
@@ -28,7 +28,7 @@ class RedflagController:
         images = data.get('images')
         videos = data.get('videos')
 
-        redflag = Incident(id, createdBy, type,
+        redflag = Incident(incident_id, createdBy, type,
                            title, location, comment,
                            status, createdOn, images, videos
                            )
@@ -40,13 +40,13 @@ class RedflagController:
             return jsonify({
                 'Error': 'Redflag record already reported!',
                 'status': 406}), 406
-        db.insert_redflag(id, createdBy, type,
+        db.insert_redflag(incident_id, createdBy, type,
                           title, location, comment,
                           status, createdOn, images, videos)
         return jsonify({
             'status': 201, 
             'message': 'created redflag reccord!',
-            'id': id,
+            'id': incident_id,
             'data': redflag.__dict__
             }), 201
 
@@ -69,7 +69,7 @@ class RedflagController:
             'message': 'These are your reports!'
         }), 200
 
-    def fetch_one_redflag(self):
+    def fetch_one_redflag(self, redflag_id):
         """
         This method enables a registered
         user fetch a specific redflag record.
@@ -78,7 +78,7 @@ class RedflagController:
         For any given right id
         """
         try:
-            get_one = db.fetch_redflag(id)
+            get_one = db.fetch_redflag(redflag_id)
             if not get_one:
                 return jsonify({
                     'status': 404,
@@ -91,16 +91,16 @@ class RedflagController:
         except TypeError:
             return jsonify({'message': 'Redflag Id must be a number.'}), 400
 
-    def delete_one_redflag(self):
+    def delete_one_redflag(self, redflag_id):
         """
         A method for deleting a specific redflag from the report.
         """
         try:
             username = get_jwt_identity()
-            get_one = db.fetch_redflag(id)
+            get_one = db.fetch_redflag(redflag_id)
 
             if username and get_one:
-                db.delete_redflag(id)
+                db.delete_redflag(redflag_id)
                 return jsonify({
                     'message': 'Redflag record deleted succesfully.',
                     'data': get_one,
@@ -115,17 +115,17 @@ class RedflagController:
             return jsonify({'message': 'Only the reporter can delete this.',
                             'status': 401}), 401
 
-    def update_status(self, data):
+    def update_status(self, redflag_id, data):
         """
         A method for updating status a specific redflag from the report.
         """
         try:
-            get_one = db.fetch_redflag(id)
+            get_one = db.fetch_redflag(redflag_id)
             if get_one:
-                db.update_status(id, data)
+                db.update_status(redflag_id, data)
                 return jsonify({
                     'status': 200,
-                    'data': db.fetch_redflag(id),
+                    'data': db.fetch_redflag(redflag_id),
                     'message': 'Redflag status successfully updated!'
                                 }), 200
             else:
@@ -138,18 +138,18 @@ class RedflagController:
                 'message': 'Please provide right inputs'
             }), 400
   
-    def update_location(self, data):
+    def update_location(self, redflag_id, data):
         """
         A method for updating location a specific redflag from the report.
         """
         location = data.get('location')
         try:
-            get_one = db.fetch_redflag(id)
+            get_one = db.fetch_redflag(redflag_id)
             if get_one:
-                db.update_location(id, location)
+                db.update_location(redflag_id, location)
                 return jsonify({
                     'status': 200,
-                    'data': db.fetch_redflag(id),
+                    'data': db.fetch_redflag(redflag_id),
                     'message': 'Redflag location successfully updated!'
                                 }), 200
             else:
@@ -162,17 +162,17 @@ class RedflagController:
                 'message': 'Please provide right inputs'
             }), 400
 
-    def update_comment(self, data):
+    def update_comment(self, redflag_id, data):
         """
         A method for updating a comment of a specific redflag from the report.
         """
         comment = data.get('comment')
         try:
-            get_one = db.fetch_redflag(id)
+            get_one = db.fetch_redflag(redflag_id)
             if get_one:
-                db.update_comment(id, comment)
+                db.update_comment(redflag_id, comment)
                 return jsonify({'status': 200,
-                                'data': db.fetch_redflag(id),
+                                'data': db.fetch_redflag(redflag_id),
                                 'message': 'Redflag comment successfully updated!'
                                 }), 200
             else:
