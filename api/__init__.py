@@ -32,12 +32,12 @@ def create_app(config_name):
         ]
 
     @app.errorhandler(Exception)
-    def errors(e):
+    def errors(error):
         """
         This funcion handles the 404 and 405 HTTP STATUS CODES.
         """
         response = None
-        if e.code == 404:
+        if error == 404:
             response = jsonify({
                 'Issue': 'You have entered an unknown URL.',
                 'Valid URLs': valid_urls,
